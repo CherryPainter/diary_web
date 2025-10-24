@@ -1,0 +1,268 @@
+from datetime import datetime, timedelta
+from flask import Blueprint, render_template, redirect, url_for, flash, request, abort, g, current_app
+from flask_login import login_user, login_required, logout_user, current_user, UserMixin
+
+from simple_notes.extensions import db, login_manager, limiter
+from simple_notes.forms import RegisterForm, LoginForm, NoteForm
+from simple_notes.models import User, NoteEntry
+from simple_notes.services.auth_service import AuthService
+from simple_notes.services.note_service import NoteService
+from flask import session
+
+bp = Blueprint('main', __name__)
+auth_service = AuthService()
+note_service = NoteService()
+
+# Helper to fetch admin contact emails from configured admin usernames
+def _get_admin_contact_email() -> str:
+    admins = current_app.config.get('ADMIN_USERS', set()) or set()
+    emails = []
+    for username in admins:
+        u = User.query.filter_by(username=username).first()
+        if u and u.email:
+            emails.append(u.email)
+    return ', '.join(emails) if emails else ''
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.get(User, int(user_id))
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash('请先登录再访问该页面。', 'warning')
+    return redirect(url_for('main.login'))
+
+@bp.route('/')
+@login_required
+def index():
+    page = request.args.get('page', 1, type=int)
+    pagination = note_service.repo.list_of_user_paginated(current_user.id, page=page, per_page=10)
+    return render_template('index.html', pagination=pagination, entries=pagination.items)
+
+@bp.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+    form = RegisterForm()
+    if form.validate_on_submit():
+        ok, msg, _user = auth_service.register(form.username.data, form.email.data, form.password.data)
+        if not ok:
+            flash(msg, 'danger')
+            return render_template('register.html', form=form)
+        flash(msg, 'success')
+        return redirect(url_for('main.login'))
+    return render_template('register.html', form=form)
+
+@bp.route('/login', methods=['GET', 'POST'])
+@limiter.limit(lambda: current_app.config.get('LOGIN_RATE_LIMIT', '10 per minute'))
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+
+    username_param = request.args.get('u')
+    show_protect = request.args.get('protect') == '1'
+    locked_user = None
+    security_question = None
+    remaining_aux_attempts = None
+    protect_email = ''
+    if username_param:
+        u = User.query.filter_by(username=username_param.strip()).first()
+        if u and u.security_profile and ((u.security_profile.locked_until and u.security_profile.locked_until > datetime.utcnow()) or (u.security_profile.failed_count or 0) >= 3):
+            locked_user = u.username
+            security_question = u.security_profile.question
+            # remaining attempts for auxiliary verification (max 5)
+            attempts = session.get(f'aux_attempts:{locked_user}', 0)
+            remaining_aux_attempts = max(0, 5 - int(attempts or 0))
+            # if no auxiliary verification configured, trigger protect modal
+            if (not u.security_profile.question) or (not u.security_profile.answer_hash):
+                protect_email = _get_admin_contact_email()
+    form = LoginForm()
+    if form.validate_on_submit():
+         ok, msg, user, sec_q = auth_service.validate_login(form.username.data, form.password.data)
+         if not ok:
+             category = 'warning' if '锁定' in msg else 'danger'
+             flash(msg, category)
+             # if user is locked due to service check, use their username
+             render_locked_user = locked_user or (user.username if user else None)
+             # update remaining attempts in case username provided
+             if render_locked_user:
+                 attempts = session.get(f'aux_attempts:{render_locked_user}', 0)
+                 remaining_aux_attempts = max(0, 5 - int(attempts or 0))
+                 # if missing auxiliary verification, set protect email
+                 if user and user.security_profile and (not user.security_profile.question or not user.security_profile.answer_hash):
+                     protect_email = _get_admin_contact_email()
+             return render_template('login.html', form=form, locked_user=render_locked_user, security_question=sec_q or security_question, remaining_aux_attempts=remaining_aux_attempts, protect_contact_email=protect_email or (_get_admin_contact_email() if show_protect else ''))
+         login_user(user)
+         flash('登录成功', 'success')
+         next_url = request.args.get('next')
+         return redirect(next_url or url_for('main.index'))
+    return render_template('login.html', form=form, locked_user=locked_user, security_question=security_question, remaining_aux_attempts=remaining_aux_attempts, protect_contact_email=protect_email or (_get_admin_contact_email() if show_protect else ''))
+
+@bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('您已退出登录', 'info')
+    return redirect(url_for('main.login'))
+
+@bp.route('/entry/new', methods=['GET', 'POST'])
+@login_required
+def create_entry():
+    form = NoteForm()
+    if form.validate_on_submit():
+        ok, msg, _entry = note_service.create_entry(current_user.id, form.title.data, form.content.data)
+        flash(msg, 'success' if ok else 'danger')
+        if ok:
+            return redirect(url_for('main.index'))
+    return render_template('entry_form.html', form=form, mode='create')
+
+@bp.route('/login/aux-verify', methods=['POST'])
+def aux_verify():
+    username = request.form.get('username', '').strip()
+    answer = request.form.get('answer', '')
+    # enforce 5-attempt limit per username (session-scoped)
+    attempt_key = f'aux_attempts:{username}'
+    attempts = int(session.get(attempt_key, 0) or 0)
+    if attempts >= 5:
+        # already exceeded attempts; show protect modal
+        return redirect(url_for('main.login', u=username, protect=1))
+    ok, msg = auth_service.aux_verify(username, answer)
+    if not ok:
+        attempts += 1
+        session[attempt_key] = attempts
+        if attempts >= 5:
+            # trigger protect modal with admin contact email
+            return redirect(url_for('main.login', u=username, protect=1))
+        # show remaining attempts info
+        remaining = max(0, 5 - attempts)
+        flash(f"{msg}（剩余次数：{remaining}）", 'danger')
+        return redirect(url_for('main.login', u=username))
+    # success: reset attempts, mark aux verified and go to reset password
+    session.pop(attempt_key, None)
+    session[f'aux_verified:{username}'] = True
+    flash('辅助验证通过，请设置新密码以完成解锁。', 'success')
+    return redirect(url_for('main.reset_password', u=username))
+
+@bp.route('/entry/<int:entry_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_entry(entry_id):
+    entry = note_service.repo.get_by_id_for_user(entry_id, current_user.id)
+    if not entry:
+        abort(404)
+    form = NoteForm(obj=entry)
+    if form.validate_on_submit():
+        ok, msg = note_service.update_entry(entry, form.title.data, form.content.data)
+        flash(msg, 'success' if ok else 'danger')
+        if ok:
+            return redirect(url_for('main.index'))
+    return render_template('entry_form.html', form=form, mode='edit')
+
+@bp.route('/entry/<int:entry_id>/delete', methods=['POST'])
+@login_required
+def delete_entry(entry_id):
+    entry = note_service.repo.get_by_id_for_user(entry_id, current_user.id)
+    if not entry:
+        abort(404)
+    ok, msg = note_service.delete_entry(entry)
+    flash(msg, 'info' if ok else 'danger')
+    return redirect(url_for('main.index'))
+
+@bp.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    profile = current_user.security_profile
+    if not profile:
+        profile = auth_service.user_repo.ensure_profile(current_user)
+    if request.method == 'POST':
+        form_name = request.form.get('form')
+        if form_name == 'password':
+            ok, msg = auth_service.change_password(
+                current_user,
+                request.form.get('old_password', ''),
+                request.form.get('new_password', ''),
+                request.form.get('confirm_new', ''),
+            )
+            flash(msg, 'success' if ok else 'danger')
+            if ok:
+                return redirect(url_for('main.settings') + '#password')
+        elif form_name == 'security':
+            ok, msg = auth_service.save_security(
+                current_user,
+                request.form.get('question', ''),
+                request.form.get('answer', ''),
+                request.form.get('auth_password', ''),
+            )
+            flash(msg, 'success' if ok else 'danger')
+            if ok:
+                return redirect(url_for('main.settings') + '#security')
+    return render_template('settings.html', profile=profile)
+
+@bp.app_errorhandler(404)
+def not_found(e):
+    return render_template('errors/404.html'), 404
+
+@bp.app_errorhandler(500)
+def server_error(e):
+    return render_template('errors/500.html'), 500
+
+@bp.app_context_processor
+def inject_sidebar_and_csp():
+    ctx = {'csp_nonce': getattr(g, 'csp_nonce', '')}
+    try:
+        if current_user.is_authenticated and request.endpoint not in ['main.login', 'main.register']:
+            entries = note_service.repo.recent_entries(current_user.id, limit=50)
+            today = datetime.utcnow().date()
+            groups_map = {}
+            for e in entries:
+                d = e.created_at.date()
+                if d == today:
+                    label = '今天'
+                elif d == today - timedelta(days=1):
+                    label = '昨天'
+                else:
+                    label = d.strftime('%Y-%m-%d')
+                groups_map.setdefault(label, []).append(e)
+            sorted_groups = sorted(
+                groups_map.items(),
+                key=lambda kv: max(x.created_at for x in kv[1]),
+                reverse=True
+            )
+            ctx['sidebar_groups'] = [{'label': k, 'items': v} for k, v in sorted_groups]
+    except Exception:
+        pass
+    return ctx
+
+
+@bp.route('/login/reset-password', methods=['GET', 'POST'])
+def reset_password():
+    username = request.args.get('u', '').strip() if request.method == 'GET' else request.form.get('username', '').strip()
+    if not username:
+        flash('参数缺失：用户名', 'danger')
+        return redirect(url_for('main.login'))
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        flash('用户不存在', 'danger')
+        return redirect(url_for('main.login'))
+    # Require prior auxiliary verification in this session
+    if not session.get(f'aux_verified:{username}', False):
+        flash('未授权的密码重置，请先通过辅助验证。', 'warning')
+        return redirect(url_for('main.login', u=username))
+    
+    if request.method == 'POST':
+        new_password = request.form.get('new_password', '')
+        confirm_new = request.form.get('confirm_new', '')
+        if not new_password or not confirm_new:
+            flash('请填写新密码与确认新密码', 'danger')
+            return render_template('reset_password.html', username=username)
+        if new_password != confirm_new:
+            flash('两次输入的密码不一致', 'danger')
+            return render_template('reset_password.html', username=username)
+        ok, msg = auth_service.reset_password(user, new_password)
+        flash(msg, 'success' if ok else 'danger')
+        if ok:
+            # clear aux verified flag and redirect to login
+            session.pop(f'aux_verified:{username}', None)
+            return redirect(url_for('main.login', u=username))
+        return render_template('reset_password.html', username=username)
+    
+    return render_template('reset_password.html', username=username)

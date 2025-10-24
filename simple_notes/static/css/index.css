@@ -1,0 +1,9 @@
+.entries .entry .entry-actions {
+  position: relative;
+}
+.entries .entry .entry-actions .btn {
+  left: 0;
+}
+.entries .entry .entry-actions .danger {
+  right: 0;
+}
