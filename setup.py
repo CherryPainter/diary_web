@@ -16,8 +16,8 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='项目团队',
-    author_email='team@example.com',
-    url='https://github.com/your-org/diary_web',  # 替换为实际的GitHub仓库URL
+    author_email='sqy3258731070@163.com',
+    url='https://github.com/CherryPainter/diary_web.git',  # 替换为实际的GitHub仓库URL
     packages=find_packages(),
     package_data={
         'diary_app': [

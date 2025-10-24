@@ -13,7 +13,7 @@
   <!-- moved to inline script with CSP nonce -->
 </head>
 <body>
-  {% if request.endpoint not in ['login', 'register'] %}
+  {% if request.endpoint not in ['login', 'register', 'auth.login', 'auth.register', 'main.login', 'main.register'] %}
   <aside class="sidebar">
     <div class="sidebar-header">
       <a class="brand" href="{{ url_for('index') }}">日记管理系统</a>
@@ -57,7 +57,7 @@
   {% endif %}
 
 
-  <main class="content {% if request.endpoint not in ['login','register'] %}with-sidebar{% endif %}">
+  <main class="content {% if request.endpoint not in ['login','register', 'auth.login', 'auth.register', 'main.login', 'main.register'] %}with-sidebar{% endif %}">
     <div class="container">
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

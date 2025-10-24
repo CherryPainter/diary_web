@@ -10,8 +10,11 @@ class BaseTestCase(unittest.TestCase):
     
     def setUp(self):
         """测试前的准备工作"""
-        # 创建测试应用实例，使用测试配置
-        self.app = create_app('testing')
+        # 创建测试应用实例，不传递参数
+        self.app = create_app()
+        # 手动设置测试配置
+        self.app.config['TESTING'] = True
+        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
         self.client = self.app.test_client()
         self.app_context = self.app.app_context()
         self.app_context.push()

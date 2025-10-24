@@ -139,10 +139,18 @@ body {
   padding-top: 12px;
 }
 
+/* 认证页面页脚 */
+.auth-footer {
+  text-align: center;
+  margin-top: 24px;
+  color: #666;
+  font-size: 12px;
+}
+
 /* 侧边导航 */
 .sidebar .brand {
   display: block;
-  color: #fff;
+  color: #333;
   text-decoration: none;
   font-weight: 600;
   margin-bottom: 12px;
@@ -157,23 +165,23 @@ body {
 .sidebar-link {
   display: block;
   padding: 8px 10px;
-  color: #e5e7eb;
+  color: #666;
   text-decoration: none;
   border-radius: 6px;
 }
 
 .sidebar-link:hover {
-  background: #1f2937;
-  color: #fff;
+  background: #e0e0e0;
+  color: #333;
 }
 
 .danger-link {
-  color: #fecaca;
+  color: #d32f2f;
 }
 
 .sidebar-user {
   font-size: 13px;
-  color: #9ca3af;
+  color: #666;
   padding: 4px 2px;
 }
 
@@ -184,7 +192,7 @@ body {
 }
 
 .content.with-sidebar {
-  padding-left: 240px;
+  padding-left: 180px;
 }
 
 
@@ -200,15 +208,15 @@ body {
 
 .collapse-btn {
   background: transparent;
-  border: 1px solid #555;
-  color: #fff;
+  border: 1px solid #ccc;
+  color: #666;
   padding: 6px 8px;
   border-radius: 6px;
   cursor: pointer;
 }
 
 .collapse-btn:hover {
-  background: #2a2a2a;
+  background: #e0e0e0;
 }
 
 /* 桌面端：侧边栏与内容区域过渡 */
@@ -217,11 +225,11 @@ body {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 240px;
-  background: #1f1f1f;
-  color: #fff;
+  width: 180px;
+  background: #f5f5f5; /* 灰白色 */
+  color: #333;
   padding: 16px 12px;
-  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.05);
+  box-shadow: 1px 0 0 rgba(0, 0, 0, 0.05);
   z-index: 1000;
   overflow-y: auto;
   transition: width 0.2s ease, transform 0.2s ease;
@@ -232,21 +240,21 @@ body {
 }
 
 .content.with-sidebar {
-  padding-left: 240px;
+  padding-left: 180px;
 }
 
 .sidebar.collapsed {
-  width: 64px;
+  width: 48px;
 }
 
 .sidebar.collapsed~.content.with-sidebar {
-  padding-left: 64px;
+  padding-left: 48px;
 }
 
 @media (max-width: 576px) {
-  /* 极窄屏保留64px图标栏，避免导航消失 */
+  /* 极窄屏保留48px图标栏，避免导航消失 */
   .sidebar.collapsed~.content.with-sidebar {
-    padding-left: 64px;
+    padding-left: 48px;
   }
   .sidebar.collapsed {
     transform: none;
@@ -259,7 +267,8 @@ body {
 /* 折叠态隐藏文字与列表，只保留折叠按钮 */
 .sidebar.collapsed .brand,
 .sidebar.collapsed .nav-list,
-.sidebar.collapsed .sidebar-user {
+.sidebar.collapsed .sidebar-user,
+.sidebar.collapsed .sidebar-group-label {
   display: none;
 }
 
@@ -285,6 +294,10 @@ body {
 .sidebar.collapsed .sidebar-link {
   justify-content: center;
   padding: 8px 0;
+}
+
+.sidebar.collapsed .collapse-btn {
+  transform: translateX(-5px);
 }
 
 /* 覆盖之前的折叠隐藏，确保菜单仍显示图标 */
