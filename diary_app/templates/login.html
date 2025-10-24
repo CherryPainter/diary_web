@@ -4,6 +4,7 @@
 <div>
   <div style="max-width: 420px; margin: 0 auto;">
     <h1 style="text-align:center;">登录</h1>
+    {% if not locked_user %}
     <form method="post" novalidate style="text-align:center;">
       {{ form.hidden_tag() }}
       <div class="form-group" style="text-align:center;">
@@ -18,31 +19,116 @@
       </div>
       <div class="form-actions" style="display:flex; justify-content:center; gap:8px;">
         {{ form.submit(class='btn primary') }}
-        <a class="btn" href="{{ url_for('register') }}">没有账号？注册</a>
+        <a class="btn" href="{{ url_for('main.register') }}">没有账号？注册</a>
       </div>
     </form>
+    {% endif %}
 
     {% if locked_user %}
-    <div class="card" style="max-width: 420px; margin: 16px auto; padding: 16px;">
-      <h3 style="text-align:center; margin-bottom: 12px;">账户已锁定，需要辅助验证</h3>
-      <form method="post" action="{{ url_for('aux_verify') }}" style="text-align:center;">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <input type="hidden" name="username" value="{{ locked_user }}">
-        <div class="form-group" style="text-align:center;">
-          <label>安全问题</label>
-          <input class="input" type="text" value="{{ security_question or '未设置' }}" readonly style="width: 320px; max-width: 100%; margin: 0 auto; display: block;">
+    <div class="card shadow-sm mx-auto" style="max-width: 480px;">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+          <i class="bi bi-shield-lock fs-4 text-warning"></i>
+          <h5 class="card-title mb-0">账户已锁定，需要辅助验证</h5>
         </div>
-        <div class="form-group" style="text-align:center;">
-          <label>答案</label>
-          <input class="input" type="password" name="answer" required style="width: 320px; max-width: 100%; margin: 0 auto; display: block;">
-        </div>
-        <div class="form-actions" style="display:flex; justify-content:center; gap:8px;">
-          <button class="btn primary" type="submit">使用辅助验证解锁</button>
-          <a class="btn" href="{{ url_for('settings') }}#security">去设置辅助验证</a>
-        </div>
-      </form>
+        {% if remaining_aux_attempts is not none %}
+          <div class="text-center mb-3"><span class="badge bg-warning text-dark">剩余次数：{{ remaining_aux_attempts }} / 5</span></div>
+        {% endif %}
+        {% if security_question %}
+        <form method="post" action="{{ url_for('main.aux_verify') }}" novalidate>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="username" value="{{ locked_user }}">
+          <div class="mb-3">
+            <label class="form-label">安全问题</label>
+            <input class="form-control" type="text" value="{{ security_question }}" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">答案</label>
+            <div class="input-group">
+              <input class="form-control" type="password" name="answer" id="auxAnswerInput" autocomplete="off" required>
+              <button class="btn btn-outline-secondary" type="button" id="toggleAnswer" aria-label="显示/隐藏答案"><i class="bi bi-eye"></i></button>
+            </div>
+            <div class="form-text">请输入您设置的辅助验证答案。</div>
+          </div>
+          <div class="d-flex justify-content-center gap-2">
+            <button class="btn btn-primary" type="submit">使用辅助验证解锁</button>
+          </div>
+        </form>
+        {% else %}
+          <div class="alert alert-warning text-center" role="alert">
+            未设置辅助验证，无法自助解锁。请联系管理员进行身份核实。
+          </div>
+        {% endif %}
+      </div>
     </div>
     {% endif %}
   </div>
 </div>
+{% endblock %}
+{% block page_scripts %}
+<script nonce="{{ csp_nonce }}">
+(function(){
+  // Show protective modal when attempts exhausted
+  const contact = '{{ protect_contact_email or '' }}';
+  if (contact){
+    const modalHtml = `
+    <div class="modal fade" id="protectModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">账户保护提示</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+          </div>
+          <div class="modal-body">
+            <p>为保护你的账户，辅助验证已失败 5 次。请联系管理员核实身份解除锁定。</p>
+            <p><strong>管理员邮箱：</strong><span id="adminContact"></span></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+    const container = document.createElement('div');
+    container.innerHTML = modalHtml;
+    document.body.appendChild(container);
+    const el = document.getElementById('protectModal');
+    const applyAndShow = function(){
+      const span = document.getElementById('adminContact');
+      if (span) span.textContent = contact;
+      const m = new window.bootstrap.Modal(el);
+      m.show();
+    };
+    if (window.bootstrap && typeof window.bootstrap.Modal === 'function'){
+      applyAndShow();
+    } else {
+      const start = Date.now();
+      const timer = setInterval(function(){
+        if (window.bootstrap && typeof window.bootstrap.Modal === 'function'){
+          clearInterval(timer);
+          applyAndShow();
+        } else if (Date.now() - start > 3000){
+          clearInterval(timer);
+          alert('为保护你的账户，请联系管理员：' + contact);
+        }
+      }, 100);
+    }
+  }
+
+  // Auxiliary answer show/hide
+  const answerInput = document.getElementById('auxAnswerInput');
+  const toggleBtn = document.getElementById('toggleAnswer');
+  if (answerInput && toggleBtn){
+    toggleBtn.addEventListener('click', function(){
+      const isPwd = answerInput.getAttribute('type') === 'password';
+      answerInput.setAttribute('type', isPwd ? 'text' : 'password');
+      const icon = toggleBtn.querySelector('i');
+      if (icon){
+        icon.classList.remove('bi-eye','bi-eye-slash');
+        icon.classList.add(isPwd ? 'bi-eye-slash' : 'bi-eye');
+      }
+    });
+  }
+})();
+</script>
 {% endblock %}

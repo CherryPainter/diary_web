@@ -87,3 +87,21 @@ class AuthService:
         user.password_hash = generate_password_hash(new_password)
         self.user_repo.commit()
         return True, '密码已更新'
+
+    def reset_password(self, user, new_password: str):
+        """Reset user's password without requiring the old password.
+        Returns (ok, msg).
+        """
+        try:
+            if not new_password or len(new_password) < 6:
+                return False, '密码长度至少为6位'
+            # align with change_password implementation
+            user.password_hash = generate_password_hash(new_password)
+            # clear lock state on security profile
+            profile = self.user_repo.ensure_profile(user)
+            profile.failed_count = 0
+            profile.locked_until = None
+            self.user_repo.commit()
+            return True, '密码已重置，请使用新密码登录。'
+        except Exception:
+            return False, '重置密码失败，请稍后再试或联系管理员'
