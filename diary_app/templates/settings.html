@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}账户设置 - 日记管理系统{% endblock %}
+{% block title %}账户设置 - 简笔记{% endblock %}
 {% block content %}
 <div id="account" class="row gy-3">
-  <div class="col-lg-3">
+  <!-- 左侧用户信息卡片 -->
+  <div class="col-lg-3 mb-4 mb-lg-0">
     <div class="card h-100">
       <div class="card-body">
         <div class="d-flex align-items-center gap-3 mb-2">
@@ -26,6 +27,7 @@
     </div>
   </div>
 
+  <!-- 右侧设置表单 -->
   <div class="col-lg-9">
     <div id="password" class="card mb-3">
       <div class="card-header">修改密码</div>
@@ -79,6 +81,49 @@
     </div>
   </div>
 </div>
+
+<!-- 响应式样式 -->
+<style nonce="{{ csp_nonce }}">
+  /* 确保卡片和表单在各种设备上正常显示 */
+  .card {
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 16px;
+  }
+  
+  /* 响应式布局调整 */
+  @media (max-width: 991.98px) {
+    #account .col-lg-9 {
+      padding-top: 16px;
+    }
+  }
+  
+  @media (max-width: 575.98px) {
+    /* 移动设备优化 */
+    .container {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    
+    /* 确保按钮在小屏幕上也有良好的点击体验 */
+    .btn {
+      padding: 10px 16px;
+      font-size: 15px;
+      min-width: 100px;
+    }
+    
+    /* 表单按钮在移动设备上垂直排列 */
+    .d-flex.gap-2 {
+      flex-direction: column;
+    }
+    
+    /* 确保模态框在小屏幕上正常显示 */
+    .modal-dialog {
+      margin: 10px;
+      max-width: none;
+    }
+  }
+</style>
 {% endblock %}
 {% block page_scripts %}
 <script nonce="{{ csp_nonce }}">
@@ -171,10 +216,28 @@
     });
   }
 
+  // 添加响应式处理逻辑
+  function handleResponsive() {
+    // 处理窗口大小变化时的响应式调整
+    const adjustLayout = () => {
+      // 可以在这里添加额外的响应式调整逻辑
+    };
+    
+    // 初始调整
+    adjustLayout();
+    
+    // 监听窗口大小变化
+    window.addEventListener('resize', adjustLayout);
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSecurityModal);
+    document.addEventListener('DOMContentLoaded', () => {
+      initSecurityModal();
+      handleResponsive();
+    });
   } else {
     initSecurityModal();
+    handleResponsive();
   }
 })();
 </script>

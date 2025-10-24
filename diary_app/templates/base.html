@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}日记管理系统{% endblock %}</title>
+  <title>{% block title %}简笔记{% endblock %}</title>
   <link href="{{ url_for('static', filename='vendor/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
 
@@ -16,14 +16,14 @@
   {% if request.endpoint not in ['login', 'register', 'auth.login', 'auth.register', 'main.login', 'main.register'] %}
   <aside class="sidebar">
     <div class="sidebar-header">
-      <a class="brand" href="{{ url_for('index') }}">日记管理系统</a>
+      <a class="brand" href="{{ url_for('index') }}">简笔记</a>
       <button class="collapse-btn" type="button" id="sidebarToggle" aria-label="折叠侧边栏" aria-expanded="true"><i class="bi bi-chevron-double-left"></i></button>
     </div>
 
     <div class="nav-list">
       {% if current_user.is_authenticated %}
-        <a class="sidebar-link" href="{{ url_for('create_entry') }}"><i class="bi bi-plus-square icon"></i><span class="label">新建日记</span></a>
-        <a class="sidebar-link" href="{{ url_for('index') }}"><i class="bi bi-journal-text icon"></i><span class="label">我的日记</span></a>
+        <a class="sidebar-link" href="{{ url_for('create_entry') }}"><i class="bi bi-plus-square icon"></i><span class="label">新建笔记</span></a>
+        <a class="sidebar-link" href="{{ url_for('index') }}"><i class="bi bi-journal-text icon"></i><span class="label">我的笔记</span></a>
       {% else %}
         <a class="sidebar-link" href="{{ url_for('login') }}"><i class="bi bi-box-arrow-in-right icon"></i><span class="label">登录</span></a>
         <a class="sidebar-link" href="{{ url_for('register') }}"><i class="bi bi-person-plus icon"></i><span class="label">注册</span></a>
@@ -74,7 +74,7 @@
   </main>
 
   <footer class="footer container">
-    <p>© 2025 日记管理系统</p>
+    <p>© 2025 简笔记</p>
   </footer>
 
   <script nonce="{{ csp_nonce }}">

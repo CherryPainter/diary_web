@@ -3,8 +3,8 @@ from flask_login import login_required, current_user
 
 from ..services.admin_service import AdminService
 from ..repositories.user_repo import UserRepository
-from ..repositories.diary_repo import DiaryRepository
-from ..models import User, DiaryEntry
+from ..repositories.note_repo import NoteRepository
+from ..models import User, NoteEntry
 
 bp_admin = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -13,7 +13,7 @@ _admin_service = None
 def get_admin_service():
     global _admin_service
     if _admin_service is None:
-        _admin_service = AdminService(UserRepository(), DiaryRepository())
+        _admin_service = AdminService(UserRepository(), NoteRepository())
     return _admin_service
 
 
@@ -87,7 +87,7 @@ def api_list_entries():
 @login_required
 def api_delete_entry(entry_id):
     require_admin()
-    entry = DiaryEntry.query.get_or_404(entry_id)
+    entry = NoteEntry.query.get_or_404(entry_id)
     ok, msg = get_admin_service().delete_entry(entry)
     return jsonify({'ok': ok, 'message': msg})
 
