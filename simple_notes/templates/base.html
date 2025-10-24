@@ -58,7 +58,7 @@
 
 
   <main class="content {% if request.endpoint not in ['login','register', 'auth.login', 'auth.register', 'main.login', 'main.register'] %}with-sidebar{% endif %}">
-    <div class="container">
+    <div class="container wide-container">
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           <div class="flash">

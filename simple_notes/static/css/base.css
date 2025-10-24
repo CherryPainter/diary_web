@@ -6,3 +6,11 @@
   padding: 0;
   text-align: center;
 }
+
+/* 更宽的容器样式 */
+.wide-container {
+  max-width: 1400px;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
