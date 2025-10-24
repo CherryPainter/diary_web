@@ -18,11 +18,20 @@ class UserRepository:
         db.session.add(user)
 
     def ensure_profile(self, user: User) -> SecurityProfile:
+        # Prefer the relationship if already loaded/assigned
         profile = user.security_profile
-        if not profile:
-            profile = SecurityProfile(user_id=user.id, failed_count=0)
-            db.session.add(profile)
-            db.session.flush()
+        if profile:
+            return profile
+        # Double-check directly from DB to avoid duplicate insert when relationship not loaded
+        profile = SecurityProfile.query.filter_by(user_id=user.id).first()
+        if profile:
+            # attach to relationship for consistency
+            user.security_profile = profile
+            return profile
+        # Create a new profile only if none exists; initialize non-null fields
+        profile = SecurityProfile(user_id=user.id, failed_count=0, question='', answer_hash='')
+        db.session.add(profile)
+        # Do not flush here; let caller decide when to commit/flush to avoid premature INSERT
         return profile
 
     def list_users(self, page: int = 1, per_page: int = 20):

@@ -34,8 +34,8 @@ class SecurityProfile(db.Model):
     __tablename__ = 'security_profiles'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, unique=True)
-    question = db.Column(db.String(255))
-    answer_hash = db.Column(db.String(255))
+    question = db.Column(db.String(255), nullable=False)
+    answer_hash = db.Column(db.String(255), nullable=False)
     failed_count = db.Column(db.Integer, default=0, nullable=False)
     locked_until = db.Column(db.DateTime, nullable=True)
 

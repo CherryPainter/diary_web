@@ -58,12 +58,22 @@ class AuthService:
         db.session.commit()
         return True, '账户已解锁，请重新登录。'
 
-    def save_security(self, user: User, question: str, answer: str) -> Tuple[bool, str]:
-        if not question or not answer:
+    def save_security(self, user: User, question: str, answer: str, auth_password: str) -> Tuple[bool, str]:
+        # trim inputs and validate non-empty
+        q = (question or '').strip()
+        a = (answer or '').strip()
+        if not q or not a:
             return False, '请填写问题和答案'
+        # secondary password verification
+        if not auth_password or not check_password_hash(user.password_hash, auth_password):
+            return False, '需二次验证密码，密码错误'
+        # ensure a single profile and update
         profile = self.user_repo.ensure_profile(user)
-        profile.question = question.strip()
-        profile.answer_hash = generate_password_hash(answer)
+        profile.question = q
+        profile.answer_hash = generate_password_hash(a)
+        # reset failed count and unlock on successful save
+        profile.failed_count = 0
+        profile.locked_until = None
         self.user_repo.commit()
         return True, '辅助验证已保存'
 

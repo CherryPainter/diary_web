@@ -124,6 +124,8 @@ def aux_verify():
 @login_required
 def settings():
     profile = current_user.security_profile
+    if not profile:
+        profile = auth_service.user_repo.ensure_profile(current_user)
     if request.method == 'POST':
         form_name = request.form.get('form')
         if form_name == 'password':
@@ -141,6 +143,7 @@ def settings():
                 current_user,
                 request.form.get('question', ''),
                 request.form.get('answer', ''),
+                request.form.get('auth_password', ''),
             )
             flash(msg, 'success' if ok else 'danger')
             if ok:
