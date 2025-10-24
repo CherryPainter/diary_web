@@ -1,20 +1,16 @@
-from typing import Optional, Tuple
-from datetime import datetime
-
-from ..repositories.user_repo import UserRepository
-from ..repositories.diary_repo import DiaryRepository
-from ..models import User, DiaryEntry
-from ..extensions import db
-
 from typing import Optional, Tuple, Set
+from datetime import datetime
 import json
 
-from ..models import User, DiaryEntry, AppSetting
+from ..repositories.user_repo import UserRepository
+from ..repositories.note_repo import NoteRepository
+from ..models import User, NoteEntry, AppSetting
+from ..extensions import db
 
 class AdminService:
-    def __init__(self, user_repo: Optional[UserRepository] = None, diary_repo: Optional[DiaryRepository] = None):
+    def __init__(self, user_repo: Optional[UserRepository] = None, note_repo: Optional[NoteRepository] = None):
         self.user_repo = user_repo or UserRepository()
-        self.diary_repo = diary_repo or DiaryRepository()
+        self.note_repo = note_repo or NoteRepository()
 
     def get_admin_users(self) -> Set[str]:
         setting = AppSetting.query.filter_by(key='admin_users').first()
@@ -74,10 +70,10 @@ class AdminService:
     # Entries
     def list_entries(self, page: int = 1, per_page: int = 20, user_id: Optional[int] = None):
         if user_id:
-            return DiaryEntry.query.filter_by(user_id=user_id).order_by(DiaryEntry.created_at.desc()).paginate(page=page, per_page=per_page, error_out=False)
-        return self.diary_repo.paginate_all(page=page, per_page=per_page)
+            return NoteEntry.query.filter_by(user_id=user_id).order_by(NoteEntry.created_at.desc()).paginate(page=page, per_page=per_page, error_out=False)
+        return self.note_repo.paginate_all(page=page, per_page=per_page)
 
-    def delete_entry(self, entry: DiaryEntry) -> Tuple[bool, str]:
-        self.diary_repo.delete(entry)
-        self.diary_repo.commit()
-        return True, '日记已删除'
+    def delete_entry(self, entry: NoteEntry) -> Tuple[bool, str]:
+        self.note_repo.delete(entry)
+        self.note_repo.commit()
+        return True, '笔记已删除'

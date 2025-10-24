@@ -14,7 +14,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('密码', validators=[DataRequired()])
     submit = SubmitField('登录')
 
-class DiaryForm(FlaskForm):
+class NoteForm(FlaskForm):
     title = StringField('标题', validators=[DataRequired(), Length(max=200)])
     content = TextAreaField('内容', validators=[DataRequired(), Length(max=10000)])
     submit = SubmitField('保存')

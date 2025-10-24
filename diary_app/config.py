@@ -27,7 +27,7 @@ class Config:
         # fallback to sqlite for dev/preview
         instance_dir = pathlib.Path(instance_path)
         instance_dir.mkdir(parents=True, exist_ok=True)
-        return f"sqlite:///{instance_dir / 'diary.db'}"
+        return f"sqlite:///{instance_dir / 'notes.db'}"
 
     @classmethod
     def apply(cls, app):
