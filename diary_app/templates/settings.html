@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}账户设置 - 日记管理系统{% endblock %}
+{% block content %}
+<div style="max-width: 720px; margin: 0 auto;">
+  <h1>账户设置</h1>
+  <div style="display:flex; gap:16px; flex-wrap:wrap;">
+    <div id="account" style="flex:1 1 320px;">
+      <div class="card" style="padding:16px;">
+        <h2 style="margin:0 0 12px 0;">你好，{{ current_user.username }}</h2>
+        <p>使用下方锚点快速定位：
+          <a class="btn" href="#password">修改密码</a>
+          <a class="btn" href="#security">辅助验证</a>
+        </p>
+      </div>
+    </div>
+
+    <div id="password" style="flex:1 1 320px;">
+      <div class="card" style="padding:16px;">
+        <h3 style="margin:0 0 12px 0;">修改密码</h3>
+        <form method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="form" value="password">
+          <div class="form-group">
+            <label>旧密码</label>
+            <input class="input" type="password" name="old_password" required>
+          </div>
+          <div class="form-group">
+            <label>新密码</label>
+            <input class="input" type="password" name="new_password" minlength="8" required>
+          </div>
+          <div class="form-group">
+            <label>确认新密码</label>
+            <input class="input" type="password" name="confirm_new" minlength="8" required>
+          </div>
+          <div class="form-actions">
+            <button class="btn primary" type="submit">修改密码</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="security" style="flex:1 1 320px;">
+      <div class="card" style="padding:16px;">
+        <h3 style="margin:0 0 12px 0;">辅助验证（安全问题）</h3>
+        <form method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="form" value="security">
+          <div class="form-group">
+            <label>问题</label>
+            <input class="input" type="text" name="question" value="{{ profile.question or '' }}" maxlength="255" required>
+          </div>
+          <div class="form-group">
+            <label>答案（将被加密保存）</label>
+            <input class="input" type="password" name="answer" required>
+          </div>
+          <div class="form-actions">
+            <button class="btn primary" type="submit">保存辅助验证</button>
+          </div>
+        </form>
+        {% if profile.failed_count and profile.failed_count >= 3 %}
+          <p style="color:#bf4c4c; margin-top:8px;">当前失败次数：{{ profile.failed_count }}（已锁定，登录页可通过辅助验证解锁）</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

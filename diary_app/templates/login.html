@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}登录 - 日记管理系统{% endblock %}
+{% block content %}
+<div>
+  <div style="max-width: 420px; margin: 0 auto;">
+    <h1 style="text-align:center;">登录</h1>
+    <form method="post" novalidate style="text-align:center;">
+      {{ form.hidden_tag() }}
+      <div class="form-group" style="text-align:center;">
+        {{ form.username.label }}
+        {{ form.username(class='input', style='width: 320px; max-width: 100%; margin: 0 auto; display: block;') }}
+        {% for e in form.username.errors %}<div class="error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group" style="text-align:center;">
+        {{ form.password.label }}
+        {{ form.password(class='input', style='width: 320px; max-width: 100%; margin: 0 auto; display: block;') }}
+        {% for e in form.password.errors %}<div class="error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-actions" style="display:flex; justify-content:center; gap:8px;">
+        {{ form.submit(class='btn primary') }}
+        <a class="btn" href="{{ url_for('register') }}">没有账号？注册</a>
+      </div>
+    </form>
+
+    {% if locked_user %}
+    <div class="card" style="max-width: 420px; margin: 16px auto; padding: 16px;">
+      <h3 style="text-align:center; margin-bottom: 12px;">账户已锁定，需要辅助验证</h3>
+      <form method="post" action="{{ url_for('aux_verify') }}" style="text-align:center;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="username" value="{{ locked_user }}">
+        <div class="form-group" style="text-align:center;">
+          <label>安全问题</label>
+          <input class="input" type="text" value="{{ security_question or '未设置' }}" readonly style="width: 320px; max-width: 100%; margin: 0 auto; display: block;">
+        </div>
+        <div class="form-group" style="text-align:center;">
+          <label>答案</label>
+          <input class="input" type="password" name="answer" required style="width: 320px; max-width: 100%; margin: 0 auto; display: block;">
+        </div>
+        <div class="form-actions" style="display:flex; justify-content:center; gap:8px;">
+          <button class="btn primary" type="submit">使用辅助验证解锁</button>
+          <a class="btn" href="{{ url_for('settings') }}#security">去设置辅助验证</a>
+        </div>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

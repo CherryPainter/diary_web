@@ -1,0 +1,358 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Microsoft Yahei', sans-serif;
+  margin: 0;
+  background: #f7f7f9;
+  color: #222;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+
+/* 按钮 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #fff;
+  color: #111;
+  text-decoration: none;
+  margin-right: 0;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.btn.primary {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.btn.danger {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #fff;
+}
+
+/* 表单与提示 */
+.form-group {
+  margin-bottom: 12px;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.textarea {
+  min-height: 180px;
+}
+
+.error {
+  color: #b91c1c;
+  font-size: 14px;
+}
+
+.flash {
+  margin: 12px 0;
+}
+
+.flash-item {
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.flash-item.success {
+  background: #ecfdf5;
+  border: 1px solid #10b981;
+}
+
+.flash-item.info {
+  background: #eff6ff;
+  border: 1px solid #3b82f6;
+}
+
+.flash-item.danger {
+  background: #fef2f2;
+  border: 1px solid #ef4444;
+}
+
+/* 列表 */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.entries {
+  list-style: none;
+  padding: 0;
+}
+
+.entry {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.entry-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.entry-meta {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.entry-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* 页脚 */
+.footer {
+  color: #666;
+  font-size: 12px;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 24px;
+  padding-top: 12px;
+}
+
+/* 侧边导航 */
+.sidebar .brand {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 8px 10px;
+  color: #e5e7eb;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.sidebar-link:hover {
+  background: #1f2937;
+  color: #fff;
+}
+
+.danger-link {
+  color: #fecaca;
+}
+
+.sidebar-user {
+  font-size: 13px;
+  color: #9ca3af;
+  padding: 4px 2px;
+}
+
+
+/* 主内容：仅保留过渡，不覆盖容器居中 */
+.content {
+  transition: padding-left 0.2s ease;
+}
+
+.content.with-sidebar {
+  padding-left: 240px;
+}
+
+
+
+
+/* 侧边栏头部（品牌 + 折叠按钮） */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.collapse-btn {
+  background: transparent;
+  border: 1px solid #555;
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.collapse-btn:hover {
+  background: #2a2a2a;
+}
+
+/* 桌面端：侧边栏与内容区域过渡 */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 240px;
+  background: #1f1f1f;
+  color: #fff;
+  padding: 16px 12px;
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.05);
+  z-index: 1000;
+  overflow-y: auto;
+  transition: width 0.2s ease, transform 0.2s ease;
+}
+
+.content {
+  transition: padding-left 0.2s ease;
+}
+
+.content.with-sidebar {
+  padding-left: 240px;
+}
+
+.sidebar.collapsed {
+  width: 64px;
+}
+
+.sidebar.collapsed~.content.with-sidebar {
+  padding-left: 64px;
+}
+
+@media (max-width: 576px) {
+  /* 极窄屏保留64px图标栏，避免导航消失 */
+  .sidebar.collapsed~.content.with-sidebar {
+    padding-left: 64px;
+  }
+  .sidebar.collapsed {
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
+    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* 折叠态隐藏文字与列表，只保留折叠按钮 */
+.sidebar.collapsed .brand,
+.sidebar.collapsed .nav-list,
+.sidebar.collapsed .sidebar-user {
+  display: none;
+}
+
+/* 移除移动端适配：覆盖或删除相关样式 */
+/* 删除 .sidebar.open、.sidebar-overlay、.topbar 显示逻辑与 @media 查询的影响 */
+/* 如果仍有 @media (max-width: 768px) 片段，将不再生效或可移除 */
+/* 图标+标签布局与折叠态样式 */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar .icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.sidebar.collapsed .label {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-link {
+  justify-content: center;
+  padding: 8px 0;
+}
+
+/* 覆盖之前的折叠隐藏，确保菜单仍显示图标 */
+.sidebar.collapsed .nav-list {
+  display: flex !important;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar.collapsed .sidebar-user {
+  display: flex !important;
+}
+
+/* 侧边栏布局：底部固定用户与退出 */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-list {
+  flex: 1 1 auto;
+}
+
+/* 分组标题与容器样式 */
+.sidebar-group-label {
+  color: #9ca3af;
+  font-size: 12px;
+  margin: 10px 8px 6px;
+}
+.sidebar-sections .nav-list {
+  gap: 6px;
+}
+.sidebar-group {
+  margin-bottom: 8px;
+}
+
+/* 折叠态：隐藏文本标签，仅显示图标 */
+.sidebar.collapsed .label {
+  display: none;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-divider {
+  border-top: 1px solid #2f2f2f;
+  margin: 8px 0;
+}
+
+/* 折叠态：底部也只显示图标，保持居中 */
+.sidebar.collapsed .sidebar-footer .label {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-footer .sidebar-link {
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.sidebar.collapsed .sidebar-user {
+  justify-content: center;
+}
+
+/* 用户名标签左侧外边距 */
+.sidebar-user .label {
+  margin-left: 10px;
+}
