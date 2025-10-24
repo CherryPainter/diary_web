@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}注册 - 日记管理系统{% endblock %}
+{% block content %}
+<div>
+  <div style="max-width: 420px; margin: 0 auto;">
+    <h1 style="text-align:center;">注册</h1>
+    <form method="post" novalidate style="text-align:center;">
+      {{ form.hidden_tag() }}
+      <div class="form-group" style="text-align:center;">
+        {{ form.username.label }}
+        {{ form.username(class='input', style='width: 320px; max-width: 100%; margin: 0 auto; display: block;') }}
+        {% for e in form.username.errors %}<div class="error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group" style="text-align:center;">
+        {{ form.email.label }}
+        {{ form.email(class='input', style='width: 320px; max-width: 100%; margin: 0 auto; display: block;') }}
+        {% for e in form.email.errors %}<div class="error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group" style="text-align:center;">
+        {{ form.password.label }}
+        {{ form.password(class='input', style='width: 320px; max-width: 100%; margin: 0 auto; display: block;') }}
+        {% for e in form.password.errors %}<div class="error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-group" style="text-align:center;">
+        {{ form.confirm_password.label }}
+        {{ form.confirm_password(class='input', style='width: 320px; max-width: 100%; margin: 0 auto; display: block;') }}
+        {% for e in form.confirm_password.errors %}<div class="error">{{ e }}</div>{% endfor %}
+      </div>
+      <div class="form-actions" style="display:flex; justify-content:center; gap:8px;">
+        {{ form.submit(class='btn primary') }}
+        <a class="btn" href="{{ url_for('login') }}">已有账号？登录</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

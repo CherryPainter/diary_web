@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}管理员设置 - 日记管理系统{% endblock %}
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+  <h1>管理员设置</h1>
+  <p>在此添加或移除管理员用户名。新增的用户需要先注册或创建账户后才能登录；默认管理员为 <code>admin</code>，默认密码来自配置。</p>
+
+  <div class="card" style="padding:16px; margin-bottom:16px;">
+    <h3 style="margin:0 0 12px 0;">当前管理员</h3>
+    <ul id="adminList" class="list-group"></ul>
+  </div>
+
+  <div class="card" style="padding:16px;">
+    <h3 style="margin:0 0 12px 0;">添加管理员</h3>
+    <div class="form-group" style="margin-bottom:12px;">
+      <label>用户名</label>
+      <input id="usernameInput" class="input" type="text" placeholder="输入用户名">
+    </div>
+    <button id="addBtn" class="btn">添加</button>
+  </div>
+</div>
+
+<script nonce="{{ csp_nonce }}">
+(function(){
+  const csrfToken = '{{ csrf_token() }}';
+  const listEl = document.getElementById('adminList');
+  const inputEl = document.getElementById('usernameInput');
+  const addBtn = document.getElementById('addBtn');
+
+  function flash(msg, cls='info'){
+    const container = document.querySelector('.flash');
+    if (!container) return;
+    const div = document.createElement('div');
+    div.className = 'flash-item ' + cls;
+    div.textContent = msg;
+    container.appendChild(div);
+    setTimeout(() => div.remove(), 3000);
+  }
+
+  async function loadAdmins(){
+    listEl.innerHTML = '';
+    const res = await fetch('/admin/api/admin-users');
+    const data = await res.json();
+    (data.items || []).forEach(u => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item d-flex justify-content-between align-items-center';
+      li.textContent = u;
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-sm btn-outline-danger';
+      btn.textContent = '移除';
+      btn.addEventListener('click', () => removeAdmin(u));
+      li.appendChild(btn);
+      listEl.appendChild(li);
+    });
+  }
+
+  async function addAdmin(){
+    const username = (inputEl.value || '').trim();
+    if (!username){ flash('请输入用户名', 'danger'); return; }
+    const res = await fetch('/admin/api/admin-users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken,
+      },
+      body: JSON.stringify({ username })
+    });
+    const data = await res.json();
+    if (data.ok){ flash('已添加管理员', 'success'); inputEl.value=''; loadAdmins(); }
+    else { flash(data.message || '添加失败', 'danger'); }
+  }
+
+  async function removeAdmin(username){
+    const res = await fetch('/admin/api/admin-users/' + encodeURIComponent(username), {
+      method: 'DELETE',
+      headers: { 'X-CSRFToken': csrfToken }
+    });
+    const data = await res.json();
+    if (data.ok){ flash('已移除管理员', 'success'); loadAdmins(); }
+    else { flash(data.message || '移除失败', 'danger'); }
+  }
+
+  addBtn.addEventListener('click', addAdmin);
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', loadAdmins);
+  } else { loadAdmins(); }
+})();
+</script>
+{% endblock %}

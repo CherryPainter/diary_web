@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% block title %}账户设置 - 日记管理系统{% endblock %}
+{% block content %}
+<div id="account" class="row gy-3">
+  <div class="col-lg-3">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <i class="bi bi-person-circle fs-1"></i>
+          <div>
+            <div class="fw-bold">{{ current_user.username }}</div>
+            <div class="text-muted">{{ current_user.email }}</div>
+            <div class="text-muted">注册于 {{ current_user.created_at.strftime('%Y-%m-%d') }}</div>
+          </div>
+        </div>
+        <div class="small text-muted">在右侧进行账户安全相关设置。</div>
+        <hr>
+        <div class="d-grid gap-2">
+          <a class="btn btn-outline-primary" href="#password">修改密码</a>
+          <a class="btn btn-outline-primary" href="#security">辅助验证</a>
+        </div>
+        {% if profile and profile.failed_count and profile.failed_count >= 3 %}
+          <div class="alert alert-warning mt-3 mb-0">账户当前处于锁定状态（失败次数：{{ profile.failed_count }}），可在登录页通过辅助验证解锁。</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-9">
+    <div id="password" class="card mb-3">
+      <div class="card-header">修改密码</div>
+      <div class="card-body">
+        <form method="post" novalidate>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="form" value="password">
+          <div class="mb-3">
+            <label class="form-label">旧密码</label>
+            <input class="form-control" type="password" name="old_password" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">新密码</label>
+            <input class="form-control" type="password" name="new_password" minlength="8" required>
+            <div class="form-text">至少 8 位，建议包含字母、数字和符号。</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">确认新密码</label>
+            <input class="form-control" type="password" name="confirm_new" minlength="8" required>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary" type="submit">保存修改</button>
+            <a class="btn btn-outline-secondary" href="#account">返回顶部</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="security" class="card">
+      <div class="card-header">辅助验证（安全问题）</div>
+      <div class="card-body">
+        <form id="security-form" method="post" novalidate>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="form" value="security">
+          <input type="hidden" name="auth_password" value="">
+          <div class="mb-3">
+            <label class="form-label">问题</label>
+            <input class="form-control" type="text" name="question" value="{{ profile.question or '' }}" maxlength="255" required>
+            <div class="form-text">例如：我最喜欢的城市是？</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">答案（将被加密保存）</label>
+            <input class="form-control" type="text" name="answer" required>
+          </div>
+          <div class="d-flex gap-2">
+            <button id="security-submit" class="btn btn-primary" type="button">保存设置</button>
+            <a class="btn btn-outline-secondary" href="#account">返回顶部</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block page_scripts %}
+<script nonce="{{ csp_nonce }}">
+(function(){
+  function initSecurityModal(){
+    const form = document.getElementById('security-form');
+    if (!form) return;
+    const hiddenPwd = form.querySelector('input[name="auth_password"]');
+    const submitBtn = document.getElementById('security-submit');
+
+    // build modal
+    const modalHtml = `
+    <div class="modal fade" id="pwdConfirmModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">二次验证</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="关闭"></button>
+          </div>
+          <div class="modal-body">
+            <p>修改辅助验证答案前，请输入账户密码进行二次确认。</p>
+            <div class="mb-2">
+              <label class="form-label">账户密码</label>
+              <input type="password" class="form-control" id="confirmPasswordInput" autocomplete="current-password" required>
+              <div class="form-text text-danger d-none" id="confirmPasswordError">请输入密码</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" id="confirmPasswordBtn">确认并保存</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+    const container = document.createElement('div');
+    container.innerHTML = modalHtml;
+    document.body.appendChild(container);
+    const modalEl = document.getElementById('pwdConfirmModal');
+    const confirmInput = document.getElementById('confirmPasswordInput');
+    const errorEl = document.getElementById('confirmPasswordError');
+    const confirmBtn = document.getElementById('confirmPasswordBtn');
+    let bsModal = null;
+
+    function waitForBootstrapAndShow(){
+      const showModal = function(){
+        if (!bsModal) {
+          bsModal = new window.bootstrap.Modal(modalEl);
+        }
+        errorEl.classList.add('d-none');
+        confirmInput.value = '';
+        bsModal.show();
+      };
+      // robust wait with timeout
+      if (window.bootstrap && typeof window.bootstrap.Modal === 'function') {
+        showModal();
+        return;
+      }
+      const start = Date.now();
+      const timer = setInterval(function(){
+        if (window.bootstrap && typeof window.bootstrap.Modal === 'function') {
+          clearInterval(timer);
+          showModal();
+        } else if (Date.now() - start > 3000) {
+          clearInterval(timer);
+          alert('前端库未就绪，请稍后再试');
+        }
+      }, 100);
+    }
+
+    // handle button click
+    submitBtn.addEventListener('click', function(){
+      if (hiddenPwd) hiddenPwd.value = '';
+      waitForBootstrapAndShow();
+    });
+
+    // handle Enter submit (prevent direct submit)
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if (hiddenPwd) hiddenPwd.value = '';
+      waitForBootstrapAndShow();
+    });
+
+    confirmBtn.addEventListener('click', function(){
+      const pwd = (confirmInput.value || '').trim();
+      if (!pwd) { errorEl.classList.remove('d-none'); return; }
+      hiddenPwd.value = pwd;
+      if (bsModal) bsModal.hide();
+      // submit after modal with password
+      form.submit();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSecurityModal);
+  } else {
+    initSecurityModal();
+  }
+})();
+</script>
+{% endblock %}

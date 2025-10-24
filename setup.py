@@ -6,13 +6,13 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'r', encoding='u
     long_description = f.read()
 
 # 读取requirements.txt文件获取依赖列表
-with open(os.path.join(os.path.dirname(__file__), 'diary_app', 'requirements.txt'), 'r', encoding='utf-8') as f:
+with open(os.path.join(os.path.dirname(__file__), 'simple_notes', 'requirements.txt'), 'r', encoding='utf-8') as f:
     requirements = f.read().splitlines()
 
 setup(
-    name='diary_web',
+    name='simple_notes_web',
     version='1.0.0',
-    description='一个基于Flask的个人日记Web应用',
+    description='一个基于Flask的个人笔记Web应用（简笔记）',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='项目团队',
@@ -20,7 +20,7 @@ setup(
     url='https://github.com/CherryPainter/diary_web.git',  # 替换为实际的GitHub仓库URL
     packages=find_packages(),
     package_data={
-        'diary_app': [
+        'simple_notes': [
             'templates/**/*',
             'static/**/*',
             'requirements.txt'
@@ -40,7 +40,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'diary-web=diary_app.cli:main',
+            'simple-notes=simple_notes.cli:main',
         ],
     },
     classifiers=[
