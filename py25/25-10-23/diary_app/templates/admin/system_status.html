@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}系统状态管理 - 日记本应用{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">系统状态管理</h2>
+    
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">系统配置</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                
+                <div class="form-group mb-3">
+                    <div class="form-check form-switch">
+                        {{ form.maintenance_mode(class="form-check-input", id="maintenance_mode") }}
+                        {{ form.maintenance_mode.label(class="form-check-label", for="maintenance_mode") }}
+                        {% for error in form.maintenance_mode.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <small class="form-text text-muted">开启维护模式将禁止普通用户访问系统</small>
+                </div>
+                
+                <div class="form-group mb-3">
+                    {{ form.login_attempts_limit.label(class="form-label") }}
+                    {{ form.login_attempts_limit(class="form-control") }}
+                    {% for error in form.login_attempts_limit.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                    <small class="form-text text-muted">允许的最大登录失败次数</small>
+                </div>
+                
+                <div class="form-group mb-3">
+                    {{ form.account_lockout_duration.label(class="form-label") }}
+                    {{ form.account_lockout_duration(class="form-control") }}
+                    {% for error in form.account_lockout_duration.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                    <small class="form-text text-muted">账户锁定时长（分钟）</small>
+                </div>
+                
+                <div class="form-group mb-3">
+                    {{ form.default_security_level.label(class="form-label") }}
+                    {{ form.default_security_level(class="form-select") }}
+                    {% for error in form.default_security_level.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                    <small class="form-text text-muted">新用户的默认安全等级</small>
+                </div>
+                
+                <div class="form-group mb-3">
+                    {{ form.session_timeout.label(class="form-label") }}
+                    {{ form.session_timeout(class="form-control") }}
+                    {% for error in form.session_timeout.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                    <small class="form-text text-muted">会话超时时间（分钟）</small>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <div class="form-check form-switch">
+                        {{ form.require_two_factor.label(class="form-check-label", for="require_two_factor") }}
+                        {{ form.require_two_factor(class="form-check-input", id="require_two_factor") }}
+                        {% for error in form.require_two_factor.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <small class="form-text text-muted">要求所有用户启用双因素认证</small>
+                </div>
+                
+                <div class="form-group mb-3">
+                    {{ form.version.label(class="form-label") }}
+                    {{ form.version(class="form-control") }}
+                    {% for error in form.version.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                
+                <div class="form-group mb-3">
+                    {{ form.maintenance_message.label(class="form-label") }}
+                    {{ form.maintenance_message(class="form-control", rows="4") }}
+                    {% for error in form.maintenance_message.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                    <small class="form-text text-muted">维护模式下显示给用户的消息</small>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">保存配置</button>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">返回仪表盘</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

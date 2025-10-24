@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <img src="./images/窗外的风景_1.jpg" alt="">
+  <script>
+    function getRandom(x, y) {
+      const random = Math.floor(Math.random() * (y - x + 1)) + x
+      return random
+    }
+    const rd = getRandom(1, 6)
+    const hq = document.querySelector('img')
+    hq.src = `./images/窗外的风景_${rd}.jpg`
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}安全验证 - 日记本应用{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="mb-0 text-center">安全验证</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-center mb-4">
+                        <i class="fas fa-shield-alt fa-4x text-warning"></i>
+                    </p>
+                    
+                    <p class="text-center mb-4">
+                        为了您的账户安全，请完成以下验证。
+                    </p>
+                    
+                    {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if security_profile.two_factor_enabled %}
+                    <form method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label">验证码</label>
+                            <input type="text" name="verification_code" class="form-control" placeholder="请输入验证码" required>
+                            <small class="form-text text-muted">
+                                请查看您的双因素认证应用获取验证码
+                            </small>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label">恢复码（可选）</label>
+                            <input type="text" name="recovery_code" class="form-control" placeholder="如果无法获取验证码，请使用恢复码">
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-warning btn-block">验证</button>
+                        </div>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-info">
+                        您尚未启用双因素认证。请联系管理员获取帮助。
+                    </div>
+                    
+                    <form method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        
+                        <div class="form-group mb-3">
+                            <label class="form-label">密码</label>
+                            <input type="password" name="password" class="form-control" placeholder="请输入您的密码进行验证" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-warning btn-block">验证</button>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

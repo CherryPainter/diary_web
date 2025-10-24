@@ -1,0 +1,122 @@
+{% extends 'auth_base.html' %}
+
+{% block title %}注册 - 日记管理系统{% endblock %}
+
+{% block auth_content %}
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1 class="auth-title">创建账号</h1>
+      <p class="auth-subtitle">填写以下信息开始您的日记之旅</p>
+    </div>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="{{ 'success-message' if category == 'success' else 'error-message' }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    <!-- 注册表单 -->
+    <form id="register-form" method="POST">
+      {{ form.hidden_tag() }}
+      
+      <!-- 用户名输入框 -->
+      <div class="form-group">
+        <label for="username">用户名</label>
+        {{ form.username(id='username', class="form-control" + (' is-invalid' if form.username.errors else ''), 
+               placeholder="用户名", autocomplete='username', autofocus=true) }}
+        {% if form.username.errors %}
+          <span class="error-message">
+            {% for error in form.username.errors %}{{ error }}{% endfor %}
+          </span>
+        {% else %}
+          <span class="form-hint">3-50个字符，只能包含字母、数字和下划线</span>
+        {% endif %}
+      </div>
+      
+      <!-- 邮箱输入框 -->
+      <div class="form-group">
+        <label for="email">邮箱</label>
+        {{ form.email(id='email', class="form-control" + (' is-invalid' if form.email.errors else ''), 
+               placeholder="邮箱", autocomplete='email') }}
+        {% if form.email.errors %}
+          <span class="error-message">
+            {% for error in form.email.errors %}{{ error }}{% endfor %}
+          </span>
+        {% endif %}
+      </div>
+      
+      <!-- 密码输入框 -->
+      <div class="form-group">
+        <label for="password">密码</label>
+        {{ form.password(id='password', class="form-control" + (' is-invalid' if form.password.errors else ''), 
+               placeholder="密码", autocomplete='new-password') }}
+        <button type="button" id="togglePassword" class="toggle-password">
+          <i class="bi bi-eye"></i>
+        </button>
+        {% if form.password.errors %}
+          <span class="error-message">
+            {% for error in form.password.errors %}{{ error }}{% endfor %}
+          </span>
+        {% else %}
+          <!-- 密码强度指示器 -->
+          <span class="form-hint">至少8个字符，建议包含大小写字母、数字和特殊字符</span>
+          <div class="password-strength">
+            <div class="strength-bar">
+              <div class="strength-fill" id="strength-fill"></div>
+            </div>
+            <div class="strength-text" id="password-strength-text">密码强度</div>
+          </div>
+        {% endif %}
+      </div>
+      
+      <!-- 确认密码输入框 -->
+      <div class="form-group">
+        <label for="confirmPassword">确认密码</label>
+        {{ form.confirm_password(id='confirmPassword', class="form-control" + (' is-invalid' if form.confirm_password.errors else ''), 
+               placeholder="确认密码", autocomplete='new-password') }}
+        <button type="button" id="toggleConfirmPassword" class="toggle-password">
+          <i class="bi bi-eye"></i>
+        </button>
+        {% if form.confirm_password.errors %}
+          <span class="error-message">
+            {% for error in form.confirm_password.errors %}{{ error }}{% endfor %}
+          </span>
+        {% else %}
+          <div id="password-match-error" class="error-message">密码不匹配</div>
+          <div id="password-match-success" class="success-message">密码匹配</div>
+        {% endif %}
+      </div>
+      
+      <!-- 注册按钮 -->
+      <button type="submit" id="register-submit" class="btn-primary">
+        <span id="register-text">注册</span>
+        <span id="register-spinner" class="loading-spinner">
+          <i class="bi bi-arrow-repeat"></i>
+        </span>
+      </button>
+    </form>
+    
+    <!-- 条款同意 -->
+    <div class="terms-agreement">
+      <p>注册即表示您同意我们的<a href="#" class="auth-link">服务条款</a>和<a href="#" class="auth-link">隐私政策</a></p>
+    </div>
+    
+    <!-- 登录链接 -->
+    <div class="auth-links">
+      <div class="divider">或</div>
+      <a href="{{ url_for('auth.login') }}" class="auth-link">立即登录</a>
+    </div>
+    
+    <div class="auth-footer">
+      &copy; 2025 日记管理系统
+    </div>
+  </div>
+{% endblock %}
+
+{% block auth_footer %}
+  已有账号？ <a href="{{ url_for('auth.login') }}" class="auth-link">立即登录</a>
+{% endblock %}

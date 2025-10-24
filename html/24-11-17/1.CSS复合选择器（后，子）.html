@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 后代选择器 */
+        .nav ul li a {
+            color: red;
+        }
+        /* 子选择器 */
+        .hot > a{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- 后代选择器 -->
+    <div class="nav">
+        <ul>
+            <li><a href="#">百度</a></li>
+            <li><a href="#">必应</a></li>
+        </ul>
+    </div>
+    <!-- 子元素选择器 -->
+     <div class="hot">
+        <a href="#">郭子玘</a>
+        <ul>
+            <li><a href="#">端水</a></li>
+            <li><a href="#">利用</a></li>
+        </ul>
+     </div>
+</body>
+</html>

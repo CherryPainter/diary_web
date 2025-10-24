@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0 user-scalable=no,maximum-scale=1.0,minimum-scale=1.0">
+  <meta name="description" content="零基础也能学前端！本平台提供系统化 HTML、CSS、JavaScript 教程与实战项目，助你成为合格的前端开发者。">
+  <meta name="keywords"
+    content="前端学习平台,在线前端课程,HTML教程,CSS教程,JavaScript入门,前端开发实战,前端工程师学习路线,零基础学前端,Web开发教程,在线编程网站,前端项目练习,前端框架教学,响应式网页设计,前端就业培训,前端学习网站推荐">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./css/Normalize.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <!-- <script src="./js/bootstrap.js"></script> -->
+  <script src="./js/bootstrap.bundle.js"></script>
+  <title>前端开发在线学习平台 | 从入门到项目实战</title>
+</head>
+
+<body>
+  <!-- 头部导航栏 -->
+  <nav class="container-fluid navbar navbar-expand-lg bg-body-tertiary head" style="position: fixed;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="./images/logo.png" alt=""></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">首页</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              课程
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">HTML5+CSS3从基础到入门</a></li>
+              <li><a class="dropdown-item" href="#">Javascript全图解</a></li>
+              <li><a class="dropdown-item" href="#">JAVA从项目到实战</a></li>
+              <li><a class="dropdown-item" href="#">C++</a></li>
+              <li><a class="dropdown-item" href="#">C语言</a></li>
+              <li><a class="dropdown-item" href="#">Python</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">其他热门课程</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">专业规划</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="请输入课程内容" aria-label="Search">
+          <button class="btn btn-outline-success searchs" type="submit"></button>
+        </form>
+        <button type="button" class="btn btn-outline-primary margin">登录</button>
+        <button type="button" class="btn btn-outline-secondary margin ms-2">注册</button>
+      </div>
+    </div>
+  </nav>
+  <!-- 轮播图模块 -->
+  <div class="diagram">
+    <div id="carouselExampleIndicators" class="carousel slide times">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+          aria-label="Slide 4"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="./images/banner01.png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./images/banner02.png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./images/banner03.png" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="./images/banner04.png" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <!-- 迷你导航栏 -->
+    <div class="mininav container container-fluid pt-3">
+      <div class="nav-item"></div>
+      <div class="nav-item">
+        <div class="bg"></div>
+        <h5 class="d-none d-sm-none d-md-none d-lg-block">学习文档</h5>
+      </div>
+      <div class="nav-item">
+        <div class="bg"></div>
+        <h5 class="d-none d-sm-none d-md-none d-lg-block">示例代码</h5>
+      </div>
+      <div class="nav-item">
+        <div class="bg"></div>
+        <h5 class="d-none d-sm-none d-md-none d-lg-block">帮助文档</h5>
+      </div>
+      <div class="nav-item">
+        <div class="bg"></div>
+        <h5 class="d-none d-sm-none d-md-none d-lg-block">练习题库</h5>
+      </div>
+      <div class="nav-item">
+        <div class="bg"></div>
+        <h5 class="d-none d-sm-none d-md-none d-lg-block">社区支持</h5>
+      </div>
+      <div class="nav-item"></div>
+    </div>
+  </div>
+  <!-- 视频教程模块 -->
+  <div class="videoTutorial container-fluid">
+    <h2 class="pt-5">视频教程</h2>
+    <p class="pt-3 pb-4 text container">解锁技能的钥匙,学无止境的奇迹! &nbsp;&nbsp;<i>前往学习→</i></p>
+    <div class="main container ">
+      <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 row-cols-sm-3 g-3 renderBox">
+        <!-- 参考结构 -->
+        <!-- <div class="col">
+          <div class="card h-100">
+            <img src="./images/course01.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text text-truncate">JavaScript数据看板项目实战</p>
+              <div class="info">
+                <span>高级</span> • <span>3306</span>人在学习
+              </div>
+            </div>
+          </div>
+        </div>-->
+
+      </div>
+    </div>
+  </div>
+  <!-- 学习路线模块 -->
+  <div class="learningRoute ">
+    <h2 class="pt-4">学习路线</h2>
+    <p class="pt-3 pb-4 text2">踏上新征程,探索知识的宝藏!</p>
+    <ul class="navbars container-fluid container">
+      <li class="navbars-item pb-4 actives">
+        <a class="icon" data-id="JavaEE" href="#"></a>
+        <span class="pt-3" data-id="JavaEE">Java EE</span>
+      </li>
+      <li class="navbars-item pb-4">
+        <a class="icon" data-id="前端开发" href="#"></a>
+        <span class="pt-3" data-id="前端开发">前端开发</span>
+      </li>
+      <li class="navbars-item pb-4">
+        <a class="icon" data-id="大数据" href="#"></a>
+        <span class="pt-3" data-id="大数据">大数据</span>
+      </li>
+      <li class="navbars-item pb-4">
+        <a class="icon" data-id="人工智能" href="#"></a>
+        <span class="pt-3" data-id="人工智能">人工智能</span>
+      </li>
+      <li class="navbars-item pb-4">
+        <a class="icon" data-id="UI设计" href="#"></a>
+        <span class="pt-3" data-id="UI设计">UI设计</span>
+      </li>
+      <li class="navbars-item pb-4">
+        <a class="icon" data-id="软件测试" href="#"></a>
+        <span class="pt-3" data-id="软件测试">软件测试</span>
+      </li>
+      <li class="navbars-item pb-4">
+        <a class="icon" data-id="产品经理" href="#"></a>
+        <span class="pt-3" data-id="产品经理">产品经理</span>
+      </li>
+      <li class="navbars-item pb-4">
+        <a class="icon" data-id="新媒体" href="#"></a>
+        <span class="pt-3" data-id="新媒体">新媒体</span>
+      </li>
+    </ul>
+    <!-- 学习路线主体内容 -->
+    <div class="navbars-contain mt-4 container">
+      <div class=" row g-2 row-cols-1 row-cols-md-2 row-cols-lg-3 renderList pb-5">
+        <!-- 参考结构 -->
+        <!-- <div class="box-list col ">
+          <div class="left">
+            <h5 class="list-title">Java基础</h5>
+            <span class="list-contain">Java基本用法</span>
+            <span class="list-contain">Java面向对象</span>
+            <span class="list-contain">集合技术&l/O技术</span>
+            <span class="list-contain">JDK的新特性&基础加强</span>
+            <span class="list-contain">XML配置解析技术</span>
+          </div>
+          <div class="right">
+            <div class="num">01</div>
+          </div>
+        </div> -->
+
+      </div>
+    </div>
+  </div>
+  <!-- 热门学习工具模块 -->
+  <div class="learningTools mt-4 pb-5">
+    <h2 class="pt-4">热门学习工具</h2>
+    <p class="pt-3 pb-4 text2">引领学习新时代的热门学习工具!</p>
+    <div class="containTools container">
+      <!-- 参考数据 -->
+      <!-- <div class="tools">
+        <div class="imgs">
+          <img src="./images/tools3.jpg" alt="">
+        </div>
+        <div class="about ms-3">
+          <h5>MyEclipse</h5>
+          <p>MyEclipse企业级工作平台(MyEclipse Enterprise Workbench,简称MyEnlipse)是对Eclipse IDE的扩展，利用它我们可以在数据库和Java
+            EE的开发、发布以及应用程序服务器的整合方面极大地提高工作效率。</p>
+          <button type="button" class="btn btn-warning">立即下载</button>
+          <button ype="button" class="btn btn-light btn-sm mx-4 text-secondary">JavaEE</button>
+          <button ype="button" class="btn btn-light btn-sm text-secondary">3000人已下载</button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <!-- 版权页模块 -->
+  <footer class="footer mt-3">
+    <div class="container pt-5 pb-5">
+      <div class="row">
+        <div class="col-12 col-lg-5 padings">
+          <img src="./images/logo.png" alt="">
+          <p>在线学习平台是一种通过互联网提供教育和学习资源的平台,它为学生和教育者提供了便利的方式来获取和交流知识。</p>
+          <p>© 2023年 保留所有权利。-沪ICP备xxxxx号</p>
+          <button type="button" class="btn btn-outline-primary mb-4">下载APP</button>
+        </div>
+        <dl class="col d-none d-md-block d-lg-block d-xl-block"></dl>
+        <dl class="col">
+          <dt>关于我们</dt>
+          <dd>关于</dd>
+          <dd>管理团队</dd>
+          <dd>工作机会</dd>
+          <dd>客户服务</dd>
+          <dd>帮助</dd>
+        </dl>
+        <dl class="col">
+          <dt>新手指南</dt>
+          <dd>如何注册</dd>
+          <dd>如何选择</dd>
+          <dd>学分是什么</dd>
+          <dd>考试未通过怎么办</dd>
+          <dd>如何拿到毕业证</dd>
+        </dl>
+        <dl class="col">
+          <dt>合作伙伴</dt>
+          <dd>合作机构</dd>
+          <dd>合作导师</dd>
+        </dl>
+      </div>
+    </div>
+  </footer>
+  <script src="./js/index.js"></script>
+</body>
+
+
+</html>

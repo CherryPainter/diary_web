@@ -1,0 +1,68 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 20px;
+}
+
+h1 {
+  color: rgb(110, 168, 249);
+}
+
+hr {
+  border: 3px solid rgb(110, 168, 249);
+}
+
+.select {
+  width: 800px;
+  height: 200px;
+  margin: 50px auto;
+  padding: 40px 0 0 80px;
+  box-shadow: 3px 3px 40px rgba(0, 0, 0, 0.2);
+}
+
+.select label {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.select input {
+  width: 700px;
+  height: 30px;
+  font-size: 18px;
+  padding: 5px;
+  margin-top: 20px;
+}
+
+.select .search {
+  width: 714px;
+  height: 40px;
+  font-size: 16px;
+  margin-top: 20px;
+  background-color: rgb(110, 168, 249);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.result {
+  width: 800px;
+  margin: 50px auto;
+  box-shadow: 3px 3px 40px rgba(0, 0, 0, 0.2);
+}
+
+.result h2 {
+  background-color: rgb(110, 168, 249);
+  color: white;
+  padding: 10px 20px;
+  margin: 0;
+}
+
+.result .main {
+  padding: 20px;
+  font-size: 18px;
+}
+
+.result .main p:nth-child(-n + 4) {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}

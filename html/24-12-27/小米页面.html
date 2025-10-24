@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小米页面浮动</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        section{
+            background-color: pink;
+            width: 1200px;
+            height: 460px;
+
+        }
+        a{
+            text-decoration: none;
+            color: white;
+            background-color: rgba(0,0,0,.5);
+            display: block;
+            width: 300px;
+            height: 46px;
+            text-indent: 2em;
+            line-height: 46px;
+        }
+        a:hover{
+            background-color: orange;
+        }
+        .left{
+            float: left;
+        }
+        .right{
+            float: left;
+            background-color: rgb(135, 193, 135);
+            height: 460px;
+            width: 900px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="left">
+            <a href="#">手机 电话卡</a>
+            <a href="#">电视 盒子</a>
+            <a href="#">笔记本 平板</a>
+            <a href="#">家电 插线板</a>
+            <a href="#">出行 穿戴</a>
+            <a href="#">智能 路由器</a>
+            <a href="#">电源 配件</a>
+            <a href="#">健康 儿童</a>
+            <a href="#">耳机 音箱</a>
+            <a href="#">生活 箱包</a>
+        </div>
+        <div class="right"></div>
+    </section>
+</body>
+</html>

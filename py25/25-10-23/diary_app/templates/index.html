@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}我的日记 - 日记管理系统{% endblock %}
+{% block content %}
+<div class="list-header">
+  <h1>我的日记</h1>
+  <a class="btn primary" href="{{ url_for('diary.create_entry') }}">新建日记</a>
+</div>
+
+{% if diaries %}
+  <ul class="entries">
+    {% for e in diaries %}
+      <li class="entry" id="entry-{{ e.id }}">
+        <div class="entry-title">{{ e.title }}</div>
+        <div class="entry-meta">创建于 {{ e.created_at.strftime('%Y-%m-%d %H:%M') }} | 更新于 {{ e.updated_at.strftime('%Y-%m-%d %H:%M') }}</div>
+        <div class="entry-content">{{ e.content }}</div>
+        <div class="entry-actions">
+          <a class="btn" href="{{ url_for('diary.edit_entry', entry_id=e.id) }}">编辑</a>
+          <form method="post" action="{{ url_for('diary.delete_entry', entry_id=e.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn danger" type="submit" onclick="return confirm('确定要删除该日记吗？')">删除</button>
+          </form>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="pagination">
+    {% if pagination.has_prev %}
+      <a class="btn" href="{{ url_for('diary.diary_list', page=pagination.prev_num) }}">上一页</a>
+    {% endif %}
+    <span>第 {{ pagination.page }} / {{ pagination.pages }} 页</span>
+    {% if pagination.has_next %}
+      <a class="btn" href="{{ url_for('diary.diary_list', page=pagination.next_num) }}">下一页</a>
+    {% endif %}
+  </div>
+{% else %}
+  <p>暂无日记，点击“新建日记”开始书写吧！</p>
+{% endif %}
+{% endblock %}

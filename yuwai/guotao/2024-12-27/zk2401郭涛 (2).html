@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zk2401郭涛</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: block;
+            height:0;
+            visibility: hidden;
+            clear: both;
+        }
+
+        nav {
+            height: 80px;
+            width: 1200px;
+            background-color: skyblue;
+        }
+        
+        nav div{
+            float:left;
+            width: 200px;
+            height: 80px;
+            background-color: rgb(55, 122, 255);
+            margin-left: 20px;
+            text-align:center;
+            line-height: 80px;
+        }
+        
+        nav ul li{
+            float:right;
+            list-style: none;
+            background-color: #fdc9c9;
+            height: 80px;
+            width: 11%;
+            text-align: center;
+            line-height: 80px;
+            border-right: 1px solid #000;
+        }
+
+        section{
+            width: 1200px;
+        }
+
+        section li {
+            float:left;
+            list-style: none;
+            width: 25%;
+            height: 220px; 
+            background-color: greenyellow;
+            border: 5px solid #fff;
+        }
+    
+        section li:nth-of-type(1) {
+            width:50%;
+            height:440px;
+        }
+    
+        .two_clearfix div{
+            width: 1200px;
+            height: 400px;
+            background-color: rgb(161, 248, 212);
+        }
+    
+        footer {
+            background-color: rgb(203, 160, 245);
+            height: 80px;
+            width: 1200px;
+            position: relative;
+            clear: both;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div>logo</div>
+         <ul>
+                <li>li</li>
+                <li>li</li>
+                <li>li</li>
+                <li>li</li>
+                <li>li</li>
+            </ul>
+    </nav>
+    <section>
+        <ul class="clearfix">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </section>
+    <section class="two_clearfix">
+       <div></div>
+    </section>
+    <footer></footer>
+</body>
+</html>

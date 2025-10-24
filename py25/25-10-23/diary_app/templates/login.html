@@ -1,0 +1,102 @@
+{% extends 'auth_base.html' %}
+
+{% block title %}登录 - 日记管理系统{% endblock %}
+
+{% block auth_content %}
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1 class="auth-title">欢迎回来</h1>
+      <p class="auth-subtitle">请输入您的账号信息</p>
+    </div>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="{{ 'success-message' if category == 'success' else 'error-message' }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    {% if security_question %}
+    <!-- 账户解锁表单 -->
+    <div class="lock-form">
+      <h4 class="lock-title">验证安全问题</h4>
+      <p class="lock-description">您的账户已被临时锁定，请回答安全问题解锁</p>
+      
+      <form id="unlock-form" method="POST">
+        <input type="hidden" name="unlock" value="true">
+        <input type="hidden" name="username" value="{{ session['locked_username'] }}">
+        
+        <div class="form-group">
+          <label for="security_answer">安全问题：{{ security_question }}</label>
+          <input type="text" id="security_answer" name="security_answer" 
+                 class="form-control" placeholder="请输入答案" required>
+        </div>
+        
+        <button type="submit" id="unlock-submit" class="btn-primary">
+          验证并解锁
+        </button>
+      </form>
+    </div>
+    {% else %}
+    <!-- 登录表单 -->
+    <form id="login-form" method="POST">
+      {{ form.hidden_tag() }}
+      
+      <!-- 用户名输入框 -->
+      <div class="form-group">
+        <label for="username">用户名</label>
+        {{ form.username(id='username', class="form-control" + (' is-invalid' if form.username.errors else ''), 
+               placeholder="用户名", autocomplete='username', autofocus=true) }}
+        {% if form.username.errors %}
+          <span class="error-message">
+            {% for error in form.username.errors %}{{ error }}{% endfor %}
+          </span>
+        {% endif %}
+      </div>
+      
+      <!-- 密码输入框 -->
+      <div class="form-group">
+        <label for="password">密码</label>
+        {{ form.password(id='password', class="form-control" + (' is-invalid' if form.password.errors else ''), 
+               placeholder="密码", autocomplete='current-password') }}
+        <button type="button" id="togglePassword" class="toggle-password">
+          <i class="bi bi-eye"></i>
+        </button>
+        {% if form.password.errors %}
+          <span class="error-message">
+            {% for error in form.password.errors %}{{ error }}{% endfor %}
+          </span>
+        {% endif %}
+      </div>
+      
+      <!-- 记住我选项 -->
+      <div class="remember-me">
+        {{ form.remember(id='remember') }}
+        <label for="remember">记住我</label>
+      </div>
+      
+      <!-- 登录按钮 -->
+      <button type="submit" id="login-submit" class="btn-primary">
+        <span id="login-text">登录</span>
+        <span id="login-spinner" class="loading-spinner">
+          <i class="bi bi-arrow-repeat"></i>
+        </span>
+      </button>
+      
+      <!-- 链接容器 -->
+      <div class="auth-links">
+        <a href="{{ url_for('auth.forgot_password') }}">忘记密码？</a>
+        <div class="divider">或</div>
+        <a href="{{ url_for('auth.register') }}">立即注册</a>
+      </div>
+    </form>
+    {% endif %}
+    
+    <div class="auth-footer">
+      &copy; 2025 日记管理系统
+    </div>
+  </div>
+{% endblock %}

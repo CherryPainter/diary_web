@@ -1,0 +1,86 @@
+:root {
+  	--brand-primary: #266FCB;
+}
+
+:root {
+	/* \u9876\u90e8\u5bfc\u822a\u680f\u80cc\u666f\u8272 */
+  	--brand-theme-color: #1b5693;
+}
+
+:root {
+	--opacity-5: rgba(38, 111, 203, .05);
+}
+
+:root {
+	--opacity-10: rgba(38, 111, 203, .1);
+}
+
+:root {
+	--opacity-15: rgba(38, 111, 203, .15);
+}
+
+:root {
+	--opacity-20: rgba(38, 111, 203, .2);
+}
+
+:root {
+	--opacity-25: rgba(38, 111, 203, .25);
+}
+
+:root {
+	--opacity-30: rgba(38, 111, 203, .3);
+}
+
+:root {
+	--opacity-35: rgba(38, 111, 203, .35);
+}
+
+:root {
+	--opacity-40: rgba(38, 111, 203, .4);
+}
+
+:root {
+	--opacity-45: rgba(38, 111, 203, .45);
+}
+
+:root {
+	--opacity-50: rgba(38, 111, 203, .5);
+}
+
+:root {
+	--opacity-55: rgba(38, 111, 203, .55);
+}
+
+:root {
+	--opacity-60: rgba(38, 111, 203, .6);
+}
+
+:root {
+	--opacity-65: rgba(38, 111, 203, .65);
+}
+
+:root {
+	--opacity-70: rgba(38, 111, 203, .7);
+}
+
+:root {
+	--opacity-75: rgba(38, 111, 203, .75);
+}
+
+:root {
+	--opacity-80: rgba(38, 111, 203, .8);
+}
+
+:root {
+	--opacity-85: rgba(38, 111, 203, .85);
+}
+
+:root {
+	--opacity-90: rgba(38, 111, 203, .9);
+}
+
+:root {
+	--opacity-95: rgba(38, 111, 203, .95);
+}
+
+

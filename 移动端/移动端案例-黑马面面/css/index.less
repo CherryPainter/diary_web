@@ -1,0 +1,65 @@
+@import 'common';
+@baseFont:37.5;
+.warp{
+  background-color: #fff;
+  padding-bottom: (100rem / @baseFont);
+}
+// 头部
+.head{
+  height: (80rem / @baseFont);
+  border-bottom: 1px solid #eaeaea;
+  text-align: center;
+  line-height: (80rem / @baseFont);
+  font-size: (35rem / @baseFont);
+}
+// 导航栏
+.nav{
+  display: flex;
+  flex-wrap: wrap;
+  .item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33.33%;
+    margin: (45rem / @baseFont) 0 (60rem / @baseFont) 0;
+    img{
+      width: (139rem / @baseFont);
+      height: (139rem / @baseFont);
+    }
+    span{
+      font-size:  (25rem / @baseFont);
+    }
+  }
+}
+// go模块
+.go{
+  margin: 0 (10rem / @baseFont) 0 (18rem / @baseFont);
+  img{
+    width: 100%;
+  }
+}
+.content{
+  padding: (40rem / @baseFont) (24rem / @baseFont);
+  background-color: #fff;
+  margin-top: (10rem / @baseFont);
+  .con-hd{
+    display: flex;
+    justify-content: space-between;
+    height:(38rem / @baseFont);
+    border: 0;
+    h4{
+      margin: 0;
+      font-size: (28rem / @baseFont);
+      color: #333;
+      .icon{
+        display: inline-block;
+        width: (38rem / @baseFont);
+        height: (38rem / @baseFont);
+      }
+    }
+    .more{
+      font-size: (22rem / @baseFont);
+      color: #999;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.modal-backdrop{
+    background-color: transparent!important;
+}
+
+.shortcut-setting{
+    background-color: transparent;
+    color: white;
+}
+
+.view {
+    background-color: white;
+    margin: 5px;
+}
+
+.view .destroy {
+    padding: 0;
+    float: right;
+    color: red;
+    text-align: right;
+    cursor: pointer;
+}
+
+.modalMenu {
+    margin: 10px;
+    height: 400px;
+    overflow-y: auto;
+}
+
+#selectedShortcut {
+    background-color: #e4e4e4;
+}
+
+.modal-lg {
+    width: 900px;
+}
+
+.view label {
+    list-style-type: none;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}

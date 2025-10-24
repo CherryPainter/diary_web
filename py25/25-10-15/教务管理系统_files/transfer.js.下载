@@ -1,0 +1,234 @@
+(function($){
+
+
+  $.fn.transferItem = function(){
+        function transferItem($this){
+            this.init($this)
+        }
+
+        transferItem.prototype = {
+            init: function($this){
+                this.el = $this;
+                this.transferAllCheck = this.el.find(".transfer-all-check");
+                this.switchBtn = this.el.find(".to-switch");
+                this.allCheckedBoxes = this.el.find(".tyue-checkbox-input");
+                this.alldivBoxes = this.el.find(".ty-tree-div");
+                
+                this.checkBoxEvent();
+                this.allCheckEvent();
+                this.switchEvent();
+                this.checkBoxesDbClick();
+                time = null;
+            },
+            //\u6309\u94ae\u5207\u6362\u4e8b\u4ef6
+            switchEvent : function(){
+                var that = this;
+                this.switchBtn.on("click",function(){
+                    that.transferAllCheck.removeAttr("checked","checked");
+                    var _this = $(this);
+                    
+                    var a_tagClass = null;
+                    if(_this.hasClass("ty-transfer-btn-toright")){
+                        findCheckbox = _this.parents(".ty-transfer").find(".transfer-list-left li");
+                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list-right ul");
+                        a_tagClass = "ty-transfer-btn-toright";
+                    }else{
+                        findCheckbox = _this.parents(".ty-transfer").find(".transfer-list-right li");
+                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list-left ul");
+                        a_tagClass = "ty-transfer-btn-toleft";
+                    }
+                    
+                    var checkBox = findCheckbox.find(":checked");
+                        if(checkBox != 0){
+                            var arrVal = [];
+                            checkBox.each(function(){
+                            	if($(this).hasClass("tyue-checkbox-input-tag")){
+                            		return;
+                            	}
+                                $(this).removeAttr("checked");
+                                var appendText = $(this).parents(".ty-tree-div").parent("li");                         
+                                arrVal.push(appendText);
+                                that.removeActiveEvent(a_tagClass,"active");
+                                that.addActiveEvent(a_tagClass,"disabled"); 
+                                // \u67e5\u8be2\u540c\u7ea7input\u9690\u85cf\u6846,\u5e76\u6839\u636e\u79fb\u52a8\u5de6\u53f3\u6765\u6dfb\u52a0\u548c\u53bb\u9664checked
+                                var tagInpt = $(this).siblings(".tyue-checkbox-input-tag");                     
+                                if(_this.hasClass("ty-transfer-btn-toright")){
+                                	tagInpt.prop("checked","checked")
+                                } else {
+                                	tagInpt.removeAttr("checked","checked");
+                                }
+                            });
+                            inputCheckbox.prepend(arrVal);
+                      }
+
+                })
+            },
+
+            //\u6240\u6709\u6807\u7b7e\u5355\u51fb\u9009\u4e2d\u4e8b\u4ef6
+            checkBoxEvent : function(){
+                var that = this;
+                this.allCheckedBoxes.on("click",function(){
+                    clearTimeout(time);
+                    time = setTimeout(function(){
+                        var classNames = that.checkTagClass($(this));
+                        if($(this).is(":checked")){           
+                            that.removeActiveEvent(classNames[0],"disabled");
+                            that.addActiveEvent(classNames[0],"active");
+                            if(!$("."+classNames[1]).hasClass("active")){
+                                that.addActiveEvent(classNames[1],"disabled");
+                             } 
+                        }else{
+                            var siblingsTag = $(this).parents(".ty-tree-div").parent("li").siblings("li").find(".tyue-checkbox-input");
+                            if(!siblingsTag.is(":checked")){
+                                that.removeActiveEvent(classNames[0],"active");
+                                that.addActiveEvent(classNames[0],"disabled");
+                                $(this).parents(".ty-transfer").find(".transfer-all-check").removeAttr("checked","checked")
+                            }
+                        }
+                    }.bind(this),200);
+
+                });     
+            },
+
+               //\u6240\u6709\u6309\u94ae\u53cc\u51fb\u4e8b\u4ef6
+            checkBoxesDbClick : function(){
+                var that = this;
+
+                this.alldivBoxes.bind("dblclick",function(event){
+               	    clearTimeout(time);
+               	    time = setTimeout(function(){
+	                    var _this = $(this);
+	                    $(this).removeAttr("checked");
+	
+	                    if(_this.parents(".ty-transfer-list").hasClass("transfer-list-left")){
+	                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list-right ul");
+	                        btnCheckbox = that.el.find(".ty-transfer-btn-toright");
+	                    }else{
+	                        inputCheckbox = _this.parents(".ty-transfer").find(".transfer-list-left ul");
+	                        btnCheckbox = that.el.find(".ty-transfer-btn-toleft");
+	                    }
+	        
+	                    var siblingsTag = _this.parent("li").siblings("li").find(".tyue-checkbox-input");
+	                    if(!siblingsTag.is(":checked")){
+	                        btnCheckbox.removeClass("active");
+	                    }
+	                    
+	
+	                    var appendText = _this.parent("li");
+	
+	                    // \u53cc\u51fb\u540e\u6839\u636e\u5de6\u53f3\u4fa7\u4f4d\u7f6e\u6765\u6dfb\u52a0\u53d6\u6d88checked\u6807\u5fd7
+	                    if(_this.parents(".ty-transfer-list").hasClass("transfer-list-left")){
+	                    	appendText.find(".tyue-checkbox-input-tag").prop("checked","checked");
+	                    }else{
+	                    	appendText.find(".tyue-checkbox-input-tag").removeAttr("checked","checked");
+	                    }
+	
+	                    inputCheckbox.prepend(appendText);
+	                    appendText.find(".tyue-checkbox-input").removeAttr("checked");
+                    }.bind(this),200);
+                });
+            },
+           
+            //\u5168\u9009\u6309\u94ae\u4e8b\u4ef6
+            allCheckEvent : function(){
+                var that = this;
+                this.transferAllCheck.on("click",function(){
+                    var checkBoxs = $(this).parents(".ty-transfer-list-head").siblings(".ty-transfer-list-body").find(":checkBox");
+                    
+                    var classNames = that.checkTagClass($(this));
+
+                    if($(this).prop("checked") == true){
+                        checkBoxs.prop("checked","checked");
+                        that.removeActiveEvent(classNames[0],"disabled");
+                        that.addActiveEvent(classNames[0],"active");
+                        if(!$("."+classNames[1]).hasClass("active")){
+                            that.addActiveEvent(classNames[1],"disabled");
+                         }               
+                    }else{
+                        checkBoxs.removeAttr("checked","checked");
+                        that.removeActiveEvent(classNames[0],"active");
+                        that.addActiveEvent(classNames[0],"disabled");
+                    }
+                })
+            },
+            //\u6309\u94ae\u6dfb\u52a0class\u4e8b\u4ef6
+            checkTagClass : function($that){
+                var parentsTransfer = $that.parents(".ty-transfer-list");
+                    var tagClass = null;
+                    var tagRemoveClass = null;
+
+                    if(parentsTransfer.hasClass("transfer-list-left")){
+                        tagClass = "ty-transfer-btn-toright"
+                        tagRemoveClass = "ty-transfer-btn-toleft";
+                    }else{
+                        tagClass = "ty-transfer-btn-toleft"
+                        tagRemoveClass = "ty-transfer-btn-toright";
+                    }
+                    return [tagClass,tagRemoveClass];
+            },
+            addActiveEvent : function(position,addClasses){
+                this.el.find("."+position).addClass(addClasses);
+            },
+            removeActiveEvent : function(position,addClasses){
+                this.el.find("."+position).removeClass(addClasses);
+            },
+
+        }
+
+        new transferItem(this)
+  }
+
+  /*
+    * \u7a7f\u68ad\u6846 end
+    */
+
+
+
+})(jQuery);
+
+
+
+//-----------------------------\u6b64\u5904jquery \u63d2\u4ef6 \u7ed3\u675f \u4e0b\u9762\u4e3a\u514d\u8c03\u7528\u5168\u5c40\u65b9\u6cd5---------------------------------
+
+
+jQuery(document).ready(function(jQuery) {
+
+  
+    /*
+     * \u81ea\u5b9a\u4e49\u5217\u7684\u529f\u80fd////////////////////////////////////////////////////////////////////////////////
+     * */
+
+   
+    /*
+    * \u6309\u94ae\u70b9\u51fb start
+    * */
+
+    $(".btn").click(function(){
+        //\u4e3b\u6309\u94ae\u70b9\u51fb\u540e \u6837\u5f0f
+        var _this = $(this);
+        _this.addClass("ued-btn-clicked");
+        setTimeout(function(){
+             _this.removeClass("ued-btn-clicked");
+         },300);
+
+        /*if($(this).hasClass("main-btn-active")){
+            $(this).css("background","#7AC7F8")
+        }else if($(this).hasClass("secondary-btn-active")){
+        
+        }*/
+        //\u5224\u65ad\u662f\u5426\u6709\u81ea\u5b9a\u4e49\u5c5e\u6027\u6539\u53d8\u6587\u672c
+        if($.type($(this).attr('data-text')) != "undefined")
+        {
+            var datatext = $(this).attr("data-text");
+            $(this).text(datatext);
+        }
+    });
+
+    
+    
+
+});
+
+
+
+

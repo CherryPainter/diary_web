@@ -1,0 +1,330 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot?nl3xwq');
+  src: url('../fonts/icomoon.eot?nl3xwq#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?nl3xwq') format('truetype'), url('../fonts/icomoon.woff?nl3xwq') format('woff'), url('../fonts/icomoon.svg?nl3xwq#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+body {
+  background-color: #F3F5F7 !important;
+}
+.head {
+  z-index: 10;
+  background-color: #FFF5E2;
+  border-radius: 0 0 5% 5%;
+}
+.head .font {
+  color: #643522;
+  font-size: 1.5rem;
+}
+.head .searchs {
+  background-color: #643522;
+  width: 20px;
+  height: 34px;
+  border-radius: 10%;
+  margin: 1px 15px 0 -10px;
+}
+.head .searchs::after {
+  content: '\e906';
+  font-family: icomoon;
+  color: #fff;
+  margin-left: -7px;
+}
+.head .searchs:hover {
+  background-color: #FFDFBB;
+}
+.head [type="search"] {
+  margin-bottom: 10px;
+  width: 20rem;
+}
+.head .margin2 {
+  margin-left: 4px;
+}
+.head .margin,
+.head .margin2 {
+  height: 30px;
+  width: 50px;
+  padding: 5px;
+  line-height: 15px;
+  margin-bottom: 10px;
+}
+.banner {
+  display: flex;
+  padding-top: 70px;
+  height: 700px;
+  width: 100%;
+  background-color: #FFDFBB;
+}
+.banner .left {
+  flex: 2;
+  background-color: #FFDDB6;
+}
+.banner .left h2 {
+  display: inline-block;
+  font-size: 7rem;
+  color: #6A381D;
+  margin-left: 40px;
+  width: 500px;
+}
+.banner .right {
+  flex: 1;
+  background: url(../images/图层\ 11.png) no-repeat;
+  background-size: cover;
+}
+.diagram {
+  background-color: #fff;
+  padding-top: 100px;
+}
+.diagram .btn {
+  margin-bottom: 80px;
+}
+.diagram .post {
+  margin-bottom: 63px;
+}
+.diagram .mininav {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+}
+.diagram .mininav .nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+.diagram .mininav .nav-item:nth-child(2) .bg {
+  background: url(../images/pic.png) no-repeat;
+}
+.diagram .mininav .nav-item:nth-child(3) .bg {
+  background: url(../images/pic.png) no-repeat;
+  background-position: -41px 0px;
+}
+.diagram .mininav .nav-item:nth-child(4) .bg {
+  background: url(../images/pic.png) no-repeat;
+  background-position: -81px 0px;
+}
+.diagram .mininav .nav-item:nth-child(5) .bg {
+  background: url(../images/pic.png) no-repeat;
+  background-position: -121px 0px;
+}
+.diagram .mininav .nav-item:nth-child(6) .bg {
+  background: url(../images/pic.png) no-repeat;
+  background-position: -160px 0px;
+}
+.diagram .mininav .nav-item .bg {
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 7px;
+}
+.diagram .mininav .nav-item h5 {
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-left: 1rem;
+}
+.videoTutorial {
+  background-color: #fff;
+  margin-top: 1.5rem;
+  padding-bottom: 3.5rem;
+}
+.videoTutorial h2,
+.videoTutorial .text {
+  text-align: center;
+}
+.videoTutorial h2 {
+  font-weight: 530;
+  font-size: 1.8rem;
+}
+.videoTutorial .text {
+  font-weight: 400;
+  font-size: 1rem;
+}
+.videoTutorial .text i {
+  font-style: normal;
+  color: red;
+}
+.videoTutorial .main .col {
+  position: relative;
+  top: 0;
+  transition: all 0.5s;
+}
+.videoTutorial .main .col:hover {
+  top: -8px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+.videoTutorial .main .col .card img {
+  border-radius: 4%;
+}
+.videoTutorial .main .col .info {
+  font-size: 12px;
+  color: #999;
+}
+.videoTutorial .main .col .info span {
+  color: #ff7c2d;
+}
+.learningRoute {
+  margin-top: 1.4rem;
+  background-color: #fff;
+}
+.learningRoute h2,
+.learningRoute .text2 {
+  text-align: center;
+}
+.learningRoute h2 {
+  font-weight: 530;
+  font-size: 1.8rem;
+}
+.learningRoute .text2 {
+  font-weight: 400;
+  font-size: 1.3rem;
+}
+.learningRoute .navbars {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-bottom: 1px solid #CDCDCD;
+}
+.learningRoute .navbars .navbars-item {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  flex-shrink: 0;
+  margin: 0 30px;
+}
+.learningRoute .navbars .navbars-item:hover {
+  color: #FF0000;
+  border-bottom: 3px solid #E81716;
+}
+.learningRoute .navbars .navbars-item .icon {
+  width: 50px;
+  height: 60px;
+}
+.learningRoute .navbars .navbars-item span {
+  cursor: pointer;
+}
+.learningRoute .navbars .navbars-item:first-child .icon {
+  background: url(../images/anijavaee.png) no-repeat -15px -11px;
+  background-size: 75px auto;
+}
+.learningRoute .navbars .navbars-item:nth-child(2) .icon {
+  background: url(../images/aniweb.png) no-repeat -15px -11px;
+  background-size: 75px auto;
+}
+.learningRoute .navbars .navbars-item:nth-child(3) .icon {
+  background: url(../images/anipython.png) no-repeat -15px -11px;
+  background-size: 75px auto;
+}
+.learningRoute .navbars .navbars-item:nth-child(4) .icon {
+  background: url(../images/aniai.png) no-repeat -15px -11px;
+  background-size: 75px auto;
+}
+.learningRoute .navbars .navbars-item:nth-child(5) .icon {
+  background: url(../images/aniui.png) no-repeat -15px -11px;
+  background-size: 75px auto;
+}
+.learningRoute .navbars .navbars-item:nth-child(6) .icon {
+  background: url(../images/anitest.png) no-repeat -15px -11px;
+  background-size: 75px auto;
+}
+.learningRoute .navbars .navbars-item:nth-child(7) .icon {
+  background: url(../images/anipm.png) no-repeat -15px -11px;
+  background-size: 75px auto;
+}
+.learningRoute .navbars .navbars-item:last-child .icon {
+  background: url(../images/anixmt.png) no-repeat -15px -11px;
+  background-size: 75px auto;
+}
+.learningRoute .navbars-contain .box-list {
+  display: flex;
+  height: 11rem;
+  text-align: center;
+}
+.learningRoute .navbars-contain .box-list .left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0 3px 10px rgba(153, 153, 153, 0.3);
+}
+.learningRoute .navbars-contain .box-list .left .list-title {
+  flex: 1;
+  padding-top: 1rem;
+  color: #E81716;
+}
+.learningRoute .navbars-contain .box-list .left .list-contain {
+  flex: 5;
+  font-size: 1rem;
+  color: gray;
+}
+.learningRoute .navbars-contain .box-list .right {
+  position: relative;
+  flex: 1;
+  background-color: #fff;
+  box-shadow: 3px 3px 10px rgba(153, 153, 153, 0.3);
+  border-left: 2px dashed #b8b1b1;
+}
+.learningRoute .navbars-contain .box-list .right .num {
+  text-align: center;
+  margin-top: 50px;
+  color: #E92322;
+  font-size: 3rem;
+  font-weight: bold;
+}
+.learningRoute .navbars-contain .box-list .right::after {
+  position: absolute;
+  top: -9px;
+  left: -12px;
+  display: inline-block;
+  content: '';
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: #f4f3f3;
+  border-radius: 50%;
+  box-shadow: 0 -1px 5px hsl(0, 2%, 65%) inset;
+}
+.learningRoute .navbars-contain .box-list .right::before {
+  position: absolute;
+  top: 164px;
+  left: -12px;
+  display: inline-block;
+  content: '';
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: #f4f3f3;
+  border-radius: 50%;
+  box-shadow: 0 1px 5px hsl(0, 2%, 65%) inset;
+}
+.actives {
+  color: #FF0000;
+  border-bottom: 3px solid #E81716;
+}
+.learningTools {
+  background-color: #fff;
+}
+.learningTools h2 {
+  font-weight: 540;
+  font-size: 1.8rem;
+  text-align: center;
+}
+.learningTools .text2 {
+  font-weight: 400;
+  font-size: 1.4rem;
+  text-align: center;
+}
+.learningTools .containTools .tools {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.footer {
+  background-color: #F8F9FA;
+}
+.footer .col dt {
+  font-weight: normal;
+  font-size: 1.5rem;
+}

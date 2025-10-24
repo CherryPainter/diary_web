@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>简易留言板</title>
+</head>
+
+<body>
+  <h1>简易留言板</h1>
+
+  <div>
+    <textarea id="messageInput" placeholder="请输入留言内容"></textarea>
+    <button onclick="addMessage()">发布留言</button>
+  </div>
+
+  <div id="messageBoard"></div>
+
+  <script>
+    function addMessage() {
+      // 获取输入框的值
+      var messageInput = document.getElementById('messageInput');
+      var messageText = messageInput.value.trim();
+
+      // 检查是否为空
+      if (messageText === '') {
+        alert('请输入留言内容');
+        return;
+      }
+
+      // 创建留言容器
+      var messageDiv = document.createElement('div');
+
+      // 创建留言内容
+      var contentP = document.createElement('p');
+      contentP.textContent = messageText;
+      messageDiv.appendChild(contentP);
+
+      // 创建删除按钮
+      var deleteBtn = document.createElement('button');
+      deleteBtn.textContent = '删除';
+      deleteBtn.onclick = function () {
+        messageDiv.remove();
+      };
+      messageDiv.appendChild(deleteBtn);
+
+      // 添加到留言板
+      document.getElementById('messageBoard').appendChild(messageDiv);
+
+      // 清空输入框
+      messageInput.value = '';
+    }
+  </script>
+</body>
+
+</html>

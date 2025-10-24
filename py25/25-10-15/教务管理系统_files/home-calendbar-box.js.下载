@@ -1,0 +1,264 @@
+var Month_Map_En = {
+	'1':'Jan',
+	'2':'Feb',
+	'3':'Mar',
+	'4':'Apr',
+	'5':'May',
+	'6':'June',
+	'7':'July',
+	'8':'Aug',
+	'9':'Sept',
+	'10':'Oct',
+	'11':'Nov',
+	'12':'Dec',
+};
+	
+	var weekInfoInit = function (){
+		var semesterId = jQuery("#semesterId").val();
+		var map = new Map();
+		
+		jQuery.ajax({
+			async : false,
+			type : "post",
+			url : bg.getContextPath() + "/homeExt!getCalendarInfo.action",
+			data : {semesterId : semesterId},
+			
+			error : function(){},
+			success: function(datas) {
+				map = eval("(" + datas + ")");
+			}
+		});
+		return map;
+	}	
+
+	// \u65f6\u95f4\u63a7\u4ef6js
+	
+	var CalendarBox = Backbone.Model.extend({
+		curDate : null,
+		curYear : null,
+		curMonth : null,
+		curDay : null,
+		curWeekDay : null,
+		dynamicYear : null,
+		dynamicMonth : null,
+		weekInfoMap : weekInfoInit(),
+		
+		initialize : function(){
+			var myDate = new Date();
+			this.curDate = myDate;
+			this.curYear = myDate.getFullYear();
+			this.curMonth = myDate.getMonth();
+			this.curDay = myDate.getDate();
+			this.curWeekDay = myDate.getDay();
+			
+			this.dynamicYear = myDate.getFullYear();
+			this.dynamicMonth = myDate.getMonth();
+			
+		},
+		initTable : function(){
+			var curWeekIndex = jQuery("#curWeekIndex").val();
+			
+			// \u83b7\u53d6\u672c\u6708\u7b2c\u4e00\u5929
+			var myDate = new Date();
+			// \u672c\u6708\u7b2c\u4e00\u5929
+			var monthFirstDay = myDate.setFullYear(this.dynamicYear, this.dynamicMonth, 1);
+			// \u672c\u6708\u7b2c\u4e00\u5929\u662f\u5468\u51e0
+			var firstWeekday = myDate.getDay();
+			if (firstWeekday == 0) {
+				firstWeekday = 7;
+			}
+			
+			var $calendarBoxTbody = $('.calendar-box .content table tbody');
+			$calendarBoxTbody.empty();
+			
+			var html = "";
+			// \u4e0b\u4e2a\u6708\u8865\u4f4d\u65e5\u671f\u7b2c\u4e00\u5929
+			var futureDate = 1;
+			
+			for(var i = 0; i < 6; i++){ // \u5468
+				html += "<tr>";
+				for(var j = 1; j < 8 ; j++){ // \u5929
+					var teachWeek = "";
+					var weekSpan = "weekTd ";
+					
+					// \u5c06\u65e5\u671f\u62fc\u63a5\u4e3ayyyy-MM-dd\u683c\u5f0f
+					// key\uff1a\u6559\u5b66\u5468key\uff1bhKey\uff1a\u8282\u5047\u65e5key
+					var key = myDate.getFullYear() + "-";
+					if (myDate.getMonth() < 9) {
+						key += "0";
+					}
+					key += myDate.getMonth() + 1 + "-";
+					key += myDate.getDate() < 10 ? ("0" + myDate.getDate()) : myDate.getDate();
+					
+					var hKey = key + "_h";
+					
+					// \u6559\u5b66\u5468
+					if (j == 1) {
+						teachWeek = this.weekInfoMap[key];
+						if (teachWeek == undefined) {
+							teachWeek = "";
+						}
+						if (curWeekIndex != "" && teachWeek == curWeekIndex) {
+							weekSpan += "today";
+						}
+						html += "<td class='teachWeekTd'><span class='" + weekSpan + "'>" + teachWeek + "</span></td>"
+					}
+					
+					var spanClass = "monthTd ";
+					if((myDate.getFullYear() == this.curYear) && (myDate.getMonth() == this.curMonth) && (myDate.getDate() == this.curDay)){
+						spanClass += "today";
+					}
+				
+					if((myDate.getFullYear() > this.dynamicYear) || (myDate.getMonth() > this.dynamicMonth)){
+						// \u5468\u672b\u65e5\u671f\u6dfb\u52a0class
+						var curWeekDay = myDate.getDay();
+						spanClass += " pre";
+						if (curWeekDay == 6 || curWeekDay == 0) {
+							spanClass += " weekend";
+						}
+						
+						// \u5224\u65ad\u662f\u5426\u662f\u8282\u5047\u65e5
+						if (this.weekInfoMap[hKey] == 999) {
+							// \u4e0b\u4e2a\u6708\u65e5\u671f\u8865\u4f4d\uff0c\u662f\u8282\u5047\u65e5
+							html += "<td><span class='" + spanClass + "'>" + futureDate + "</span><span class='" + spanClass + "'>\u4f11</span></td>";
+						} else {
+							// \u4e0b\u4e2a\u6708\u65e5\u671f\u8865\u4f4d\uff0c\u975e\u8282\u5047\u65e5
+							html += "<td><span class='" + spanClass + "'>" + futureDate + "</span></td>";
+						}
+						
+						futureDate += 1;
+						myDate.setDate(myDate.getDate() + 1);
+					} else {
+						if(i == 0){
+							if(j >= firstWeekday){
+								// \u5468\u672b\u65e5\u671f\u6dfb\u52a0class
+								var curWeekDay1 = myDate.getDay();
+								if (curWeekDay1 == 6 || curWeekDay1 == 0) {
+									spanClass += " weekend";
+								}
+								
+								// \u5224\u65ad\u662f\u5426\u662f\u8282\u5047\u65e5
+								if (this.weekInfoMap[hKey] == 999) {
+									// \u662f\u8282\u5047\u65e5
+									html += "<td><span class='" + spanClass + "'> "+ myDate.getDate() + "</span><span class='" + spanClass + "'>\u4f11</span></td>";
+								} else {
+									// \u975e\u8282\u5047\u65e5
+									html += "<td><span class='" + spanClass + "'> "+ myDate.getDate() + "</span></td>";
+								}
+								
+								myDate.setDate(myDate.getDate() + 1);
+							} else {
+								// \u4e0a\u4e2a\u6708\u65e5\u671f\u8865\u4f4d
+								var preDate = new Date(monthFirstDay - (firstWeekday - j) *24 * 60 * 60 * 1000);
+								// \u5468\u672b\u65e5\u671f\u6dfb\u52a0class
+								spanClass += " pre";
+								var curWeekDay2 = preDate.getDay();
+								if (curWeekDay2 == 6 || curWeekDay1 == 0) {
+									spanClass += " weekend";
+								}
+								
+								var perKey = preDate.getFullYear() + "-";
+								if (preDate.getMonth() < 9) {
+									perKey += "0";
+								}
+								perKey += preDate.getMonth() + 1 + "-";
+								perKey += preDate.getDate() < 10 ? ("0" + preDate.getDate()) : preDate.getDate();
+								
+								perKey += "_h";
+								
+								// \u5224\u65ad\u662f\u5426\u662f\u8282\u5047\u65e5
+								if (this.weekInfoMap[perKey] == 999) {
+									// \u4e0a\u4e2a\u6708\u65e5\u671f\u8865\u4f4d\uff0c\u662f\u8282\u5047\u65e5
+									html += "<td><span class='" + spanClass + "'> "+ preDate.getDate() + "</span><span class='" + spanClass + "'>\u4f11</span></td>";
+								} else {
+									// \u4e0a\u4e2a\u6708\u65e5\u671f\u8865\u4f4d\uff0c\u975e\u8282\u5047\u65e5
+									html += "<td><span class='" + spanClass + "'>" + preDate.getDate() + "</span></td>";
+								}
+								
+							}
+						} else {
+							// \u5468\u672b\u65e5\u671f\u6dfb\u52a0class
+							var curWeekDay3 = myDate.getDay();
+							if (curWeekDay3 == 6 || curWeekDay3 == 0) {
+								spanClass += " weekend";
+							}
+							
+							// \u5224\u65ad\u662f\u5426\u662f\u8282\u5047\u65e5
+							if (this.weekInfoMap[hKey] == 999) {
+								// \u662f\u8282\u5047\u65e5
+								html += "<td><span class='" + spanClass + "'> "+ myDate.getDate() + "</span><span class='" + spanClass + "'>\u4f11</span></td>";
+							} else {
+								// \u975e\u8282\u5047\u65e5
+								html += "<td><span class='" + spanClass + "'> "+ myDate.getDate() + " </span></td>";
+							}
+								
+							myDate.setDate(myDate.getDate() + 1);
+						}
+					}
+				}
+				html += "</tr>";
+			}
+			$calendarBoxTbody.append(html);
+			
+			if (bg_lang == "zh") {
+				// \u662f\u5f53\u524d\u6708\u4efd\u624d\u5c55\u793a\u5b66\u5e74\u5b66\u671f\u4fe1\u606f
+				var curDate = new Date()
+				if ((myDate.getFullYear() == curDate.getFullYear()) && (myDate.getMonth() == curDate.getMonth() + 1)) {
+					$('.calendar-title .title-date').html(this.dynamicYear + " \u5e74 " + (this.dynamicMonth + 1) + " \u6708");
+					$('.calendar-title span').removeClass("otherMonth");
+					$(".title-semester").show();
+				} else {
+					$('.calendar-title .title-date').html(this.dynamicYear + " \u5e74 " + (this.dynamicMonth + 1) + " \u6708");
+					$('.calendar-title .title-date').addClass("otherMonth");
+					$(".title-semester").hide();
+				}
+			} else {
+				var month = Month_Map_En[this.dynamicMonth + 1];
+				if ((myDate.getFullYear() == curDate.getFullYear()) && (myDate.getMonth() == curDate.getMonth() + 1)) {
+					$('.calendar-title .title-date').html(month + "  " + this.dynamicYear);
+					$('.calendar-title span').removeClass("otherMonth");
+					$(".title-semester").show();
+				} else {
+					$('.calendar-title .title-date').html(month + "  " + this.dynamicYear);
+					$('.calendar-title .title-date').addClass("otherMonth");
+					$(".title-semester").hide();
+				}
+			}
+		}
+	});
+	var calendarBox = new CalendarBox();
+	
+	calendarBox.initTable();
+	
+	$(".calendar-box .title-2 #pre-btn").on('click', function(){
+		// \u4e0a\u4e00\u4e2a\u6708
+		var myDate = new Date();
+		myDate.setFullYear(calendarBox.dynamicYear, calendarBox.dynamicMonth, 1);
+		// setMonth\u7684\u65f6\u5019\uff0c3\u6708\u52302\u6708\uff0c\u4f1a\u6709\u95ee\u9898\uff0c\u6240\u4ee5\u624d\u4f7f\u7528setDate
+		myDate.setDate(myDate.getDate() - 1);
+		calendarBox.dynamicYear = myDate.getFullYear();
+		calendarBox.dynamicMonth = myDate.getMonth();
+		
+		calendarBox.initTable();
+	});
+	
+	$(".calendar-box .title-2 #next-btn").on('click', function(){
+		// \u4e0b\u4e00\u4e2a\u6708
+		var myDate = new Date();
+		myDate.setFullYear(calendarBox.dynamicYear, calendarBox.dynamicMonth, 1);
+		myDate.setMonth(myDate.getMonth() + 1);
+		calendarBox.dynamicYear = myDate.getFullYear();
+		calendarBox.dynamicMonth = myDate.getMonth();
+		
+		calendarBox.initTable();
+	});
+	
+	// \u8df3\u8f6c\u4eca\u5929
+	$(".calendar-box .title-2 #todey-btn").on('click', function(){
+		var myDate = new Date();
+		calendarBox.dynamicYear = myDate.getFullYear();
+		calendarBox.dynamicMonth = myDate.getMonth();
+		
+		calendarBox.initTable();
+	});
+	

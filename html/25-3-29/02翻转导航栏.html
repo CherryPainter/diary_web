@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul {
+      margin: 100px;
+    }
+
+    ul li {
+      width: 120px;
+      height: 35px;
+      list-style: none;
+      position: absolute;
+      perspective: 500px;
+    }
+
+    .box {
+      position: relative;
+      width: 120px;
+      height: 35px;
+      transition: 1s;
+      transform-style: preserve-3d;
+    }
+
+    .fz1,
+    .fz2 {
+      position: absolute;
+      text-align: center;
+      line-height: 35px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .fz1 {
+      color: skyblue;
+      background-color: pink;
+      transform: translateZ(35px);
+    }
+
+    .fz2 {
+      color: pink;
+      background-color: skyblue;
+      transform-origin: bottom;
+      transform: rotateX(-90deg);
+    }
+
+    .box:hover {
+      transform: rotateX(90deg);
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li>
+      <div class="box">
+        <div class="fz1">恋恋不舍</div>
+        <div class="fz2">必有回响</div>
+      </div>
+    </li>
+  </ul>
+</body>
+
+</html>

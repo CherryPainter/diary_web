@@ -1,0 +1,16 @@
+/* 
+ * My97 DatePicker 4.7
+ */
+
+.Wdate{
+	border:#999 1px solid;
+	height:20px;
+	background:#fff url(images/calendar.svg) no-repeat 4px;
+}
+
+.WdateFmtErr{
+	font-weight:bold;
+	color:red;
+
+
+}

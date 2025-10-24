@@ -1,0 +1,88 @@
+.header .w .nav ul li:nth-child(3) a {
+  color: #00a4ff;
+}
+.main {
+  margin-top: 5rem !important;
+}
+.main h3 {
+  display: inline;
+  color: #00a4ff;
+}
+.main span {
+  color: #b8b1b1;
+}
+.main .navbars-contain {
+  width: 100%;
+}
+.main .navbars-contain h4 {
+  color: #00a4ff;
+}
+.main .navbars-contain .box-list {
+  display: flex;
+  height: 11rem;
+  text-align: center;
+  transition: all 0.5s;
+}
+.main .navbars-contain .box-list .left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0 3px 10px rgba(153, 153, 153, 0.3);
+}
+.main .navbars-contain .box-list .left .list-title {
+  flex: 1;
+  padding-top: 1rem;
+  color: #00a4ff;
+}
+.main .navbars-contain .box-list .left a .list-contain {
+  flex: 5;
+  font-size: 1rem;
+  color: gray;
+}
+.main .navbars-contain .box-list .left a:hover .list-contain {
+  color: #00a4ff;
+}
+.main .navbars-contain .box-list .right {
+  position: relative;
+  flex: 1;
+  background-color: #fff;
+  box-shadow: 3px 3px 10px rgba(153, 153, 153, 0.3);
+  border-left: 2px dashed #b8b1b1;
+}
+.main .navbars-contain .box-list .right .num {
+  text-align: center;
+  margin-top: 50px;
+  color: #00a4ff;
+  font-size: 3rem;
+  font-weight: bold;
+}
+.main .navbars-contain .box-list .right::after {
+  position: absolute;
+  top: -9px;
+  left: -12px;
+  display: inline-block;
+  content: '';
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: #f4f3f3;
+  border-radius: 50%;
+  box-shadow: 0 -1px 5px hsl(0, 2%, 65%) inset;
+}
+.main .navbars-contain .box-list .right::before {
+  position: absolute;
+  top: 164px;
+  left: -12px;
+  display: inline-block;
+  content: '';
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: #f4f3f3;
+  border-radius: 50%;
+  box-shadow: 0 1px 5px hsl(0, 2%, 65%) inset;
+}
+.main .navbars-contain .box-list:hover {
+  top: -8px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}

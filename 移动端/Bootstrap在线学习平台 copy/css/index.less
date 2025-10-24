@@ -1,0 +1,394 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot?nl3xwq');
+  src: url('../fonts/icomoon.eot?nl3xwq#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?nl3xwq') format('truetype'),
+    url('../fonts/icomoon.woff?nl3xwq') format('woff'),
+    url('../fonts/icomoon.svg?nl3xwq#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+body {
+  background-color: #F3F5F7 !important;
+}
+
+// 头部导航栏
+.head {
+  z-index: 10;
+
+  .searchs {
+    background-color: #2BA9F2;
+    width: 20px;
+    height: 34px;
+    border-radius: 10%;
+    margin: 1px 15px 0 -10px;
+
+    &::after {
+      content: '\e906';
+      font-family: icomoon;
+      color: #fff;
+      margin-left: -7px;
+    }
+
+    &:hover {
+      background-color: #51b6f1;
+    }
+  }
+
+  [type="search"] {
+    margin-bottom: 10px;
+  }
+
+  .margin2 {
+    margin-left: 4px;
+  }
+
+  .margin,
+  .margin2 {
+    height: 30px;
+    width: 50px;
+    padding: 5px;
+    line-height: 15px;
+    margin-bottom: 10px;
+  }
+}
+
+// 轮播图模块
+.diagram {
+  background-color: #fff;
+  padding-top: 100px;
+
+  .btn {
+    margin-bottom: 80px;
+  }
+
+  .post {
+    margin-bottom: 63px;
+  }
+
+  .mininav {
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+
+      &:nth-child(2) {
+        .bg {
+          background: url(../images/pic.png) no-repeat;
+        }
+      }
+
+      &:nth-child(3) {
+        .bg {
+          background: url(../images/pic.png) no-repeat;
+          background-position: -41px 0px;
+        }
+      }
+
+      &:nth-child(4) {
+        .bg {
+          background: url(../images/pic.png) no-repeat;
+          background-position: -81px 0px;
+        }
+      }
+
+      &:nth-child(5) {
+        .bg {
+          background: url(../images/pic.png) no-repeat;
+          background-position: -121px 0px;
+        }
+      }
+
+      &:nth-child(6) {
+        .bg {
+          background: url(../images/pic.png) no-repeat;
+          background-position: -160px 0px;
+        }
+      }
+
+      .bg {
+        cursor: pointer;
+        width: 2rem;
+        height: 2rem;
+        margin-bottom: 7px;
+      }
+
+      h5 {
+        cursor: pointer;
+        font-size: 1.1rem;
+        margin-left: 1rem;
+      }
+    }
+  }
+}
+
+// 视频教程模块
+.videoTutorial {
+  background-color: #fff;
+  margin-top: 1.5rem;
+  padding-bottom: 3.5rem;
+
+  h2,
+  .text {
+    text-align: center;
+  }
+
+  h2 {
+    font-weight: 530;
+    font-size: 1.8rem;
+  }
+
+  .text {
+    font-weight: 400;
+    font-size: 1rem;
+
+    i {
+      font-style: normal;
+      color: red;
+    }
+  }
+
+  .main {
+    .col {
+      position: relative;
+      top: 0;
+      transition: all .5s;
+
+      &:hover {
+        top: -8px;
+        box-shadow: 0 15px 30px rgb(0 0 0 / 10%);
+      }
+
+      .card {
+        img {
+          border-radius: 4%;
+        }
+      }
+
+      .info {
+        font-size: 12px;
+        color: #999;
+
+        span {
+          color: #ff7c2d;
+        }
+      }
+    }
+  }
+}
+
+// 学习路线模块
+.learningRoute {
+  margin-top: 1.4rem;
+  background-color: #fff;
+
+  h2,
+  .text2 {
+    text-align: center;
+  }
+
+  h2 {
+    font-weight: 530;
+    font-size: 1.8rem;
+  }
+
+  .text2 {
+    font-weight: 400;
+    font-size: 1.3rem;
+  }
+
+  .navbars {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-bottom: 1px solid #CDCDCD;
+
+    .navbars-item {
+      display: flex;
+      box-sizing: border-box;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      flex-shrink: 0;
+      margin: 0 30px;
+
+      &:hover {
+        color: #FF0000;
+        border-bottom: 3px solid #E81716;
+      }
+
+      .icon {
+        width: 50px;
+        height: 60px;
+      }
+
+      span {
+        cursor: pointer;
+      }
+
+      &:first-child .icon {
+        background: url(../images/anijavaee.png) no-repeat -15px -11px;
+        background-size: 75px auto;
+      }
+
+      &:nth-child(2) .icon {
+        background: url(../images/aniweb.png) no-repeat -15px -11px;
+        background-size: 75px auto;
+      }
+
+      &:nth-child(3) .icon {
+        background: url(../images/anipython.png) no-repeat -15px -11px;
+        background-size: 75px auto;
+      }
+
+      &:nth-child(4) .icon {
+        background: url(../images/aniai.png) no-repeat -15px -11px;
+        background-size: 75px auto;
+      }
+
+      &:nth-child(5) .icon {
+        background: url(../images/aniui.png) no-repeat -15px -11px;
+        background-size: 75px auto;
+      }
+
+      &:nth-child(6) .icon {
+        background: url(../images/anitest.png) no-repeat -15px -11px;
+        background-size: 75px auto;
+      }
+
+      &:nth-child(7) .icon {
+        background: url(../images/anipm.png) no-repeat -15px -11px;
+        background-size: 75px auto;
+      }
+
+      &:last-child .icon {
+        background: url(../images/anixmt.png) no-repeat -15px -11px;
+        background-size: 75px auto;
+      }
+    }
+  }
+
+  .navbars-contain {
+
+    .box-list {
+      display: flex;
+      // width: 520px;
+      height: 11rem;
+      text-align: center;
+
+      .left {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #fff;
+        box-shadow: 0 3px 10px rgba(#999, .3);
+
+        .list-title {
+          flex: 1;
+          padding-top: 1rem;
+          color: #E81716;
+
+        }
+
+        .list-contain {
+          flex: 5;
+          font-size: 1rem;
+          color: gray;
+        }
+      }
+
+      .right {
+        position: relative;
+        flex: 1;
+        background-color: #fff;
+        box-shadow: 3px 3px 10px rgba(#999, .3);
+        border-left: 2px dashed #b8b1b1;
+
+        .num {
+          text-align: center;
+          margin-top: 50px;
+          color: #E92322;
+          font-size: 3rem;
+          font-weight: bold;
+        }
+
+        &::after {
+          position: absolute;
+          top: -9px;
+          left: -12px;
+          display: inline-block;
+          content: '';
+          width: 1.4rem;
+          height: 1.4rem;
+          background-color: #f4f3f3;
+          border-radius: 50%;
+          box-shadow: 0 -1px 5px hsl(0, 2%, 65%) inset;
+        }
+
+        &::before {
+          position: absolute;
+          top: 164px;
+          left: -12px;
+          display: inline-block;
+          content: '';
+          width: 1.4rem;
+          height: 1.4rem;
+          background-color: #f4f3f3;
+          border-radius: 50%;
+          box-shadow: 0 1px 5px hsl(0, 2%, 65%) inset;
+        }
+      }
+    }
+  }
+}
+
+// 导航栏样式
+.actives {
+  color: #FF0000;
+  border-bottom: 3px solid #E81716;
+}
+
+// 热门学习工具模块
+.learningTools {
+  background-color: #fff;
+
+  h2 {
+    font-weight: 540;
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .text2 {
+    font-weight: 400;
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .containTools {
+    .tools {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+.footer {
+  background-color: #F8F9FA;
+
+  .col {
+    dt {
+      font-weight: normal;
+      font-size: 1.5rem;
+    }
+  }
+}

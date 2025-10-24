@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="#" autocomplete="off" class="info">
+    <input type="text" name="text" class="text">
+    <button>提交</button>
+  </form>
+  <script>
+    const reg = /^[a-z0-9A-ZA-Z]{6,16}$/
+    const text = document.querySelector('.text')
+    const info = document.querySelector('.info')
+    text.addEventListener('blur', function () {
+      if (reg.test(this.value)) {
+        alert('合规范')
+      }
+    })
+
+  </script>
+</body>
+
+</html>

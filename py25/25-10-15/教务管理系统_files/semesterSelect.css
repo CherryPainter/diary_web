@@ -1,0 +1,76 @@
+.selectize-control {
+	text-align: left;
+    width:140px;  /*\u9ed8\u8ba4\u5bbd\u5ea6*/
+    height: 24px;
+}
+.selectize-control .selectize-input {
+    background: var(--brand-primary) !important;  /**\u4e3b\u9898\u8272*/
+    border-radius: 3px;
+    border: none;
+    color: #fff;
+    text-align: left;
+    padding: unset;
+    height: 24px;
+}
+
+.selectize-control .selectize-input>input {
+	display: none !important;
+}
+
+
+.selectize-control .selectize-input .item {
+	padding: 4px 0px 3px 11px;
+	font-family: PingFangSC-Regular, PingFang SC;
+	font-weight: 400;
+	font-size:12px;
+}
+
+.selectize-control .selectize-dropdown {
+    border: none;
+    margin-top: 4px;
+}
+
+.selectize-control .selectize-dropdown-content {
+	background: #FFFFFF;
+    box-shadow: 0px 8px 20px 6px rgb(0 0 0 / 5%), 0px 4px 12px 0px rgb(0 0 0 / 8%), 0px 0px 4px -4px rgb(0 0 0 / 20%);
+    border-radius: 4px;
+    border: 1px solid #DCDFE6;
+    -webkit-overflow-scrolling: touch;
+}
+
+.selectize-control .selectize-dropdown-content::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+}
+.selectize-control .selectize-dropdown-content::-webkit-scrollbar-track-piece {
+    height: 8px;
+}
+.selectize-control .selectize-dropdown-content::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: #E0E0E0;
+    opacity: 0.1;
+}
+.selectize-control .selectize-dropdown-content::-webkit-scrollbar-track {
+    background-color: unset;
+}
+
+.selectize-control .selectize-dropdown .active {
+	background: var(--opacity-20);
+}
+
+.selectize-input::after {
+	content: url("../../images/qiehuan.png") !important;
+	border-style: none !important;
+    border-width: unset !important;
+    top: 30% !important;
+    margin-top: 0 !important;
+    right: 20px !important;
+}
+
+.selectize-control .selectize-dropdown-emptyoptionlabel{
+	text-align: left;
+}
+.selectize-control.single .selectize-input {
+	box-shadow: unset;
+}
+

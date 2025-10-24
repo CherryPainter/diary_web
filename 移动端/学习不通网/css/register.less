@@ -1,0 +1,129 @@
+@blue: #1D85DA;
+
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot?nl3xwq');
+  src: url('../fonts/icomoon.eot?nl3xwq#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?nl3xwq') format('truetype'), url('../fonts/icomoon.woff?nl3xwq') format('woff'), url('../fonts/icomoon.svg?nl3xwq#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.main {
+  padding: 4vw 0;
+
+
+  h2 {
+    margin-left: 2vw;
+    color: #999;
+    font-weight: normal;
+  }
+
+  .registerForm {
+    margin: 2vw 25vw;
+    display: flex;
+    flex-direction: column;
+
+    .fs {
+      margin-bottom: 1.7vw;
+      height: 55px;
+      padding-left: 1rem;
+      border: 1px solid #999;
+      width: 100%;
+    }
+
+    .username,
+    .phone,
+    .verificationCode,
+    .password,
+    .confirm {
+      position: relative;
+
+      .pass {
+        position: absolute;
+        top: 16px;
+        left: 390px;
+        content: '\e907';
+        font-family: 'icomoon';
+        background-color: #17D16B;
+        color: white;
+        font-size: 12px;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        border-radius: 50%;
+        opacity: 0;
+        transition: all .5s;
+      }
+    }
+
+    .alert {
+      position: absolute;
+      top: 55px;
+      left: 0px;
+      color: red;
+    }
+
+    .verificationCode {
+
+      a {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        color: @blue;
+        cursor: pointer;
+      }
+    }
+
+    .clause {
+
+      a {
+        color: @blue;
+      }
+    }
+
+    button {
+      margin-top: .7vw;
+      background-color: @blue;
+      border: 0;
+      border-radius: 4px;
+      height: 40px;
+      color: white;
+      cursor: pointer;
+    }
+  }
+}
+
+.ph {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 0;
+  height: 70%;
+  width: 100%;
+  background-color: #fff;
+
+  .hint {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    height: 200px;
+    width: 300px;
+    text-align: center;
+
+    p {
+      color: #1D85DA;
+      margin-top: 35px;
+      font-size: 50px;
+    }
+
+    span {
+      color: #1D85DA;
+    }
+
+    a {
+      color: red;
+    }
+  }
+}

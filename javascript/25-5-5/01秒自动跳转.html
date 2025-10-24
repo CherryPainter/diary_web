@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    span {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="https://www.baidu.com/">还有<span>5</span>秒跳转到首页</a>
+  <script>
+    let num = 5
+    const span = document.querySelector('span')
+    let timeId = setInterval(function () {
+      span.innerHTML = num
+      num--
+      if (num === 0) {
+        clearInterval(timeId)
+        location.href = 'https://www.baidu.com/'
+      }
+    }, 1000)
+  </script>
+</body>
+
+</html>

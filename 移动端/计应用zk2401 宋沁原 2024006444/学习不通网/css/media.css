@@ -1,0 +1,131 @@
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+.container h2 {
+  margin-top: 20px;
+  font-weight: normal;
+}
+.container .video video {
+  width: 100%;
+  padding: 20px 0 0 0;
+}
+.container .elevator {
+  position: fixed;
+  top: 280px;
+  right: 20px;
+  z-index: 999;
+  background: #fff;
+  border: 1px solid #e4e4e4;
+  width: 60px;
+}
+.container .elevator a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  text-align: center;
+  color: #999;
+}
+.container .elevator a.active {
+  color: #1286ff;
+}
+.container .elevator .outline {
+  padding-bottom: 300px;
+}
+.comments {
+  padding-bottom: 40px;
+}
+.comments img {
+  height: 100px;
+  width: 100px;
+  border: 2px solid pink;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+.comments form {
+  padding: 30px 30px 0 30px;
+  display: flex;
+}
+.comments form textarea[name="comments"] {
+  resize: none;
+  background-color: #f5f5f5;
+  vertical-align: top;
+  height: 100px;
+  transition: height 0.5s;
+  flex: 1;
+  font-size: 18px;
+  padding: 20px;
+  outline: none;
+  border-radius: 4px;
+  border-color: transparent;
+}
+.comments form textarea[name="comments"]:focus {
+  height: 125px;
+  border-color: #e4e4e4;
+  background: #fff;
+}
+.comments form button {
+  background: #00aeec;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-left: 10px;
+  width: 100px;
+  cursor: pointer;
+}
+.comments .total {
+  margin-right: 150px;
+  color: #999;
+  margin-top: 5px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  float: right;
+}
+.list {
+  min-width: 800px;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+.list .item {
+  width: 100%;
+  display: flex;
+}
+.list .item .avatar {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20px;
+}
+.list .item .avatar img {
+  width: 70px;
+  height: 70px;
+}
+.list .item .info {
+  flex: 1;
+  border-bottom: 1px dashed #e4e4e4;
+  padding-bottom: 10px;
+}
+.list .item .name {
+  color: skyblue;
+  font-size: 14px;
+  font-weight: bold;
+}
+.list .item .text {
+  color: #333;
+  padding: 10px 0;
+}
+.list .item .time,
+.list .item .del {
+  display: inline-block;
+  color: #999;
+  font-size: 12px;
+}
+.list .item .del {
+  margin-left: 20px;
+}
+.list .item .del:hover {
+  color: red;
+}

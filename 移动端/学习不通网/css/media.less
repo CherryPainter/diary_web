@@ -1,0 +1,154 @@
+.container {
+  width: 1200px;
+  margin: 0 auto;
+
+  h2 {
+    margin-top: 20px;
+    font-weight: normal;
+  }
+
+  .video video {
+    width: 100%;
+    padding: 20px 0 0 0;
+  }
+
+  .elevator {
+    position: fixed;
+    top: 280px;
+    right: 20px;
+    z-index: 999;
+    background: #fff;
+    border: 1px solid #e4e4e4;
+    width: 60px;
+
+    a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      text-align: center;
+      color: #999;
+
+      &.active {
+        color: #1286ff;
+      }
+    }
+
+    .outline {
+      padding-bottom: 300px;
+    }
+  }
+}
+
+.comments {
+  padding-bottom: 40px;
+
+  img {
+    height: 100px;
+    width: 100px;
+    border: 2px solid pink;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+
+  form {
+    padding: 30px 30px 0 30px;
+    display: flex;
+
+    textarea[name="comments"] {
+      resize: none;
+      background-color: #f5f5f5;
+      vertical-align: top;
+      height: 100px;
+      transition: height .5s;
+      flex: 1;
+      font-size: 18px;
+      padding: 20px;
+      outline: none;
+      border-radius: 4px;
+      border-color: transparent;
+
+      &:focus {
+        height: 125px;
+        border-color: #e4e4e4;
+        background: #fff;
+      }
+    }
+
+    button {
+      background: #00aeec;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      margin-left: 10px;
+      width: 100px;
+      cursor: pointer;
+    }
+  }
+
+  .total {
+    margin-right: 150px;
+    color: #999;
+    margin-top: 5px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    float: right;
+  }
+}
+
+.list {
+  min-width: 800px;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+
+  .item {
+    width: 100%;
+    display: flex;
+
+    .avatar {
+      display: inline-block;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 20px;
+
+      img {
+        width: 70px;
+        height: 70px;
+      }
+    }
+
+    .info {
+      flex: 1;
+      border-bottom: 1px dashed #e4e4e4;
+      padding-bottom: 10px;
+    }
+
+    .name {
+      color: skyblue;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .text {
+      color: #333;
+      padding: 10px 0;
+    }
+
+    .time,
+    .del {
+      display: inline-block;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .del {
+      margin-left: 20px;
+
+      &:hover {
+        color: red;
+      }
+    }
+  }
+}

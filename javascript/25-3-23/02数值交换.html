@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function change(x, y) {
+      let temp
+      temp = x
+      x = y
+      y = temp
+      return [x, y]
+    }
+    result = change(+prompt('请输入x的值'), +prompt('请输入y的值'))
+    console.log(`x的值是${result[0]},y的只是${result[1]}`);
+
+  </script>
+</body>
+
+</html>

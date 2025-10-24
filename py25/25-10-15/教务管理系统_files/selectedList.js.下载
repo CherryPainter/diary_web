@@ -1,0 +1,96 @@
+var SelectedListItem = Backbone.Model.extend();
+
+var SelectedListItems = Backbone.Collection.extend({model:SelectedListItem});
+
+var SelectedListView = Backbone.View.extend({
+
+    initialize : function(){
+        this.collection = new SelectedListItems();
+        //this.template = _.template("<li scope='seleccted-list-scope' draggable='true' dropable='true' class='view form-control' id='selected-<%= id %>'><label><%= name %></label><i class='fa fa-times title-icon destroy'></i></li>");
+        // \u4fee\u6539\u5df2\u9009\u5feb\u6377\u5165\u53e3\u5220\u9664\u6309\u94aey
+      	this.template = _.template("<li scope='seleccted-list-scope' draggable='true' dropable='true' class='view form-control' id='selected-<%= id %>'><label><%= name %></label><i class='view-span form-control'><svg aria-hidden='true' class='icon'><use xlink:href='#icon-closed-0'></use></svg></i></li>");
+    },
+
+    attributes: {
+        unselectedTableView: undefined
+    },
+
+    setUnselectedTableView: function(unselectedTableView){
+        this.attributes.unselectedTableView = unselectedTableView;
+    },
+
+    addSelectedListItem : function (selectedListItem) {
+        this.collection.add(selectedListItem);
+        this.$el.append(this.template(selectedListItem.toJSON()));
+        $(this.$el.find("selected-" + selectedListItem.get("id"))).draggable({
+            axis:"y",
+            opacity:0.5,
+            cursor:"pointer"
+        });
+    },
+
+    itemCount: function(){
+        return this.collection.length;
+    },
+
+    getSelectedIds: function(){
+        var selectedIds = "";
+        this.collection.each(function(selectedListItem,index){
+            selectedIds += selectedListItem.get("id") + "_" + index + ",";
+        });
+        return selectedIds;
+    },
+
+    removeSelectedListItem : function(id){
+        var selectedListItem = this.collection.findWhere({id : id});
+        this.collection.remove(selectedListItem);
+        this.$el.find("#selected-" + id).remove();
+    },
+
+    hasItem: function(id){
+        if (this.collection.findWhere({id : id}) != undefined){
+            return true;
+        }
+        return false;
+    },
+
+    events : {
+        "click i": function (event) {
+            this.removeSelectedListItem($(event.currentTarget).parent().attr("id").replace("selected-",""));
+            if (this.attributes.unselectedTableView != undefined){
+                this.attributes.unselectedTableView.unCheck($(event.currentTarget).parent().attr("id").replace("selected-",""));
+            }
+
+        },
+        "dragstart li" : function (event) {
+            this.$el.find("li").removeClass("now");
+            $(event.currentTarget).addClass("now");
+        },
+        "dragenter li" : function (event) {
+            $(event.currentTarget).css("border","1px dashed rgb(204,204,204)");
+            event.preventDefault();
+        },
+        "dragover li" : function (event) {
+            event.preventDefault();
+        },
+        "dragleave li": function (event) {
+            $(event.target).css("border","");
+        },
+        "drop li": function (event) {
+            $(event.currentTarget).after(this.$el.find("li.now"));
+            var srcItem = this.collection.findWhere({id:this.$el.find("li.now").attr("id").replace("selected-","")});
+            var targetItem = this.collection.findWhere({id:$(event.currentTarget).attr("id").replace("selected-","")});
+            var srcIndex = this.collection.indexOf(srcItem);
+            var targetIndex = this.collection.indexOf(targetItem);
+            this.collection.remove(srcItem);
+            if (srcIndex < targetIndex){
+                this.collection.add(srcItem, {at:targetIndex});
+            }else{
+                this.collection.add(srcItem, {at:targetIndex + 1});
+            }
+
+
+        }
+    }
+
+});

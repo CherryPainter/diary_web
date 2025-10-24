@@ -1,0 +1,81 @@
+var refreshViews = function (bizType, bizTypes, personName, referUrl) {
+
+	require.config({
+
+  	});
+  	
+  	require(['js/addEvent'], function (AddEvent) {
+  		var eventBus = _.extend({}, Backbone.Events);
+	
+	
+	    $(function() {
+	      	var i = 0;
+	      	var $btn = $('.section-btn ');
+	      	var $wrap = $('.section-wrap');
+	          
+	      	/* \u5f53\u524d\u9875\u9762\u8d4b\u503c */
+	      	function up() {
+	        	i--;
+	        	if (i < 0) {
+	        		i+=1
+	        	};
+	      	}
+	
+	      	function down() {
+	        	i++;
+	        	if (i == $btn.length) {
+	        		i-=1
+	        	};
+	      	}
+	
+	      	/* \u9875\u9762\u6ed1\u52a8 */
+	      	function run() {
+	        	$btn.eq(i).addClass('on').siblings().removeClass('on');
+	        	$wrap.attr("class", "section-wrap").addClass(function() {
+	        		return "put-section-" + i;
+	        	});
+	      	};
+	
+	      	/* \u53f3\u4fa7\u6309\u94ae\u70b9\u51fb */
+	      	$btn.each(function(index) {
+	        	$(this).click(function() {
+	          		i = index;
+	          		run();
+	        	})
+	      	});
+	
+	      	/* \u54cd\u5e94\u9f20\u6807 */
+	      	AddEvent.addEvent($wrap[0], "mousewheel", function(event) {
+	
+	        	if (event.delta > 0) {
+		          	// \u5f80\u4e0a\u6eda
+		          	up();
+	        	} else if (event.delta < 0) {
+		          // \u5f80\u4e0b
+		          down();
+	        	} else {
+	          		return;
+	        	}
+	        	run();
+	        	event.preventDefault();
+	      	});
+	
+	      	/* \u54cd\u5e94\u952e\u76d8\u4e0a\u4e0b\u952e */
+	      	$(document).one('keydown',k);
+	      	function k(event) {
+	        	var e = event || window.event;
+	        	var key = e.keyCode || e.which || e.charCode;
+	        	switch(key)	{
+	          		case 38: down();run();
+	            		break;
+	          		case 40: up();run();
+	            		break;
+	        	}
+	        	setTimeout(function(){
+	        		$(document).one('keydown', k)
+	        	}, 1000);
+	      	}
+	 	});
+  	});
+};
+

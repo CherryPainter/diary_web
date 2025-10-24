@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>轮播图点击切换</title>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class="slider">
+    <div class="slider-wrapper">
+      <img src="./images/slider01.jpg" alt="" />
+    </div>
+    <div class="slider-footer">
+      <p>对人类来说会不会太超前了？</p>
+      <ul class="slider-indicator">
+        <li class="active"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <div class="toggle">
+        <button class="prev">&lt;</button>
+        <button class="next">&gt;</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 1. 初始数据
+    const sliderData = [
+      { url: './images/slider01.jpg', title: '对人类来说会不会太超前了？', color: 'rgb(100, 67, 68)' },
+      { url: './images/slider02.jpg', title: '开启剑与雪的黑暗传说！', color: 'rgb(43, 35, 26)' },
+      { url: './images/slider03.jpg', title: '真正的jo厨出现了！', color: 'rgb(36, 31, 33)' },
+      { url: './images/slider04.jpg', title: '李玉刚：让世界通过B站看到东方大国文化', color: 'rgb(139, 98, 66)' },
+      { url: './images/slider05.jpg', title: '快来分享你的寒假日常吧~', color: 'rgb(67, 90, 92)' },
+      { url: './images/slider06.jpg', title: '哔哩哔哩小年YEAH', color: 'rgb(166, 131, 143)' },
+      { url: './images/slider07.jpg', title: '一站式解决你的电脑配置问题！！！', color: 'rgb(53, 29, 25)' },
+      { url: './images/slider08.jpg', title: '谁不想和小猫咪贴贴呢！', color: 'rgb(99, 72, 114)' },
+    ]
+    // 声明全局变量I
+    let i = 0
+    // 获取图片
+    const img = document.querySelector('.slider-wrapper img')
+    // 获取title
+    const tl = document.querySelector('.slider-footer p')
+    // 获取背景颜色
+    const bgc = document.querySelector('.slider-footer')
+    // 1右侧按钮业务
+    // 1.1获取右侧按钮
+    const next = document.querySelector('.next')
+    // 注册点击事件
+    next.addEventListener('click', function () {
+      i++
+      if (i >= sliderData.length) {
+        i = 0
+      }
+      toggle()
+    })
+    // 2.左侧按钮业务
+    // 2.1获取左侧按钮
+    const prev = document.querySelector('.prev')
+    // 注册点击事件
+    prev.addEventListener('click', function () {
+      i--
+      i = i < 0 ? sliderData.length - 1 : i
+      toggle()
+    })
+    function toggle() {
+      //修改图片地址
+      img.src = sliderData[i].url
+      //修改标题
+      tl.innerHTML = sliderData[i].title
+      //修改背景颜色
+      bgc.style.backgroundColor = sliderData[i].color
+      // 获取/修改圆点
+      document.querySelector('.slider-indicator .active').classList.remove('active')
+      document.querySelector(`.slider-indicator li:nth-child(${i + 1})`).classList.add('active')
+    }
+
+
+    // 3.自动播放
+    let timeId = setInterval(function () {
+      // .click()是模拟鼠标点击的一个方法
+      next.click()
+    }, 1500)
+
+
+    // 关闭定时器
+    const slider = document.querySelector('.slider')
+    // 鼠标经过暂停计时器
+    slider.addEventListener('mouseenter', function () {
+      clearInterval(timeId)
+    })
+
+    // 开启定时器
+    slider.addEventListener('mouseleave', function () {
+      // 先关
+      clearInterval(timeId)
+      // 后开
+      // 保留变量名，防止关不掉
+      timeId = setInterval(function () {
+        next.click()
+      }, 1500)
+    })
+  </script>
+</body>
+
+</html>

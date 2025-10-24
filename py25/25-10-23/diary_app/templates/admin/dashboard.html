@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}管理员仪表盘 - 日记本应用{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">管理员仪表盘</h2>
+    
+    <!-- 系统状态概览 -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">系统状态概览</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <div class="card border-info">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">总用户数</h5>
+                            <p class="card-text display-4">{{ total_users }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card border-success">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">活跃用户</h5>
+                            <p class="card-text display-4">{{ active_users }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card border-warning">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">日记总数</h5>
+                            <p class="card-text display-4">{{ total_entries }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card border-danger">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">维护状态</h5>
+                            <p class="card-text display-4">
+                                {% if status_dict.get('maintenance_mode') == 'true' %}
+                                <span class="text-danger">已开启</span>
+                                {% else %}
+                                <span class="text-success">已关闭</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 最近系统日志 -->
+    <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">最近系统日志</h4>
+                <a href="{{ url_for('admin_logs') }}" class="btn btn-light btn-sm">查看全部</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>类型</th>
+                            <th>用户</th>
+                            <th>IP地址</th>
+                            <th>消息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in recent_logs %}
+                        <tr>
+                            <td>{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            <td>
+                                <span class="badge" style="background-color: 
+                                    {% if log.log_type == 'error' %}#dc3545\{% elif log.log_type == 'warning' %}#ffc107\{% elif log.log_type == 'security' %}#fd7e14\{% else %}#28a745\{% endif %}">
+                                    {{ log.log_type }}
+                                </span>
+                            </td>
+                            <td>{{ log.user.username if log.user else '系统' }}</td>
+                            <td>{{ log.ip_address or '-' }}</td>
+                            <td>{{ log.message }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center">暂无日志记录</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 最近日记条目 -->
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">最近创建的日记</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>创建时间</th>
+                            <th>用户</th>
+                            <th>标题</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in recent_entries %}
+                        <tr>
+                            <td>{{ entry.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>{{ entry.user.username }}</td>
+                            <td>{{ entry.title }}</td>
+                            <td>
+                                <a href="{{ url_for('admin_edit_user', user_id=entry.user.id) }}" class="btn btn-sm btn-outline-primary">查看用户</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center">暂无日记记录</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

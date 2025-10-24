@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .card {
+      width: 500px;
+      height: 300px;
+      position: relative;
+      transition: 1s;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover {
+      transform: rotateY(180deg);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      position: absolute;
+    }
+
+    img:last-of-type {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="card">
+      <img src="./窗外的风景_1.jpg" alt="">
+      <img src="./窗外的风景_2.jpg" alt="">
+    </div>
+  </div>
+</body>
+
+</html>

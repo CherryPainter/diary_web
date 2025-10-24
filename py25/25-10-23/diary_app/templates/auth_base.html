@@ -1,0 +1,469 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+{# 引入认证页面专用样式 #}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{# 引入 Bootstrap 图标库 #}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<style>
+    /* 全局样式重置 */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        color: #333;
+    }
+    
+    /* 认证卡片样式 */
+    .auth-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        padding: 40px;
+        max-width: 500px;
+        width: 100%;
+        transition: transform 0.3s ease;
+    }
+    
+    .auth-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    /* 标题样式 */
+    .auth-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 8px;
+    }
+    
+    .auth-subtitle {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+    }
+    
+    /* 表单组样式 */
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #34495e;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 1rem;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        background-color: #f8f9fa;
+    }
+    
+    .form-control:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        background-color: white;
+    }
+    
+    /* 密码切换按钮 */
+    .toggle-password {
+        position: absolute;
+        right: 12px;
+        top: 38px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #7f8c8d;
+        font-size: 1.2rem;
+        padding: 5px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
+    
+    .toggle-password:hover {
+        background-color: #f1f1f1;
+        color: #667eea;
+    }
+    
+    /* 错误消息样式 */
+    .error-message {
+        color: #e74c3c;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    /* 成功消息样式 */
+    .success-message {
+        color: #2ecc71;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+    
+    /* 提交按钮样式 */
+    .btn-primary {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+    }
+    
+    .btn-primary:active {
+        transform: translateY(0);
+    }
+    
+    .btn-primary:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    /* 加载状态 */
+    .loading-spinner {
+        display: none;
+        animation: spin 1s linear infinite;
+        margin-left: 8px;
+    }
+    
+    /* 链接样式 */
+    .auth-links {
+        text-align: center;
+        margin-top: 25px;
+    }
+    
+    .auth-links a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+    
+    .auth-links a:hover {
+        color: #764ba2;
+        text-decoration: underline;
+    }
+    
+    /* 分隔线样式 */
+    .divider {
+        display: flex;
+        align-items: center;
+        margin: 25px 0;
+        color: #95a5a6;
+    }
+    
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background-color: #e1e5e9;
+    }
+    
+    .divider::before {
+        margin-right: 15px;
+    }
+    
+    .divider::after {
+        margin-left: 15px;
+    }
+    
+    /* 密码强度指示器 */
+    .password-strength {
+        margin-top: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .strength-weak {
+        color: #e74c3c;
+    }
+    
+    .strength-medium {
+        color: #f39c12;
+    }
+    
+    .strength-strong {
+        color: #2ecc71;
+    }
+    
+    /* 密码强度条 */
+    .strength-bar {
+        height: 4px;
+        background-color: #e1e5e9;
+        border-radius: 2px;
+        margin-top: 5px;
+        overflow: hidden;
+    }
+    
+    .strength-fill {
+        height: 100%;
+        background-color: #e74c3c;
+        transition: all 0.3s ease;
+    }
+    
+    /* 记住我复选框 */
+    .remember-me {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .remember-me input {
+        margin-right: 10px;
+    }
+    
+    .remember-me label {
+        margin: 0;
+        font-weight: normal;
+        cursor: pointer;
+    }
+    
+    /* 底部版权信息 */
+    .auth-footer {
+        text-align: center;
+        margin-top: 30px;
+        color: #95a5a6;
+        font-size: 0.9rem;
+    }
+    
+    /* 动画效果 */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 576px) {
+        .auth-card {
+            padding: 30px 25px;
+        }
+        
+        .auth-title {
+            font-size: 1.8rem;
+        }
+        
+        .form-control,
+        .btn-primary {
+            padding: 10px 14px;
+        }
+    }
+    
+    @media (max-width: 400px) {
+        .auth-card {
+            padding: 25px 20px;
+        }
+        
+        .auth-title {
+            font-size: 1.6rem;
+        }
+        
+        .auth-subtitle {
+            font-size: 1rem;
+        }
+    }
+    
+    /* 表单验证状态 */
+    .form-control.is-invalid {
+        border-color: #e74c3c;
+    }
+    
+    .form-control.is-valid {
+        border-color: #2ecc71;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+  <!-- Logo -->
+  <a href="{{ url_for('main.index') }}" class="auth-logo">日记系统</a>
+
+  <!-- 认证卡片 -->
+  <div class="auth-card">
+    <div class="auth-card-header">
+      <h1>{% block auth_title %}{% endblock %}</h1>
+      {% block auth_subtitle %}{% endblock %}
+    </div>
+
+    <div class="auth-card-body">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      {% if category == 'success' %}
+      <div class="success-message">{{ message }}</div>
+      {% else %}
+      <div class="error-message">{{ message }}</div>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      {% block auth_content %}{% endblock %}
+    </div>
+  </div>
+
+  <div class="mt-4 text-white text-center">
+    {% block auth_footer %}{% endblock %}
+  </div>
+    <script>
+      // 内联JavaScript功能 - 密码切换、表单提交状态管理
+      document.addEventListener('DOMContentLoaded', function() {
+        // 密码显示/隐藏切换
+        const togglePassword = document.getElementById('togglePassword');
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        
+        if (togglePassword && password) {
+          togglePassword.addEventListener('click', function(e) {
+            e.preventDefault();
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            const icon = this.querySelector('i');
+            if (icon) {
+              icon.classList.toggle('bi-eye');
+              icon.classList.toggle('bi-eye-slash');
+            }
+          });
+        }
+        
+        if (toggleConfirmPassword && confirmPassword) {
+          toggleConfirmPassword.addEventListener('click', function(e) {
+            e.preventDefault();
+            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPassword.setAttribute('type', type);
+            const icon = this.querySelector('i');
+            if (icon) {
+              icon.classList.toggle('bi-eye');
+              icon.classList.toggle('bi-eye-slash');
+            }
+          });
+        }
+        
+        // 表单提交状态管理
+        const registerForm = document.getElementById('register-form');
+        const registerSubmit = document.getElementById('register-submit');
+        const loginForm = document.getElementById('login-form');
+        const loginSubmit = document.getElementById('login-submit');
+        
+        if (registerForm && registerSubmit) {
+          registerForm.addEventListener('submit', function(e) {
+            if (!registerForm.checkValidity()) {
+              e.preventDefault();
+              registerForm.reportValidity();
+              return;
+            }
+            registerSubmit.disabled = true;
+            const textElement = registerSubmit.querySelector('#register-text');
+            const spinnerElement = registerSubmit.querySelector('#register-spinner');
+            if (textElement && spinnerElement) {
+              textElement.textContent = '创建中...';
+              spinnerElement.style.display = 'inline-block';
+            }
+          });
+        }
+        
+        if (loginForm && loginSubmit) {
+          loginForm.addEventListener('submit', function(e) {
+            if (!loginForm.checkValidity()) {
+              e.preventDefault();
+              loginForm.reportValidity();
+              return;
+            }
+            loginSubmit.disabled = true;
+          });
+        }
+        
+        // 密码匹配检查
+        if (password && confirmPassword) {
+          const errorElement = document.getElementById('password-match-error');
+          const successElement = document.getElementById('password-match-success');
+          
+          function checkPasswordMatch() {
+            if (!confirmPassword.value) {
+              if (errorElement) errorElement.style.display = 'none';
+              if (successElement) successElement.style.display = 'none';
+              return;
+            }
+            
+            if (password.value !== confirmPassword.value) {
+              if (errorElement) errorElement.style.display = 'block';
+              if (successElement) successElement.style.display = 'none';
+              confirmPassword.setCustomValidity('密码不一致');
+            } else {
+              if (errorElement) errorElement.style.display = 'none';
+              if (successElement) successElement.style.display = 'block';
+              confirmPassword.setCustomValidity('');
+            }
+          }
+          
+          confirmPassword.addEventListener('input', checkPasswordMatch);
+          password.addEventListener('input', checkPasswordMatch);
+        }
+        
+        // 简单的密码强度检测
+        if (password) {
+          const strengthText = document.getElementById('password-strength-text');
+          
+          if (strengthText) {
+            password.addEventListener('input', function() {
+              const value = this.value;
+              let strength = '弱';
+              
+              if (value.length >= 8) {
+                let score = 0;
+                if (/[A-Z]/.test(value)) score++;
+                if (/[0-9]/.test(value)) score++;
+                if (/[^A-Za-z0-9]/.test(value)) score++;
+                
+                if (score >= 3) strength = '强';
+                else if (score >= 2) strength = '中';
+              }
+              
+              strengthText.textContent = '密码强度：' + strength;
+            });
+          }
+        }
+      });
+    </script>
+  </div>
+  {% endblock %}

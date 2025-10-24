@@ -1,0 +1,192 @@
+a {
+  text-decoration: none !important;
+}
+li {
+  list-style: none;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot?nl3xwq');
+  src: url('../fonts/icomoon.eot?nl3xwq#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?nl3xwq') format('truetype'), url('../fonts/icomoon.woff?nl3xwq') format('woff'), url('../fonts/icomoon.svg?nl3xwq#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+.w {
+  width: 1200px;
+  margin: 0 auto;
+}
+.log {
+  margin-top: 2vw;
+}
+.log img {
+  height: 50px;
+  width: 198px;
+}
+.mod_copyright {
+  display: flex;
+  flex-direction: column;
+}
+.mod_copyright .link ul {
+  display: flex;
+  justify-content: center;
+}
+.mod_copyright .link ul li {
+  flex: 1;
+  text-align: center;
+}
+.mod_copyright .link ul li a {
+  color: #999;
+}
+.mod_copyright .link ul li:nth-child(n + 2) {
+  border-left: 1.2px solid #999;
+}
+.mod_copyright .copyright {
+  flex: 1;
+  text-align: center;
+  color: #999;
+}
+@media screen and (max-width: 1024px) {
+  .w {
+    width: 100% !important;
+  }
+}
+.login .main {
+  background-color: #DEEFFF;
+  height: 500px;
+  margin-bottom: 20px;
+}
+.login .main .contains {
+  height: 100%;
+  background: url(../images/13392907916325697.png) no-repeat;
+  background-size: cover;
+}
+.login .main .contains .wrapper {
+  width: 1170px;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+.login .main .contains .wrapper .box {
+  width: 380px;
+  box-shadow: 0px 0px 25px 0px rgba(3, 3, 3, 0.14);
+  position: fixed;
+  top: 170px;
+  right: 260px;
+  background: #fff;
+  padding: 20px 40px;
+}
+.login .main .contains .wrapper .box .tab-nav {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.login .main .contains .wrapper .box .tab-nav a {
+  color: #1D85DA;
+  font-size: 18px;
+  height: 35px;
+  line-height: 35px;
+}
+.login .main .contains .wrapper .box .tab-nav a.active {
+  border-bottom: 2px solid #1D85DA;
+}
+.login .main .contains .wrapper .box .tab-pane .code {
+  display: block;
+  margin: 44px auto;
+}
+.login .main .contains .wrapper .box .tab-pane .link {
+  text-align: right;
+  padding-top: 12px;
+}
+.login .main .contains .wrapper .box .tab-pane .link a {
+  color: #1D85DA;
+}
+.login .main .contains .wrapper .box .tab-pane .alert {
+  display: none;
+  color: red;
+}
+.login .main .contains .wrapper .box .tab-pane .input {
+  border: 1px solid #1D85DA;
+  width: 100%;
+  height: 36px;
+  margin-top: 17px;
+  display: flex;
+  background: #CFCDCD;
+}
+.login .main .contains .wrapper .box .tab-pane .input .iconfont {
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  text-align: center;
+  line-height: 34px;
+  font-size: 20px;
+}
+.login .main .contains .wrapper .box .tab-pane .input input {
+  flex: 1;
+  padding-left: 15px;
+}
+.login .main .contains .wrapper .box .tab-pane .input input::placeholder {
+  color: #B3B3B3 !important;
+}
+.login .main .contains .wrapper .box .tab-pane .agree {
+  color: #B3B3B3;
+  padding: 17px 0;
+}
+.login .main .contains .wrapper .box .tab-pane .agree a {
+  color: #0673B1;
+}
+.login .main .contains .wrapper .box .tab-pane .button {
+  margin-bottom: 15px;
+}
+.login .main .contains .wrapper .box .tab-pane .button .dl {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background: #1D85DA;
+  color: #fff;
+  display: block;
+  font-size: 16px;
+  margin-bottom: 17px;
+  border: 0;
+}
+.login .main .contains .wrapper .box .tab-pane .button .fl,
+.login .main .contains .wrapper .box .tab-pane .button .fr {
+  color: #1D85DA;
+}
+.login .main .contains .wrapper .box .tab-pane .button .fr {
+  float: right;
+}
+.ph {
+  display: none;
+  position: fixed;
+  top: 9%;
+  left: 0;
+  height: 55%;
+  width: 100%;
+  background-color: #fff;
+}
+.ph .hint {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  height: 200px;
+  width: 300px;
+  text-align: center;
+}
+.ph .hint p {
+  color: #1D85DA;
+  margin-top: 35px;
+  font-size: 50px;
+}
+.ph .hint span {
+  color: #1D85DA;
+}
+.ph .hint a {
+  color: red;
+}

@@ -1,0 +1,925 @@
+    var delimiter ="<br>"
+	var weekCycle =[];
+	weekCycle[1]="";// "%u8FDE";
+	weekCycle[2]="%u5355";
+    weekCycle[3]="%u53CC";
+    var weekCycle_en=[];
+    weekCycle_en[1]="";
+    weekCycle_en[2]="Odd";
+    weekCycle_en[3]="Even";
+	var result = new String("");
+    var weeksPerYear = 53 ;
+	// \u8f93\u51fa\u6559\u5b66\u6d3b\u52a8\u4fe1\u606f
+	function activityInfo(){
+	    return "teacherId:" + this.teacherId+"\n"
+	           +"teacherName:" + this.teacherName+"\n"
+	           +"courseId:"+this.courseId+"\n"
+	           +"courseName:"+this.courseName+"\n"
+	           +"roomId:"+this.roomId+"\n"
+	           +"roomName:"+this.roomName+"\n"
+	           +"vaildWeeks:"+this.vaildWeeks;
+	}
+	/**
+	 * \u5224\u65ad\u662f\u5426\u76f8\u540c\u7684\u6d3b\u52a8 same acitivity [teacherId,courseId,roomId,vaildWeeks]
+	 */
+	function isSameActivity(other){
+		return this.canMergeWith(other)&&(this.vaildWeeks==other.vaildWeeks);
+	}
+	/**
+	 * \u5408\u5e76\u76f8\u540c\u7684\u6559\u5b66\u6d3b\u52a8 same [teacherId,courseId,roomId,remark] can merge
+	 */
+	function canMergeWith(other){
+	   return (
+			this.teacherId == other.teacherId
+			&& 
+			this.courseId == other.courseId 
+			&& 
+			this.roomId == other.roomId 
+			&&
+			this.courseName==other.courseName
+			&&
+			this.schGroupNo==other.schGroupNo
+			&&
+			this.schGroupName==other.schGroupName
+			&&
+			this.experiItemName == other.experiItemName
+		);	   
+	}
+	// utility for repeat char
+	function repeatChar(str,length){
+   	    if(length<=1){
+   	       return str;
+   	    }
+   	    var rs="";
+   	    for(var k=0;k<length;k++){
+          rs += str;
+        }
+        return rs;
+   	}
+
+   	/**
+	 * \u6dfb\u52a0\u7f29\u7565\u8868\u793a add a abbreviation to exists result; Do not use it directly. a
+	 * white space will delimate the weeks For example:odd1-18 even3-20
+	 */
+   	function addAbbreviate(cycle,begin,end){
+   	    if(result!==""){
+   	    	result += " [";
+   	    } else {
+   	    	result += "[";
+   	    }
+   	    if(begin==end){ // only one week
+          result+= begin;
+        }
+        else {
+        	if (this.language && "en"==this.language) {
+        		result+= begin+ "-" + end + unescape(weekCycle_en[cycle]);
+        	} else {
+        		result+= begin+ "-" + end + unescape(weekCycle[cycle]);
+        	}
+        }
+        result += "]";
+        return result;   	    
+   	}
+	// \u7f29\u7565\u5355\u5468,\u4f8b\u5982"10101010"
+	function mashalOdd(result,weekOccupy,from,start) {
+		var cycle = 0;
+		if ((start - from + 2) % 2 === 0){
+			cycle = 3;
+		}
+		else{
+			cycle = 2;
+		}
+		var i = start + 2;
+		for (; i < weekOccupy.length; i += 2) {
+			if (weekOccupy.charAt(i) == '1') {
+				if (weekOccupy.charAt(i + 1) == '1') {
+					addAbbreviate(cycle, start - from + 2, i);
+					return i+1;
+				}
+			} else {
+				if (i - 2 == start){
+					cycle = 1;
+				}
+				addAbbreviate(cycle, start - from + 2, i - 2- from + 2);
+				return i + 1;
+			}
+		}
+		return i;
+	}
+
+	// \u7f29\u7565\u8fde\u7eed\u5468
+	function mashalContinue(result,weekOccupy,from,start) {
+		var cycle = 1;
+		var i = start + 2;
+		for (; i < weekOccupy.length; i += 2) {
+			if (weekOccupy.charAt(i) == '1') {
+				if (weekOccupy.charAt(i + 1) != '1') {
+					addAbbreviate(cycle, start - from + 2, i- from + 2);
+					return i + 2;
+				}
+			} else {
+				addAbbreviate(cycle, start - from + 2, i - 1- from + 2);
+				return i + 1;
+			}
+		}
+		return i;
+	}
+   	/**
+	 * \u5bf9\u6559\u5b66\u5468\u5360\u7528\u4e32\u8fdb\u884c\u7f29\u7565\u8868\u793a marsh a string contain only '0' or '1' which named
+	 * "vaildWeeks" with length 53
+	 * 00000000001111111111111111100101010101010101010100000 |
+	 * |--------------------------------------| (from) (startWeek) (endWeek)
+	 * from is start position with minimal value 1,in login it's calendar week
+	 * start startWeek is what's start position you want to mashal baseed on
+	 * start,it also has minimal value 1 endWeek is what's end position you want
+	 * to mashal baseed on start,it also has minimal value 1
+	 */
+    function marshal(weekOccupy,from,startWeek,endWeek){
+		
+        result="";
+   	    if (null == weekOccupy){
+   	       return "";
+   	    }
+   	    var initLength = weekOccupy.length;   
+
+        if (from > 1) {
+            var before = weekOccupy.substring(0, from - 1);
+            if (before.indexOf('1') != -1){
+                weekOccupy = weekOccupy + before;
+             }
+        }
+        var tmpOccupy = repeatChar("0", from + startWeek - 2);
+        tmpOccupy += weekOccupy.substring(from + startWeek - 2,from + endWeek - 1);
+        tmpOccupy += repeatChar("0",initLength - weekOccupy.length);
+        weekOccupy = tmpOccupy;
+        
+        if (endWeek > weekOccupy.length){
+            endWeek = weekOccupy.length;
+        }
+        if(weekOccupy.indexOf('1') == -1){
+            return "";
+        }
+        weekOccupy += "000";
+		var start = 0;
+		while ('1' != weekOccupy.charAt(start)){
+			start++;
+	    }
+		var i = start + 1;
+		while (i < weekOccupy.length) {
+			var post = weekOccupy.charAt(start + 1);
+			if (post == '0'){
+				start = mashalOdd(result, weekOccupy,from, start);
+		    }
+			if (post == '1'){
+				start = mashalContinue(result, weekOccupy,from, start);
+		    }
+			while (start < weekOccupy.length && '1' != weekOccupy.charAt(start)){
+				start++;
+		    }
+			i = start;
+		}
+        return result;	
+   	}
+	/**
+	 * mashal style is or --------------------------- -------------------- |
+	 * odd3-18 even19-24,room | | odd3-18 | --------------------------
+	 * --------------------
+	 */
+   	function showMarshalValidWeeks(from,startWeek,endWeek){
+   		
+   	    // alert(this.vaildWeeks);
+   	    var result="";
+   	    // \u6559\u5ba4\u5b58\u5728\u5e76\u4e14\u5c55\u793a
+   	    if(this.roomName!=="" && this.$rname == 'true'){
+   	    	// \u4e0d\u5c55\u793a\u5468\u6b21
+   	       if(this.$wname == 'false'){
+   	       	   result = this.roomName;
+   	       }else{
+	   	       result = marshal(this.vaildWeeks,from,startWeek,endWeek)+"\u5468,"+this.roomName;
+   	       }
+   	    }
+   	    else{
+   	    	if(this.$wname == 'true'){
+   	    		result = marshal(this.vaildWeeks,from,startWeek,endWeek) + "\u5468";
+   	    	}
+   	    }
+   	    
+   	    if(this.schGroupName!='' && this.$scname == 'true'){
+   	    	result=result+" "+this.schGroupName;
+   	    }else if(this.schGroupNo!='' && this.$scname == 'true'){
+   	    	result=result+" \u7ec4"+this.schGroupNo;
+   	    }
+   	    
+   	    
+   	    return result;
+   	}
+   	/**
+	 * mashal style is or --------------------------- -------------------- |
+	 * odd3-18 even19-24,room | | odd3-18 | --------------------------
+	 * --------------------
+	 */
+   	function marshalValidWeeks(from,startWeek,endWeek){
+   	    // alert(this.vaildWeeks);
+   	    var result="";
+   	    if(this.roomName!==""){
+   	       result= marshal(this.vaildWeeks,from,startWeek,endWeek)+"\u5468,"+this.roomName;
+   	    }
+   	    else{
+   	       result= marshal(this.vaildWeeks,from,startWeek,endWeek) + "\u5468";
+   	    }
+   	    if(this.schGroupNo!=''){
+   	    	result=result+" \u7ec4"+this.schGroupNo;
+   	    }
+   	    return result;
+   	}
+    function or(first,second){
+        var newStr="";
+        for(var i=0;i<first.length;i++){
+	        if(first.charAt(i)=='1' ||second.charAt(i)=='1'){
+    		    newStr+="1";
+    		}
+	        else{
+	            newStr+="0";
+	        }
+	    }
+	    // alert(first+":first\n"+second+":second\n"+newStr+":result");
+        return newStr;
+    }
+
+    // merger activity in every unit.
+    function mergeAll(){
+        for(var i=0;i<this.unitCounts;i++){
+            if(this.activities[i].length>1){
+		        for(var j=1;j<this.activities[i].length;j++){
+	                this.activities[i][0].vaildWeeks = or( this.activities[i][0].vaildWeeks,this.activities[i][j].vaildWeeks);
+	                this.activities[i][j]=null;
+	             }
+	         }
+	     }
+    }
+    // merger activity in every unit by course.
+    function mergeByCourse(){
+        for(var i=0;i<this.unitCounts;i++){
+            if(this.activities[i].length>1){
+             // O(n^2)
+             for(var j=0;j<this.activities[i].length;j++){
+              if(null!=this.activities[i][j]){
+                 for(var k=j+1;j<this.activities[i].length;k++){
+                    if(null!=this.activities[i][k]){
+                        if(this.activities[i][j].courseName==this.activities[i][k].courseName){
+                           this.activities[i][j].vaildWeeks = or( this.activities[i][j].vaildWeeks,this.activities[i][k].vaildWeeks);
+	                       this.activities[i][k]=null;
+	                    }
+                    }
+                 }
+               }
+             }
+          }
+       }
+    }
+    function isTimeConflictWith(otherTable){
+       for(var i=0;i<this.unitCounts;i++){
+          if(this.activities[i].length!==0&&otherTable.activities[i].length!==0){           
+              for(var m=0;m<this.activities[i].length;m++){
+                 for(var n=0;n<otherTable.activities[i].length;n++){
+                    for( var k=0;k<this.activities[i][m].vaildWeeks.length;k++){                    
+                      if(this.activities[i][m].vaildWeeks.charAt(k)=='1'
+                         && otherTable.activities[i][n].vaildWeeks.charAt(k)=='1'){                         
+                         return true;
+                      }
+                    }
+                 }
+              }
+           }
+       }
+       return false;
+    }
+    
+    /**
+	 * aggreagate activity of same course. first merge the activity of same
+	 * (teacher,course,room). then output mashal vaildWeek string . if course is
+	 * null. the course name will be ommited in last string. style is
+	 * -------------------------------- | teacher1Name course1Name | |
+	 * (odd1-2,room1Name) | | (even2-4,room2Name) | | teacher2Name course1Name | |
+	 * (odd3-6,room1Name) | | (even5-8,room2Name) |
+	 * ----------------------------------
+	 * 
+	 * @param index
+	 *            time unit index
+	 * @param from
+	 *            start position in year occupy week
+	 * @param startWeek
+	 *            bengin position from [from]
+	 * @param endWeek
+	 *            end position from [from]
+	 */
+    function marshalByTeacherCourse(index,from,startWeek,endWeek){
+        var validStart=from + startWeek-2;
+        if(this.activities[index].length===0){return "";}
+    	if(this.activities[index].length==1){  
+    	  var cname=this.activities[index][0].courseName;
+    	  if(this.activities[index][0].$cname == 'false'){
+    	  	cname =cname.substring(0,cname.indexOf('('))
+    	  }
+    	  var tname= "";
+    	  
+    	  // \u4e3a\u6559\u5ba4\u8bfe\u8868\u65f6
+    	  if(this.activities[index][0].$rname == ''){
+	    	  if(this.activities[index][0].teacherName != "" && (this.activities[index][0].$tname == 'true' || this.activities[index][0].$adname == 'true')){
+		    	  if(this.activities[index][0].$tname == 'true'){
+		    	  	// \u5224\u65ad\u6559\u5e08\u662f\u5426\u4e3a\u7a7ay
+		    	  	var teaName = this.activities[index][0].teacherName.substring(0, this.activities[index][0].teacherName.indexOf(delimiter));
+		    	  	if (teaName != "") {
+		    	  		tname += "(" + teaName + ")";
+		    	  	}
+	    	  	  	// tname += "(";
+		    	  	// tname += this.activities[index][0].teacherName.substring(0, this.activities[index][0].teacherName.indexOf(delimiter));
+		    	  }
+		    	  if(this.activities[index][0].$adname == 'true'){
+		    	  	tname += this.activities[index][0].teacherName.substring(this.activities[index][0].teacherName.indexOf(delimiter));
+	    		    tname += ")";
+		    	  }
+	    	  }
+    	  } else {
+    	  	// \u6559\u5e08\u8bfe\u8868\u6dfb\u52a0\u6559\u5b66\u73ed\u5185\u5bb9\u5c55\u793ay
+    	  	if(this.activities[index][0].teacherName != "" && (this.activities[index][0].$tname == 'true' || this.activities[index][0].$adname == 'true')){
+    	  		if(this.activities[index][0].$tname == 'true'){
+    	  			// \u5224\u65ad\u6559\u5e08\u662f\u5426\u4e3a\u7a7ay
+    	  			var teaName = "";
+    	  			if (this.activities[index][0].teacherName.indexOf(delimiter) >= 0) {
+					  	// teacherName\u4e3a\u6559\u5e08+\u884c\u653f\u73ed
+					  	teaName = this.activities[index][0].teacherName.substring(0, this.activities[index][0].teacherName.indexOf(delimiter));
+				  	} else {
+				  		// teacherName\u4ec5\u4e3a\u6559\u5e08
+					  	teaName = this.activities[index][0].teacherName;
+				  	}
+		    	  	if (teaName != "") {
+		    	  		tname += "(" + teaName + ")";
+		    	  	}
+    	  			// tname += "("+ this.activities[index][0].teacherName +")";
+    	  			// tname += "(";
+		    	  	// tname += this.activities[index][0].teacherName.substring(0, this.activities[index][0].teacherName.indexOf(delimiter));
+    	  		}
+    	  		if(this.activities[index][0].$adname == 'true'){
+		    	  	tname += this.activities[index][0].teacherName.substring(this.activities[index][0].teacherName.indexOf(delimiter));
+	    		    tname += ")";
+	    	  	}
+    	  	}
+    	  
+    	  }
+    	  var assistantName="";
+    	  if (this.activities[index][0].assistantName != "" && this.activities[index][0].$asname == 'true'){
+    	  	  // assistantName += delimiter;
+    		  assistantName += "(" + this.activities[index][0].assistantName + ")";
+    	  }
+    	  var experiItemName="";
+    	  if (this.activities[index][0].experiItemName != "" && this.activities[index][0].$exname == 'true'){
+    	  	  // experiItemName += delimiter;
+    		  experiItemName += "(" + this.activities[index][0].experiItemName + ")";
+    	  }
+    	  var weekIsShow = this.activities[index][0].$wname;
+    	  var roomIsShow = this.activities[index][0].$rname;
+    	  var scGroupIsShow = this.activities[index][0].$scname;
+    	  var $schGroupNo = this.activities[index][0].schGroupNo;
+    	  // \u5468\u6b21\u548c\u6559\u5ba4\u540c\u65f6\u4e0d\u5c55\u793a
+    	  if(weekIsShow == 'false' && (roomIsShow == 'false' || roomIsShow == '') && ($schGroupNo == '' || scGroupIsShow == 'false')){
+    	  	return cname+" "+ tname + assistantName + experiItemName;
+    	  }
+    	  return cname+" "+ tname + assistantName + experiItemName + delimiter + "(" +this.activities[index][0].adjustClone(this.endAtSat,validStart,false).showMarshal(from,startWeek,endWeek)+")";
+    	}
+    	else {
+         	var marshalString="";
+    	    var tempActivities=new Array();
+    	    tempActivities[0] = this.activities[index][0].adjustClone(this.endAtSat,validStart,true);
+    	    // merge this.activities to tempActivities by same courseName and
+			// roomId .start with 1.
+    	    for(var i=1;i<this.activities[index].length;i++){
+    	       var merged=false;
+    	       for(var j=0;j< tempActivities.length;j++){
+    	           if(this.activities[index][i].canMergeWith(tempActivities[j])){
+	    	           // alert(tempActivities[j]+"\n"
+						// +this.activities[index][i]);
+	    	           merged=true;
+	    	           var secondWeeks = this.activities[index][i].vaildWeeks;
+	    	           if(this.activities[index][i].needLeftShift(this.endAtSat,validStart)){
+       	                 secondWeeks=this.activities[index][i].vaildWeeks.substring(1,53)+"0";
+       	               }
+	    	           tempActivities[j].vaildWeeks = or(tempActivities[j].vaildWeeks,secondWeeks);	
+	    	       }
+    	       }
+    	       if(!merged){
+    	           tempActivities[tempActivities.length] = this.activities[index][i].adjustClone(this.endAtSat,validStart,false);
+    	       }
+    	    }
+    	    
+    	   // marshal tempActivities
+    	    for(var m=0;m<tempActivities.length;m++){
+    	        if(tempActivities[m]===null){
+    	           continue;
+    	        }
+    	    	var courseName=tempActivities[m].courseName;
+	    		if(tempActivities[m].$cname == 'false'){
+	    	  		courseName =courseName.substring(0,courseName.indexOf('('))
+	    	  	}
+    	    	var teacherName= "";
+    	    	
+    	    	var roomIsShow = tempActivities[m].$rname;
+    	    	 // \u4e3a\u6559\u5ba4\u8bfe\u8868\u65f6
+    	  		if(roomIsShow == ''){
+    	  			 if(tempActivities[m].teacherName != "" && (tempActivities[m].$tname == 'true' || tempActivities[m].$adname == 'true')){
+				    	  if(tempActivities[m].$tname == 'true'){
+				    	  	// \u5224\u65ad\u6559\u5e08\u662f\u5426\u4e3a\u7a7ay
+		    	  			var teaName = "";
+		    	  			if (tempActivities[m].teacherName.indexOf(delimiter) >= 0) {
+							  	// teacherName\u4e3a\u6559\u5e08+\u884c\u653f\u73ed
+							  	teaName = tempActivities[m].teacherName.substring(0, tempActivities[m].teacherName.indexOf(delimiter));
+						  	} else {
+						  		// teacherName\u4ec5\u4e3a\u6559\u5e08
+							  	teaName = tempActivities[m].teacherName;
+						  	}
+				    	  	if (teaName != "") {
+				    	  		teacherName += "(" + teaName + ")";
+				    	  	}
+			    	  	  	// teacherName += "(";
+				    	  	// teacherName += tempActivities[m].teacherName.substring(0, tempActivities[m].teacherName.indexOf(delimiter));
+				    	  }
+				    	  if(tempActivities[m].$adname == 'true'){
+				    	  	teacherName += tempActivities[m].teacherName.substring(tempActivities[m].teacherName.indexOf(delimiter));
+			    		    teacherName += ")";
+				    	  }
+			    	  }
+    	  		}else{
+    	    	  if(tempActivities[m].teacherName != ""){
+    	    	  	if(tempActivities[m].$tname == 'true'){
+    	    		  // teacherName += "("+ tempActivities[m].teacherName +")";
+    	    		  var teaName = "";
+    	  			  if (tempActivities[m].teacherName.indexOf(delimiter) >= 0) {
+					  	// teacherName\u4e3a\u6559\u5e08+\u884c\u653f\u73ed
+					  	teaName = tempActivities[m].teacherName.substring(0, tempActivities[m].teacherName.indexOf(delimiter));
+				  	  } else {
+				  	  	// teacherName\u4ec5\u4e3a\u6559\u5e08
+					  	teaName = tempActivities[m].teacherName;
+				  	  }
+		    	  	  if (teaName != "") {
+		    	  		teacherName += "(" + teaName + ")";
+		    	  	  }
+		    	  	}
+    	    	  }
+    	    	  	// \u6559\u5e08\u8bfe\u8868\u6dfb\u52a0\u6559\u5b66\u73ed\u5185\u5bb9\u5c55\u793ay
+	    	  		if(tempActivities[m].$adname == 'true'){
+	    	  			teacherName += tempActivities[m].teacherName.substring(tempActivities[m].teacherName.indexOf(delimiter));
+    		    		teacherName += ")";
+	    	  		}
+    	  		}
+    	    	var assistantName="";
+    	    	  if(tempActivities[m].assistantName!="" && tempActivities[m].$asname == 'true'){
+    	    		  assistantName += "("+tempActivities[m].assistantName+")";
+    	    	  }
+    	    	var experiItemName="";
+    	    	  if(tempActivities[m].experiItemName!=""  && tempActivities[m].$exname == 'true'){
+    	    		  experiItemName += "("+tempActivities[m].experiItemName+")";
+    	    	  }
+    	    	 var weekIsShow = tempActivities[m].$wname;
+    	    	 
+    	    	 var scGroupIsShow = tempActivities[m].$scname;
+    	    	 var $schGroupNo = tempActivities[m].schGroupNo;
+    	    	// add teacherName and courseName
+                if(courseName!==null) {
+                	// \u62fc\u63a5\u5b9e\u9a8c\u8f85\u5bfc\u8001\u5e08\u548c\u5b9e\u9a8c\u9879\u76ee\u4fe1\u606fy
+                	marshalString += delimiter + courseName + " " + teacherName + assistantName + experiItemName;
+                }
+                var weekRoom = tempActivities[m].showMarshal(from,startWeek,endWeek);
+                if(weekIsShow =='false' && (roomIsShow == 'false' || roomIsShow == '') && ( $schGroupNo == '' || scGroupIsShow == 'false')){
+                	
+                	
+                }else {
+	                marshalString += delimiter+"(" + weekRoom;	
+                }
+	    	   //\u622a\u53d6\u524d\u6bb5
+	    	    var forward1 = tempActivities[m].marshal(from,startWeek,endWeek).split(".")[0];
+	    	   
+	    	    for(var n=m+1;n<tempActivities.length;n++){
+	    	        // marshal same courseName activity
+	                if(tempActivities[n]!==null&&courseName==tempActivities[n].courseName&&teacherName==tempActivities[n].teacherName&&assistantName==tempActivities[n].assistantName&&experiItemName==tempActivities[n].experiItemName){	              
+	              		//marshalString += delimiter+"(" +tempActivities[n].marshal(from,startWeek,endWeek)+")";
+	                 	var forward2 = tempActivities[n].marshal(from,startWeek,endWeek).split(".")[0]
+	                 	var sequence = tempActivities[n].marshal(from,startWeek,endWeek).split(".")[1]
+	                 if(forward2 == forward1){
+                         /**
+						  * BUG #69042 \u540c\u4e00\u4e2a\u73ed\u7ea7 \u540c\u4e00\u4e2a\u8bfe\u7a0b\u5b58\u5728\u591a\u4e2a\u4efb\u52a1\uff0c\u800c\u4e14\u6392\u8bfe\u7684\u65f6\u5019\u8fd9\u4e2a\u4efb\u52a1 \u6ca1\u6709\u6392\u8001\u5e08\u4e5f\u6ca1\u6709\u6392\u5730\u70b9,\u73ed\u7ea7\u8bfe\u8868\u663e\u793a\u5f02\u5e38
+						  * \u6ca1\u6709\u5b89\u6392\u5730\u70b9\uff0csequence\u662f undefined \u62fc\u63a5\u5b57\u7b26\u4e32\u51fa\u9519
+						  * \u4fee\u6539\uff1a\u6dfb\u52a0\u5bf9 sequence \u7684\u5224\u65ad
+                          */
+	                 		if(undefined != sequence){
+                                marshalString += "/"+sequence;
+                            }
+	                 }else{
+	                 	if (tempActivities[n].showMarshal(from,startWeek,endWeek) != "") {
+		                 	marshalString += ")";
+		                 	marshalString += delimiter+"(" +tempActivities[n].showMarshal(from,startWeek,endWeek);
+	                 	}
+	                 }
+	                 	forward1 = 	forward2;
+	                    tempActivities[n]=null;
+	                }
+	            }
+	            //\u770b\u62fc\u63a5\u8fc7\u540e\u6700\u540e\u4e00\u4e2a\u662f\u5426\u6709\u62ec\u53f7
+	            var aa= marshalString.substr(marshalString.length-1,1);
+	            if((weekIsShow == 'true' || roomIsShow == 'true' || ($schGroupNo !='' && scGroupIsShow == 'true'))){
+	            	marshalString += ")";	
+	            }
+	    	 }
+	    	 
+	    	 if(marshalString.indexOf(delimiter)===0){
+	    	     return marshalString.substring(delimiter.length);
+	    	 }
+	    	 else{
+	    	     return marshalString;
+	    	 }
+    	}
+    }
+    
+    // return true,if this.activities[first] and this.activities[second] has
+	// same activities .
+    function isSameActivities(first,second){        
+    	if(this.activities[first].length!=this.activities[second].length){
+    	   return false;
+    	}
+    	if(this.activities[first].length==1){
+    	    return this.activities[first][0].isSame(this.activities[second][0]);
+    	}    
+    	for(var i=0;i<this.activities[first].length;i++){
+    		var find=false;
+    		for(var j=0;j<this.activities[second].length;j++){
+    			if(this.activities[first][i].isSame(this.activities[second][j])){
+    				find=true;break;
+    			}
+    	    }
+    		if(find===false){
+    		    return false;
+    		}
+    	}
+    	return true;
+    }
+    /**
+	 * \u68c0\u67e5\u662f\u5426\u9700\u8981\u8fdb\u884c\u5de6\u79fb\u52a8
+	 */
+    function needLeftShift(endAtSat,start){
+       return (!endAtSat&&this.vaildWeeks.substring(0,start).indexOf("1")!=-1&&this.vaildWeeks.substring(start).indexOf("1")==-1)
+    }
+    /**
+	 * \u6839\u636e\u5e74\u4efd\u662f\u5426\u4ee5\u5468\u516d\u7ed3\u675f,\u8c03\u6574\u5360\u7528\u5468. \u5982\u679c\u5728\u8d77\u59cb\u5468\u4e4b\u524d\u6709\u5360\u7528\u5468,\u53ea\u6709\u6ca1\u6709\u5219\u8868\u793a\u53ef\u4ee5\u8fdb\u884c\u8c03\u8282.
+	 */
+    function leftShift(){
+        this.vaildWeeks= this.vaildWeeks.substring(1,53)+"0";
+        // alert("leftShift:"+this.vaildWeeks);
+    }
+    /**
+	 * \u6839\u636e\u8be5\u5e74\u4efd\u662f\u5426\u7ed3\u675f\u4e8e\u661f\u671f\u516d\uff0c\u8c03\u6574\u6559\u5b66\u5dde\u7684\u5360\u7528\u4e32\u3002 \u5982\u679c\u6ca1\u6709\u8c03\u6574\u5219\u8fd4\u56de\u539f\u6765\u7684activity.\u5426\u5219\u8fd4\u56de\u8c03\u6574\u540e\u7684\u65b0\u7684activity\u3002
+	 * 
+	 * @activity \u8981\u8c03\u6574\u7684\u6559\u5b66\u6d3b\u52a8
+	 * @endAtStat \u8be5\u6d3b\u52a8\u7684\u5e74\u4efd\u662f\u5426\u7ed3\u675f\u4e8e\u661f\u671f\u516d
+	 * @start \u4ece\u4f55\u4e3a\u6b62\u68c0\u67e5\u6709\u6548\u7684\u6559\u5b66\u5468
+	 * @mustClone \u662f\u5426\u5fc5\u987b\u514b\u9686
+	 */
+    function adjustClone(endAtSat,start,mustClone){
+         if(mustClone){
+            var newActivity =  this.clone();
+            if(newActivity.needLeftShift(endAtSat,start)){
+            	newActivity.leftShift();
+            }
+            return newActivity;
+         }else{
+              if(this.needLeftShift(endAtSat,start)){
+                 var activity = this.clone();
+                 activity.leftShift(start);
+                 return activity;
+	          }else{
+	              // return this;
+	              return this.clone();
+	          }
+         }
+    }
+    // new taskAcitvity
+	function TaskActivity(teacherId,teacherName,courseId,courseName,roomId,roomName,vaildWeeks,taskId,remark,assistantName,experiItemName,schGroupNo,schGroupName,cname,tname,wname,rname,asname,exname,scname,adname){
+    	this.teacherId=teacherId;
+		this.teacherName=teacherName;
+		this.courseId=courseId;
+		this.courseName=courseName;
+		this.roomId = roomId;
+		this.roomName = roomName;
+		this.vaildWeeks = vaildWeeks;	// 53\u4e2a01\u7ec4\u6210\u7684\u5b57\u7b26\u4e32\uff0c\u4ee3\u8868\u4e86\u4e00\u5e74\u768453\u5468
+		this.taskId=taskId;
+		this.marshal=marshalValidWeeks; // \u5468\u6b21,\u6559\u5ba4\u4fe1\u606f
+		this.showMarshal=showMarshalValidWeeks; // \u5468\u6b21,\u6559\u5ba4\u4fe1\u606f
+		this.addAbbreviate=addAbbreviate;
+		this.clone=cloneTaskActivity;
+		this.canMergeWith=canMergeWith;
+		this.isSame=isSameActivity;
+		this.toString=activityInfo;
+		this.adjustClone=adjustClone;
+		this.leftShift=leftShift;
+		this.needLeftShift=needLeftShift;
+		this.remark = remark;
+		this.assistantName=assistantName;
+		this.experiItemName=experiItemName;
+		this.schGroupNo=schGroupNo;
+		this.schGroupName=schGroupName;
+		this.$cname = cname;
+		this.$tname = tname;
+		this.$wname = wname;
+		this.$rname = rname;
+		this.$asname = asname;
+		this.$exname = exname;
+		this.$scname = scname;
+		this.$adname = adname;
+	}
+   	
+   	// clone a activity
+   	function cloneTaskActivity(){
+   	    return new TaskActivity(this.teacherId,this.teacherName,this.courseId,this.courseName,this.roomId,this.roomName,this.vaildWeeks,this.taskId,this.remark,this.assistantName,this.experiItemName,this.schGroupNo,this.schGroupName,this.$cname,this.$tname,this.$wname,this.$rname,this.$asname,this.$exname,this.$scname,this.$adname);
+   	}
+   	// 
+   	function marshalTable(from,startWeek,endWeek){
+   	  for(var k=0;k<this.unitCounts;k++){
+		if(this.activities[k].length>0){
+		    this.marshalContents[k]=this.marshal(k,from,startWeek,endWeek);
+ 	     }
+ 	  }
+   	}
+   	
+   	
+   	function marshalTableForAdminclass(from,startWeek,endWeek){
+   		for(var k=0;k<this.unitCounts;k++){
+   			if(this.activities[k].length>0){
+   				this.marshalContents[k]= this.marshalForAdminclass(k,from,startWeek,endWeek);
+   			}
+   		}
+ 	}
+   	
+   	function marshalForAdminclass(index,from,startWeek,endWeek){
+        var validStart=from + startWeek-2;
+        if(this.activities[index].length===0){return "";}
+    	if(this.activities[index].length==1){  
+    	  var cname=this.activities[index][0].courseName;
+    	  var tname=this.activities[index][0].teacherName;
+    	  var roomOccupancy =  "(" +this.activities[index][0].adjustClone(this.endAtSat,validStart,false).marshal(from,startWeek,endWeek)+")";
+    	  return tname+" "+cname + roomOccupancy;
+    	}
+    	else {
+         	var marshalString="";
+    	    var tempActivities=new Array();
+    	    tempActivities[0] = this.activities[index][0].adjustClone(this.endAtSat,validStart,true);
+    	    // merge this.activities to tempActivities by same courseName and
+			// roomId .start with 1.
+    	    for(var i=1;i<this.activities[index].length;i++){
+    	       var merged=false;
+    	       for(var j=0;j< tempActivities.length;j++){
+    	           if(this.activities[index][i].canMergeWith(tempActivities[j])){
+	    	           // alert(tempActivities[j]+"\n"
+						// +this.activities[index][i]);
+	    	           merged=true;
+	    	           var secondWeeks = this.activities[index][i].vaildWeeks;
+	    	           if(this.activities[index][i].needLeftShift(this.endAtSat,validStart)){
+       	                 secondWeeks=this.activities[index][i].vaildWeeks.substring(1,53)+"0";
+       	               }
+	    	           tempActivities[j].vaildWeeks = or(tempActivities[j].vaildWeeks,secondWeeks);	
+	    	       }
+    	       }
+    	       if(!merged){
+    	           tempActivities[tempActivities.length] = this.activities[index][i].adjustClone(this.endAtSat,validStart,false);
+    	       }
+    	    }
+    	    
+    	   // marshal tempActivities
+    	    for(var m=0;m<tempActivities.length;m++){
+    	        if(tempActivities[m]===null){
+    	           continue;
+    	        }
+    	    	var courseName=tempActivities[m].courseName;
+    	    	var teacherName=tempActivities[m].teacherName;
+    	    	// add teacherName and courseName
+    	    	var tipStr = "";
+                if(courseName!==null) {
+                	tipStr = courseName+"(" +tempActivities[m].marshal(from,startWeek,endWeek)+")";
+                }
+                if(marshalString.indexOf(tipStr)==-1){
+                	marshalString += delimiter+tipStr;
+                }
+	    	 }
+	    	 
+	    	 if(marshalString.indexOf(delimiter)===0){
+	    	     return marshalString.substring(delimiter.length);
+	    	 }
+	    	 else{
+	    	     return marshalString;
+	    	 }
+    	}
+    }
+   	
+   	function fillTable(tableId,weeks,units){
+   	   var courseTable = document.getElementById(tableId);
+   	   if(courseTable==null){ return;}
+   	   for(var i=0;i<weeks;i++){
+	 	    for(var j=0;j<units-1;j++){
+	 	        var index =units*i+j;
+	 	        var preTd=document.getElementById("TD"+index);
+	 	        var nextTd=document.getElementById("TD"+(index+1));
+	 	        while(this.marshalContents[index]!=null&&this.marshalContents[index+1]!=null&&this.marshalContents[index]==this.marshalContents[index+1]){
+	 	            preTd.parentNode.removeChild(nextTd);
+	 	            var spanNumber = new Number(preTd.colSpan);
+	 	            spanNumber++;
+	 	            preTd.colSpan=spanNumber;
+	 	            j++;
+	 	            if(j>=units-1){
+	 	                break;
+	 	            }
+	 	            index=index+1;
+	 	            nextTd=document.getElementById("TD"+(index+1));
+	 	        }
+	 	    }
+ 	    }
+ 	    
+ 	    for(var k=0;k<this.unitCounts;k++){
+ 	         var td=document.getElementById("TD"+k);
+ 	         if(td != null&&this.marshalContents[k]!=null){
+ 	            td.innerHTML = this.marshalContents[k];
+ 	            td.style.backgroundColor="#94aef3";
+ 	            td.className="infoTitle";
+ 	         }
+ 	    }
+   	}
+    /***************************************************************************
+	 * course table dispaly occupy of teacher,room and andminClass. It also
+	 * represent data model of any course arrangement. For example student's
+	 * course table,single course's table,teacher's course table,and
+	 * adminClass's course table,even major's .
+	 **************************************************************************/
+    function CourseTable(year,unitCounts,type){
+        this.unitCounts = unitCounts;
+        this.activities = [unitCounts];
+        this.type = type;
+        this.year=year;
+        var date = new Date();
+        // \u65e5\u671f\u4e2d\u7684\u6708\u4efd\u4e3a\u8be5\u6708\u4efd\u7684\u6570\u5b57\u51cf\u4e00
+        date.setFullYear(year,11,31);
+        this.endAtSat=false;
+        if(6==date.getDay()){
+           this.endAtSat=true;
+        }
+        
+        this.marshalContents =new Array(unitCounts);
+        for(var k=0;k<unitCounts;k++){
+         	this.activities[k]=[];
+        }
+        
+        this.mergeAll=mergeAll;
+        this.marshal=marshalByTeacherCourse;
+        // return true,if this.activities[first] and this.activities[second] has
+		// same vaildWeeks and roomId pair set.
+        this.isSame=isSameActivities;
+        this.isTimeConflictWith=isTimeConflictWith;
+        this.marshalTable=marshalTable;
+        this.marshalTableForAdminclass = marshalTableForAdminclass;
+        this.fill=fillTable;
+        this.marshalForAdminclass= marshalForAdminclass;
+    }
+    
+    /***************************************************************************
+	 * \u6dfb\u52a0\u4e00\u4e2a\u5c0f\u8282\u4e2d\u7684\u6559\u5b66\u6d3b\u52a8\u7ec4\u6210\u4e00\u4e2a\u6d3b\u52a8\u96c6. * *
+	 **************************************************************************/
+    // add acitity to cluster.and weekInex from 0 to weeks-1
+    function addActivityToCluster(teacherId,teacherName,roomId,roomName,weekIndex){
+        // alert("addActivityToCluster:"+weekIndex)
+        if(null==this.weeksMap[teacherId+roomId]){
+            this.weeksMap[teacherId+roomId]=new Array(this.weeks);
+            this.activityMap[teacherId+roomId]=new TaskActivity(teacherId,teacherName,this.courseId,this.courseName,roomId,roomName,"");
+        }
+        this.weeksMap[teacherId+roomId][weekIndex]="1";
+    }
+    /**
+	 * \u5408\u5e76\u8bfe\u7a0b\u8868\u4e2d\u76f8\u540c\u7684\u5355\u5143\u683c
+	 */
+    function mergeCellOfCourseTable(weeks,units){
+     	for(var i=0;i<weeks;i++){
+	 	    for(var j=0;j<units-1;j++){
+	 	        var index =units*i+j;
+	 	        var preTd=document.getElementById("TD"+index);
+	 	        var nextTd=document.getElementById("TD"+(index+1));
+	 	        while(preTd.innerHTML!==""&&nextTd.innerHTML!==""&&preTd.innerHTML==nextTd.innerHTML){ 	            
+	 	            preTd.parentNode.removeChild(nextTd);
+	 	            var spanNumber = new Number(preTd.colSpan);
+	 	            spanNumber++;
+	 	            preTd.colSpan=spanNumber;
+	 	            j++;
+	 	            if(j>=units-1){
+	 	                break;
+	 	            }
+	 	            index=index+1;
+	 	            nextTd=document.getElementById("TD"+(index+1));
+	 	        } 	        
+	 	    }
+ 	    }
+	}
+    /*
+	 * construct a valid Weeks from this.weeksMap by key teacherRoomId this
+	 * startweek is the position of this.weeksMap[teacherRoomId] in return
+	 * validWeekStr also it has mininal value 1;
+	 */
+    function constructValidWeeks(startWeek,teacherRoomId){
+        // alert("enter constructValidWeeks")
+        // as many as possible weeks with in a year
+        var firstWeeks = new Array(weeksPerYear);
+        var secondWeeks=null;
+        var weeksThisYear="";
+        for(var i=0;i<weeksPerYear-1;i++){
+	        firstWeeks[i]="0";
+	    }
+	    for(var weekIndex=0;weekIndex<this.weeksMap[teacherRoomId].length;weekIndex++){
+	        var occupy="0";
+	        if(this.weeksMap[teacherRoomId][weekIndex]===undefined) occupy=="0";
+	        else occupy="1";
+	        // \u8ba1\u7b97\u5360\u7528\u5468\u7684\u4f4d\u7f6e
+	        var weekIndexNum = new Number(weekIndex);
+	        weekIndexNum+=startWeek-1;
+	        
+	        if(weekIndexNum<weeksPerYear){
+  	          firstWeeks[weekIndexNum]=occupy;
+	        }
+	        else {
+	          if(null==secondWeeks){
+	            // \u751f\u6210\u4e0b\u4e00\u5e74\u7684\u5360\u7528\u60c5\u51b5
+ 	            secondWeeks= new Array();
+ 	            for(var i=0;i<weeksPerYear-1;i++){
+	              secondWeeks[i]="0";
+                }
+	          }
+	          secondWeeks[(weekIndexNum+(this.endAtSat?0:1))%weeksPerYear]=occupy;
+	        }
+	    }
+	    for(i=0;i<weeksPerYear;i++){
+	        weeksThisYear+=(firstWeeks[i]==null)?"0":firstWeeks[i];
+	    }
+	    // alert(weeksThisYear)
+	    var weekState=new Array();
+	    
+	    if(weeksThisYear.indexOf("1")!=-1){
+ 	       weekState[weekState.length]=weeksThisYear;
+	    }
+	    var weeksNextYear="";
+	    if(null!=secondWeeks) {
+	        for(i=0;i<weeksPerYear;i++){
+	           weeksNextYear+=(secondWeeks[i]===undefined)?"0":secondWeeks[i];
+	        }
+	        if(weeksNextYear.indexOf("1")!=-1){
+	           weekState[weekState.length]=weeksNextYear;
+	        }
+	        // alert(weeksNextYear);
+	    }
+	    // alert(weekState)
+	    return weekState;
+    }
+    /**
+	 * \u6784\u9020\u6559\u5b66\u6d3b\u52a8
+	 * 
+	 */
+    function constructActivities(startWeek){
+        // alert("enter constructActivities")
+        var activities = new Array();
+        for(var teacherRoomId in this.activityMap){
+           var weekState=this.constructValidWeeks(startWeek,teacherRoomId);
+           this.activityMap[teacherRoomId].vaildWeeks=weekState[0];
+           this.activityMap[teacherRoomId].remark=this.remark;
+           activities[activities.length]=this.activityMap[teacherRoomId];          
+           if(weekState.length==2){        
+             var cloned=this.activityMap[teacherRoomId].clone();
+             cloned.vaildWeeks=weekState[1];
+             activities[activities.length]=cloned;
+             // alert(cloned)
+           }
+           // alert(this.activityMap[teacherRoomId]);
+        }
+        return activities;
+    }
+    
+	/**
+	 * all activities in each unit consists a ActivityCluster
+	 */ 
+    function ActivityCluster(year,courseId,courseName,weeks,remark){
+        this.year=year;
+        var date = new Date();
+        date.setFullYear(year,11,31);
+        this.endAtSat=false;
+        if(6==date.getDay()){
+           this.endAtSat=true;
+        }
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.weeks = weeks;
+        this.remark = remark;
+        this.weeksMap= {};
+        this.activityMap ={};
+        this.add = addActivityToCluster;
+        this.constructValidWeeks=constructValidWeeks;
+        this.genActivities=constructActivities;
+    }

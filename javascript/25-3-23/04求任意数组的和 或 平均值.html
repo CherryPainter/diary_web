@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function sum(input) {
+      let arr = input.split(',').map(Number)
+      let result = 0
+      for (let i = 0; i < arr.length; i++) {
+        result += arr[i]
+      }
+      return result
+    }
+    function average(input) {
+      let arr = input.split(',').map(Number)
+      let result = 0
+      for (let i = 0; i < arr.length; i++) {
+        result += arr[i]
+      }
+      return result / arr.length
+    }
+    let input = prompt("请输入数字，用英文逗号分隔：")
+    while (true) {
+      let Select = prompt(`
+      ----请选择你的操作：---
+      求和请输入1 
+      平均值请输入2`) || '1'
+      if (Select == '1') {
+        let result = sum(input)
+        alert(`数组求和结果是${result}`)
+      } else if (Select == '2') {
+        let result = average(input)
+        alert(`数组平均值结果是${result}`)
+      } else {
+        alert('请输入合法选项')
+        continue
+      }
+      let fx = prompt('回车结束或者\'n\'或者其它,输入\'y\'选择其他操作')
+      if (fx == 'n' || '') {
+        break
+      } else if (fx == 'y') {
+        continue
+      } else {
+        break
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>

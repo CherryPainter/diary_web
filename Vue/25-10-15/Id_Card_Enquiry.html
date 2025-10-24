@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>身份证查询</title>
+  <!-- 引入样式文件 -->
+  <link rel="stylesheet" href="./judge.css">
+</head>
+
+<body>
+  <!-- 页面主标题 -->
+  <h1>身份证查询</h1>
+  <hr>
+  <!-- 查询表单区：仅包含身份证输入框和查询按钮 -->
+  <div class="select">
+    <form action="javascript:;" method="post">
+      <!-- 输入框：使用 HTML 属性做基础长度校验，JS 做进一步验证与解析 -->
+      <label for="code">身份证号码：</label><br>
+      <input type="text" id="code" placeholder="请输入18位身份证号码" required maxlength="18" minlength="18"
+        pattern="/^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9|Xx]$/"
+        autocomplete="off"><br>
+      <button class="search">查询</button>
+    </form>
+  </div>
+
+  <!-- 查询结果区（初始隐藏），由 JS 填充具体信息 -->
+  <div class="result " style="display: none;">
+    <h2>查询结果</h2>
+    <div class="main">
+      <!-- 结果字段，JS 会写入对应的 span -->
+      <p>身份证号：<span id="result-code"></span></p>
+      <p>性别：<span id="result-gender"></span></p>
+      <p>出生日期：<span id="result-birthdate"></span></p>
+      <p>籍贯：<span id="result-region"></span></p>
+      <p>年龄：<span id="result-age"></span></p>
+    </div>
+  </div>
+
+  <!-- 页面逻辑：解析身份证并请求 data.json 获取行政区名称 -->
+  <script src="./judge.js"></script>
+
+</body>
+
+
+</html>

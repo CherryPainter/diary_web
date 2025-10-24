@@ -1,0 +1,109 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot?nl3xwq');
+  src: url('../fonts/icomoon.eot?nl3xwq#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?nl3xwq') format('truetype'), url('../fonts/icomoon.woff?nl3xwq') format('woff'), url('../fonts/icomoon.svg?nl3xwq#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+.main {
+  padding: 4vw 0;
+}
+.main h2 {
+  margin-left: 2vw;
+  color: #999;
+  font-weight: normal;
+}
+.main .registerForm {
+  margin: 2vw 25vw;
+  display: flex;
+  flex-direction: column;
+}
+.main .registerForm .fs {
+  margin-bottom: 1.7vw;
+  height: 55px;
+  padding-left: 1rem;
+  border: 1px solid #999;
+  width: 100%;
+}
+.main .registerForm .username,
+.main .registerForm .phone,
+.main .registerForm .verificationCode,
+.main .registerForm .password,
+.main .registerForm .confirm {
+  position: relative;
+}
+.main .registerForm .username .pass,
+.main .registerForm .phone .pass,
+.main .registerForm .verificationCode .pass,
+.main .registerForm .password .pass,
+.main .registerForm .confirm .pass {
+  position: absolute;
+  top: 16px;
+  left: 390px;
+  content: '\e907';
+  font-family: 'icomoon';
+  background-color: #17D16B;
+  color: white;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.5s;
+}
+.main .registerForm .alert {
+  position: absolute;
+  top: 55px;
+  left: 0px;
+  color: red;
+}
+.main .registerForm .verificationCode a {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  color: #1D85DA;
+  cursor: pointer;
+}
+.main .registerForm .clause a {
+  color: #1D85DA;
+}
+.main .registerForm button {
+  margin-top: 0.7vw;
+  background-color: #1D85DA;
+  border: 0;
+  border-radius: 4px;
+  height: 40px;
+  color: white;
+  cursor: pointer;
+}
+.ph {
+  display: none;
+  position: fixed;
+  top: 10%;
+  left: 0;
+  height: 70%;
+  width: 100%;
+  background-color: #fff;
+}
+.ph .hint {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  height: 200px;
+  width: 300px;
+  text-align: center;
+}
+.ph .hint p {
+  color: #1D85DA;
+  margin-top: 35px;
+  font-size: 50px;
+}
+.ph .hint span {
+  color: #1D85DA;
+}
+.ph .hint a {
+  color: red;
+}

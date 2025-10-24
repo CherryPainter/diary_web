@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>简单任务列表</title>
+</head>
+
+<body>
+  <h1>任务列表</h1>
+
+  <input type="text" id="taskInput" placeholder="输入任务">
+  <button onclick="addTask()">添加</button>
+
+  <ul id="taskList"></ul>
+
+  <script>
+    function addTask() {
+      // 获取输入框的值
+      var taskText = document.getElementById('taskInput').value; //获取输入框的值
+
+      // 检查是否为空
+      if (taskText === '') {
+        alert('请输入任务内容');
+        return;
+      }
+
+      // 创建新的列表项
+      var li = document.createElement('li');     //创建新的列表项
+      li.textContent = taskText;
+
+      // 创建删除按钮
+      var deleteBtn = document.createElement('button');//按钮标签名
+      deleteBtn.textContent = '删除';
+      deleteBtn.onclick = function () {
+        li.remove();
+      };
+
+      // 把删除按钮添加到列表项
+      li.appendChild(deleteBtn);
+
+      // 把列表项添加到任务列表
+      document.getElementById('taskList').appendChild(li);
+
+      // 清空输入框
+      document.getElementById('taskInput').value = ''
+    }
+  </script>
+</body>
+
+</html>

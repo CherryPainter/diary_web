@@ -1,0 +1,514 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.w{
+    width: 1200px;
+    margin: 0 auto;
+}
+.clearfix::before,
+.clearfix::after{
+    content: "";
+    display: table;
+}
+.clearfix::after{
+    clear: both;
+}
+a{
+    text-decoration: none;
+}
+li{
+    list-style: none;
+}
+.head{
+    height: 400px;
+    width: 100%;
+    background: url(../imags/a.jpg) no-repeat top;
+    background-size: cover;
+
+}
+.xingxi{
+    position: relative;
+}
+.xingxi img{
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    width: 300px;
+
+}
+.xingxi .about{
+    /* float: left; */
+    position: absolute;
+    top: 70px;
+    left: 450px;
+    color: white;
+}
+.xingxi .hr{
+    width: 700px;
+    border: 1px solid white;
+    margin-top: 20px;
+}
+.xingxi .about .about_mr{
+    margin: 15px 0;
+}
+.xingxi .about .about_mr h4{
+    float: left;
+}
+.xingxi .about .about_mr span {
+    float: right;
+}
+.nav{
+    background-color: #008B8B;
+}
+.nav .nav_banner ul{
+    height: 60px;
+}
+.nav .nav_banner ul li{
+    float: left;
+    margin: 0 5%;
+    height: 60px;
+}
+.nav .nav_banner ul li a{
+    color: white;
+    line-height: 60px;
+    height: 50px;
+}
+.up{
+    position: relative;
+}
+.up a{
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    z-index: 4;
+    margin-left: 43%;
+}
+.up a img{
+    width: 40px;
+}
+.about_me{
+    margin-top: 100px;
+    height: 580px;
+}
+.about_me h2{
+    text-align: center;
+    font-family: "楷体";
+    font-weight: normal;
+    font-size: 80px;
+    color: #008B8B;
+}
+.about_me .two_hr{
+    border-top: 2px solid #FCE9C6;
+    border-bottom: 2px solid #FCE9C6;
+    height: 2px;
+    margin-bottom: 80px;
+}
+.about_me div p{
+    text-indent: 2em;
+    line-height: 30px;
+}
+.about_me img{
+    float: right;
+    height: 300px;
+    margin: 0 20px 0 50px;
+}
+.Personal_experience{
+    background-color: #000;
+    padding-top: 70px;
+}
+.Personal_experience h2{
+    text-align: center;
+    font-family: "楷体";
+    font-weight: normal;
+    font-size: 80px;
+    color: #008B8B;
+}
+.Personal_experience .two_hr{
+    border-top: 2px solid #604D29;
+    border-bottom: 2px solid #604D29;
+    height: 2px;
+    margin-bottom: 80px;
+}
+.Personal_experience .main{
+    position: relative;
+}
+.Personal_experience .main .Personal_experience_left{
+    float: left;
+    margin-top: 50px;
+    width: 45%;
+    text-align: right;
+}
+.Personal_experience .main .Personal_experience_left .biaoqian1{
+    width: 200px;
+    padding-bottom: 200px;
+    margin-top: 10px;
+}
+.Personal_experience .main .Personal_experience_left .biaoqian4{
+    margin-top: 10px;
+}
+.Personal_experience .main .Personal_experience_left .Personal_experience_banner1{
+    color: white;
+    text-align: right;
+    margin-bottom: 150px;
+    margin-right: 30px;
+}
+.Personal_experience .main .Personal_experience_left .Personal_experience_banner1 .p{
+    border: 1px solid #FFEF13;
+    padding: 20px;
+    letter-spacing:4px;
+    margin-bottom: 30px;
+}
+.Personal_experience .main .Personal_experience_left .Personal_experience_banner1 .p2 {
+    margin-top: 35px;
+}
+.Personal_experience .main .Personal_experience_center{
+    position: absolute;
+    left: 50%;
+    height: 1000px;
+    width: 0;
+    border: 1px solid white;
+    text-align: left;
+}
+.Personal_experience .main .Personal_experience_center_ui .ui1{
+    float: left;
+    position: absolute;
+    left: 47%;
+    top: 50px;
+    z-index: 2;
+    margin-bottom: 200px;
+}
+.Personal_experience .main .Personal_experience_center_ui .ui2 {
+    float: left;
+    position: absolute;
+    left: 47%;
+    top:290px;
+    z-index: 2;
+    margin-bottom: 200px;
+}
+.Personal_experience .main .Personal_experience_center_ui .ui3 {
+    float: left;
+    position: absolute;
+    left: 47%;
+    top: 590px;
+    z-index: 2;
+    margin-bottom: 200px;
+}
+.Personal_experience .main .Personal_experience_center_ui .ui4 {
+    float: left;
+    position: absolute;
+    left: 47%;
+    top: 830px;
+    z-index: 2;
+    margin-bottom: 200px;
+}
+
+.Personal_experience .main .Personal_experience_center_ui img{
+    width: 70px;
+}
+.Personal_experience .main .Personal_experience_right{
+    float: right;
+    margin-top: 50px;
+    width: 45%;
+}
+.Personal_experience .main .Personal_experience_right .biaoqian2{
+    width: 200px;
+}
+.Personal_experience .main .Personal_experience_right .Personal_experience_banner2{
+    color: white;
+    text-align: left;
+    margin-top: 25px;
+    margin-left: 30px;
+}   
+.Personal_experience .main .Personal_experience_right .Personal_experience_banner2 .p {
+    border: 1px solid #FFEF13;
+    padding: 20px;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+}
+.Personal_experience .main .Personal_experience_right .Personal_experience_banner2 .p2{
+    margin-top: 35px;
+}
+.Personal_experience .main .Personal_experience_right img{
+    margin-bottom:200px;
+    margin-top: 105px;
+}
+.Personal_experience .main .Personal_experience_right .biaoti3{
+    margin-top: 135px;
+}
+.Educational_background{
+    margin-top: 70px;
+}
+.Educational_background h2{
+    text-align: center;
+    font-family: "楷体";
+    font-weight: normal;
+    font-size: 80px;
+    color: #008B8B;
+}
+.Educational_background .two_hr{
+    border-top: 2px solid #FCE9C5;
+    border-bottom: 2px solid #FCE9C5;
+    height: 2px;
+    margin-bottom: 70px;
+}
+.Educational_background .biaoqian{
+    height: 45px;
+}
+.Educational_background .banner{
+    position: relative;
+}
+.Educational_background .banner .p {
+    border: 1px solid #F7E612;
+    padding: 20px;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+}
+.Educational_background .banner .p2 {
+    margin-top: 35px;
+}
+.Educational_background .banner .Educational_background_left{
+    float: left;
+    width: 45%;
+    text-align: right;
+}
+.Educational_background .banner .Educational_background_left img{
+    margin: 65px 0 200px 0;
+}
+
+.Educational_background .banner .Educational_background_main{
+    margin-top: 60px;
+}
+.Educational_background .banner .Educational_background_center_ui img{
+    width: 65px;
+}
+.Educational_background .banner .Educational_background_center{
+    position: absolute;
+    left: 50%;
+    height: 700px;
+    width: 0;
+    border: 1px solid #000;
+    text-align: left;
+}
+.Educational_background .banner .Educational_background_center_ui .ui1{
+    float: left;
+    position: absolute;
+    left: 47%;
+    top: 50px;
+    z-index: 2;
+    margin-bottom: 200px;
+}
+.Educational_background .banner .Educational_background_center_ui .ui2 {
+    float: left;
+    position: absolute;
+    left: 47%;
+    top: 350px;
+    z-index: 2;
+    margin-bottom: 200px;
+}
+.Educational_background .banner .Educational_background_center_ui .ui3 {
+    float: left;
+    position: absolute;
+    left: 47%;
+    top: 550px;
+    z-index: 2;
+    margin-bottom: 200px;
+}
+.Educational_background .banner .Educational_background_right{
+    float: right;
+    width: 45%;
+}
+.Educational_background .banner .Educational_background_right .Educational_background_main1{
+    margin-top: 70px;
+    margin-bottom: 170px;
+}
+.Educational_background .banner .Educational_background_right .biaoqian{
+    margin-bottom: 100px;
+}
+.Professional_skill{
+    padding-top: 70px;
+    background: #000;
+    padding-bottom: 100px;
+}
+.Professional_skill h2{
+    text-align: center;
+    font-family: "楷体";
+    font-weight: normal;
+    font-size: 80px;
+    color: #008B8B;
+}
+.Professional_skill .two_hr{
+    border-top: 2px solid #FCE9C5;
+    border-bottom: 2px solid #FCE9C5;
+    height: 2px;
+    margin-bottom: 70px;
+}
+.Professional_skill .banner .progress-container{
+    float: left;
+    width: 500px;
+    margin-top: 30px;
+}
+.Professional_skill .banner .pc1{
+    margin-right: 100px;
+}
+.Professional_skill .banner .pc2{
+    margin-left: 100px;
+}
+.Professional_skill .banner .progress-container span{
+    font-size: 14px;
+    color: white;
+}
+.Professional_skill .banner .progress-container .percentage{
+    float: right;
+}
+.Professional_skill .banner .progress-container .progress-bar{
+    background-color: #333;
+    margin-top: 10px;
+    height: 10px;
+    border-radius: 10px;
+}
+.Professional_skill .banner .progress-container .progress-bar .progress-fill{
+    width: 80%;
+    background: repeating-linear-gradient(
+        45deg,
+        #bfae5c,
+        #8b772e 10px,
+        #8b772e 20px
+    );
+    height: 10px;
+    border-radius: 10px 0 0 10px;
+}
+.Partial_works{
+    margin: 70px 0;
+}
+.Partial_works h2{
+    text-align: center;
+    font-family: "楷体";
+    font-weight: normal;
+    font-size: 80px;
+    color: #008B8B;
+}
+.Partial_works .two_hr{
+    border-top: 2px solid #FCE9C5;
+    border-bottom: 2px solid #FCE9C5;
+    height: 2px;
+    margin-bottom: 70px;
+}
+.Partial_works .nav{
+    background-color: #F7E612;
+    margin-bottom: 80px;
+    height: 44.5px;
+}
+.Partial_works .nav ul{
+    padding: 0 250px;
+}
+.Partial_works .nav ul li{
+    float: left;
+    height: 50px;
+    width: 100px;
+    text-align: center;
+    padding: 0 20px;
+}
+.Partial_works .nav ul li a{
+    display: block;
+    height: 50px;
+    width: 120px;
+    color: #000;
+    line-height: 50px;
+}
+.Partial_works .nav ul li a:hover{
+    background: url(../imags/hover.png) repeat-x center;
+    background-size: contain;
+    color: white;
+}
+.Partial_works .photo{
+    text-align: center;
+}
+.Partial_works .photo img{
+    width: 365px;
+    margin: 15px;
+}
+.Contact_us{
+    position: relative;
+    background-color: #000;
+    height: 700px;
+    padding-top: 70px;
+}
+.Contact_us h2{
+    text-align: center;
+    font-family: "楷体";
+    font-weight: normal;
+    font-size: 80px;
+    color: #008B8B;
+}
+.Contact_us .two_hr{
+    border-top: 2px solid #FCE9C5;
+    border-bottom: 2px solid #FCE9C5;
+    height: 2px;
+    margin-bottom: 70px;
+}
+.Contact_us img{
+    position: absolute;
+    left: -52%;
+    width: 600px;
+}
+.Contact_us .main{
+    float: right;
+    position: absolute;
+    left: 53%;
+    color: white;
+}
+.Contact_us .main .p{
+    float: left;
+    border-right: 1px solid white;
+    padding-right: 30px;
+    margin-right: 30px;
+}
+.Contact_us .main .p2{
+    float: left;
+}
+.Contact_us .main form{
+    float: left;
+    margin-top: 50px;
+}
+.Contact_us .main form input{
+    background-color: #000;
+    color: #ccc;
+    margin-bottom: 20px;
+    border: 1px solid white;
+    text-indent: 1em;
+}
+.Contact_us .main form .bd1{
+    width: 265px;
+    height: 40px;
+}
+.Contact_us .main form .bd2 {
+    width: 262px;
+    height: 40px;
+    margin-left: 10px;
+}
+.Contact_us .main form .bd3 {
+    width: 543px;
+    height: 40px;
+}
+.Contact_us .main form textarea{
+    border: 1px solid white;
+    background-color: #000;
+    color: white;
+    padding: 10px;
+}
+.Contact_us .main form button{
+    background-color: #008B8B;
+    color: white;
+    border: transparent;
+    width: 543px;
+    height: 40px;
+}
+footer{
+    background-color: #1F1F1F;
+    text-align: center;
+    font-size: 12px;
+    line-height: 70px;
+    height: 70px;
+    color: white;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <p id="greeting">你好，世界！</p>
+  <button onclick="changeText()">点击改变内容</button>
+  <script>
+    function changeText() {
+      const change = document.querySelector('#greeting')
+      change.innerHTML = `你好 , 玥糖!`
+    }
+  </script> -->
+  ------------------------------------------------
+  <!-- <img id="myImage" src="cat.jpg" alt="小猫" width="200">
+  <button onclick="changeImage()">换图</button>
+  <script>
+    let imgs = [
+      { src: './cat.jpg', alt: '咪咪' },
+      { src: './dog.jpg', alt: '汪汪' }
+    ]
+    function changeImage() {
+      const change = document.querySelector('#myImage')
+      change.src = imgs[1].src
+      change.alt = imgs[1].alt
+    }
+  </script> -->
+  ------------------------------------------------
+  <p id="clock">00:00:00</p>
+  <script>
+    let change = setInterval(function () {
+      const now = new Date()
+      let date = document.querySelector('#clock')
+      let h = now.getHours()
+      let m = now.getMinutes()
+      let s = now.getSeconds()
+      h = h.toString().padStart(2, '0')
+      m = m.toString().padStart(2, '0')
+      s = s.toString().padStart(2, '0')
+      date.innerHTML = `${h}:${m}:${s}`
+    }, 1000)
+  </script>
+</body>
+
+</html>

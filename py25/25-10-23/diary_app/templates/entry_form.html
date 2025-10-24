@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{% if mode == 'create' %}新建日记{% else %}编辑日记{% endif %} - 日记管理系统{% endblock %}
+{% block content %}
+<h1>{% if mode == 'create' %}新建日记{% else %}编辑日记{% endif %}</h1>
+<form method="post" novalidate>
+  {{ form.hidden_tag() }}
+  <div class="form-group">
+    {{ form.title.label }}
+    {{ form.title(class='input') }}
+    {% for e in form.title.errors %}<div class="error">{{ e }}</div>{% endfor %}
+  </div>
+  <div class="form-group">
+    {{ form.content.label }}
+    {{ form.content(class='textarea') }}
+    {% for e in form.content.errors %}<div class="error">{{ e }}</div>{% endfor %}
+  </div>
+  <div class="form-actions">
+    {{ form.submit(class='btn primary') }}
+    <a class="btn" href="{{ url_for('main.index') }}">返回</a>
+  </div>
+</form>
+{% endblock %}

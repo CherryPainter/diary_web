@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0 user-scalable=no,maximum-scale=1.0,minimum-scale=1.0">
+  <link rel="stylesheet" href="./css/register.css">
+  <link rel="stylesheet" href="./css/common.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <title>学习不通-注册</title>
+</head>
+
+<body>
+  <div class="log w">
+    <a href="./index.html"><img src="./images/logo.png" alt=""></a>
+  </div>
+  <div class="main w">
+    <h2>新用户注册</h2>
+    <form action="#" name="register" class="registerForm" method="post">
+      <div class="username">
+        <input type="text" placeholder="设置用户名称" name="uname" autocomplete="off" class="fs">
+        <span class="alert"></span>
+        <span class="pass"></span>
+      </div>
+      <div class="phone">
+        <input type="tel" placeholder="输入手机号码" name="phone" maxlength="11" class="fs">
+        <span class="alert"></span>
+        <span class="pass"></span>
+      </div>
+      <div class="verificationCode">
+        <input type="text" placeholder="短信验证码" maxlength="6" name="PVC" autocomplete="off" class="fs pvc">
+        <span class="alert"></span>
+        <span class="pass"></span>
+        <a class="vc">发送验证码</a>
+      </div>
+      <div class="password">
+        <input type="password" placeholder="设置6至20位字母,数字和字符组合" name="pwd" autocomplete="off" class="fs">
+        <span class="alert"></span>
+        <span class="pass"></span>
+      </div>
+      <div class="confirm">
+        <input type="text" placeholder="请再次输入上面的密码" name="tpwd" autocomplete="off" class="fs">
+        <span class="alert"></span>
+        <span class="pass"></span>
+      </div>
+
+      <div class="clause">
+        <input type="checkbox" name="confirmation" id="confirmation">
+        <span>已阅读并同意 <a href="#">《用户服务协议》</a></span>
+      </div>
+      <button>下一步</button>
+    </form>
+  </div>
+  <div class="ph">
+    <div class="hint">
+      <p>注册成功</p>
+      <span class="time">5</span>秒后自动跳转到首页或<a href="./index.html">点击此处跳转</a>
+    </div>
+  </div>
+  <!-- 底部模块 -->
+  <div class="mod_copyright w">
+    <div class="link">
+      <ul>
+        <li><a href="#">关于我们</a></li>
+        <li><a href="#">联系客服</a></li>
+        <li><a href="#">工作机会</a></li>
+        <li><a href="#">客户服务</a></li>
+        <li><a href="#">友情链接</a></li>
+        <li><a href="#">帮助指南</a></li>
+        <li><a href="#">专业指导</a></li>
+        <li><a href="#">合作机构</a></li>
+        <li><a href="#">合作导师</a></li>
+      </ul>
+    </div>
+    <div class="copyright">
+      学习不通致力于普及中国最好的教育它与中国一流大学和机构合作提供在线课程。<br>
+      © 2025年XTCG Inc.保留所有权利。-沪ICP备131452099号
+    </div>
+  </div>
+  <script src="./js/register.js"></script>
+</body>
+
+</html>

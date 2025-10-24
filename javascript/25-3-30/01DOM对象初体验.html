@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul {
+      margin: 0 auto;
+      width: 1200px;
+      height: 30px;
+    }
+
+    ul li {
+      float: left;
+      list-style: none;
+      text-align: center;
+      width: 395px;
+      line-height: 30px;
+      border-right: 1px solid gray;
+    }
+
+    ul li:last-child {
+      border-right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <ul class="nav">
+    <li>我的首页</li>
+    <li>产品介绍</li>
+    <li>联系方式</li>
+  </ul>
+  <script>
+    // const sj = document.querySelector('ul li')
+    // console.log(sj);
+    const arr = document.querySelectorAll('ul li')
+    document.write(arr)
+
+  </script>
+</body>
+
+</html>

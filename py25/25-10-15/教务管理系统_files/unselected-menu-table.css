@@ -1,0 +1,9 @@
+.table-container {
+    margin: 10px;
+    height: 400px;
+    overflow-y: auto;
+}
+
+.treegrid-indent{
+    padding-left: 40px;
+}

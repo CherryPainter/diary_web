@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0 auto;
+            padding: 0;
+        }
+        .w{
+            width: 1200px;
+        }
+        body{
+            background-image: url(./bg.jpg);
+            background-size: contain;
+        }
+        .header{
+            position: relative;
+            height: 300px;
+        }
+        .header img{
+            width: 100%;
+            height: 100%;
+        }
+        .header h2 {
+            float: left;
+            position: absolute;
+            left: 50px;
+            top: 200px;
+            font-size: 50px;
+            color: skyblue;
+        }
+        .header .bgt{
+            position: absolute;
+            top: 230px;
+            background-color: rgba(249, 202, 234,.7);
+            height: 60px;
+        }
+        .nav ul li{
+            float: left;
+            height: 50px;
+            list-style: none;
+            background-color: rgb(184, 235, 255);
+        }
+        .nav ul li a{
+            margin: 0 90px;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 50px;
+            color: #000;
+            text-decoration: none;
+        }
+        .nav ul li a:hover{
+            color: pink;
+        }
+        .main .left_banner{
+            float: left;
+            position: relative;
+            height: 900px;
+            width: 450px;
+            background-color: rgb(255, 221, 227);
+        }
+        .main .left_banner .head1{
+            position: absolute;
+            left: 80px;
+            top: 60px;
+            height: 300px;
+            width: 300px;
+            border-radius: 50%;
+            background-image: url(./head1.jpg);
+            background-size: contain;
+        }
+        .main .left_banner .size_box{
+            position: absolute;
+            top: 380px;
+            text-align: center;
+            margin: 0 50px;
+        }
+        .main .left_banner .head2{
+            position: absolute;
+            bottom: 170px;
+            left: 80px;
+            background-image: url(./beijing2.jpg);
+            height: 200px;
+            width: 300px;
+            background-size: contain;
+            border-radius: 0 40px 0 40px;
+        }
+        .main .left_banner .size_box2{
+            position: absolute;
+            bottom: 50px;
+            text-align: center;
+            margin: 0 50px;
+        }
+         .main .right_banner{
+            float: right;
+            height: 820px;
+            width: 670px;
+            text-align: left;
+            padding: 40px;
+            background: #FFF9F2 url(./footer.png) no-repeat bottom ;
+            background-size: contain;
+        }
+        .main .right_banner h2{
+            display: block;
+            margin: 20px 0;
+            text-decoration: underline;
+            color: pink;
+        }
+        .main .right_banner p{
+            text-indent: 2em;
+        }
+        .main .right_banner .ts{
+            display: block;
+            text-indent: 0;
+            padding-left: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header w">
+        <img src="./beijing.jpg" alt="">
+        <div class="bgt w"></div>
+        <h2>个人主页</h2>
+    </div>
+    <div class="nav w">
+        <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">心情日记</a></li>
+            <li><a href="#">放飞自我</a></li>
+            <li><a href="#">相册</a></li>
+            <li><a href="#">下一站</a></li>
+        </ul>
+    </div>
+    <div class="main w">
+        <div class="left_banner">
+            <div class="head1"></div>
+            <div class="size_box">
+                <h4>我的日记</h4>
+                <p>如果可以，请为生活停驻。留点时间，锻炼身体，沐浴阳光，多些耐心，关照一粟一羹汤，愿我们都勤靡余老，心有常闲。</p>
+            </div>
+            <div class="head2"></div>
+            <div class="size_box2">
+                <h4>心灵轨迹</h4>
+                <p>翻山越岭只为一场遇见，全力以赴只为一次改变。答案就在眼泪里，也凝结在汗水中，感官和心灵，总有一样要生活在别处，你会更加坚定心中的热爱。</p>
+            </div>
+        </div>
+        <div class="right_banner">
+            <h2>介绍</h2>
+            <p>生命里写满它的姓，青春里缀满着它的名，穷尽一生，无悔无憾启程，去寻找热爱，愿这趟旅程能找到它，哪怕它在满是伤痕的大地。</p>
+            <h2>相册</h2>
+            <p>时光总像“林花谢了春红”，脚步太匆匆。在追寻梦想的路上，“何妨吟啸且徐行”。这里有“荡胸生层云”的旷达，有“潇潇雨歇”的怅惋，有“长太息以掩涕兮”的悲悯，也有“悠悠我心”的真情。 </p>
+            <h2>今日朋友圈</h2>
+            <p class="ts">
+                总会有一个人的出现，<br>
+                能抚平你受过伤的心，<br>
+                给你久违的踏实感，<br>
+                温暖你的世界，<br>
+                弥补你所有的遗憾，<br>
+                让你觉得人间值得。<br>
+                那个美好的人和事物，<br>
+                也许会来晚些，<br>
+                但不会缺席<br>
+            </p>
+            <h2>随心吟唱</h2>
+            <p class="ts">
+                越接近终点，就越明白，<br>
+                生活的意义，<br>
+                并不是到达终点。<br>
+                而是认真地，<br>
+                生活在它的每一秒里。<br>
+                雨打窗，秋草黄，风吹落叶，<br>
+                还有你眼角的光<br>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

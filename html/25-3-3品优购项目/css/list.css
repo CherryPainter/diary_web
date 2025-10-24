@@ -1,0 +1,112 @@
+header{
+  position: relative;
+}
+.ms_logo{
+  position: absolute;
+  top: 35px;
+  left: 202px;
+  width: 56px;
+  height: 26px;
+  background: url(../images/ms_logo.png) no-repeat;
+  z-index: 2;
+}
+.ms_logo::before{
+  position: absolute;
+  top: -2px;
+  left: -16px;
+  content: '';
+  display: inline-block;
+  height: 30px;
+  border: 1px solid #C81523;
+}
+.nav .nav_fl,
+.nav_fr{
+  float: left;
+}
+.nav ul li{
+  float: left;
+}
+.nav .nav_fl ul li a{
+  display: block;
+  line-height: 47px;
+  padding: 0 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+}
+.nav .nav_fr ul li a{
+  display: block;
+  line-height: 49px;
+  padding: 0 20px;
+  font-size: 14px;
+  color: #000;
+
+}
+.nav .nav_fr ul li:last-child a::after{
+  content: '\e91e';
+  font-family: 'icomoon';
+  margin-left: 4px;
+}
+.sk_container{
+  margin-bottom: 200px !important;
+}
+.sk_container .sk_bd ul li{
+  float: left;
+  width: 290px;
+  height: 460px;
+  margin: 10px 12px 10px 0;
+  color: #747474;
+}
+.sk_container .sk_bd ul li:nth-child(4n){
+  margin-right: 0;
+}
+.sk_container .sk_bd ul li:hover{
+  border: 1px solid #C81523;
+}
+.sk_container .sk_bd ul li .sk_text{
+  margin: 10px 10px;
+}
+.sk_container .sk_bd ul li .sk_text h3{
+  display: inline-block;
+  margin: 10px 5px 10px 0;
+  font-size: 20px;
+}
+.sk_container .sk_bd ul li .sk_text s{
+  font-size: 14px;
+  font-weight: 600;
+  color: #A4A4A4;
+}
+.sk_container .sk_bd ul li .sk_text .jd p{
+  font-size: 14px;
+  display: inline-block;
+}
+.sk_container .sk_bd ul li .sk_text .jd .border{
+  display: inline-block;
+  overflow: hidden;
+  width: 132px;
+  height: 12px;
+  border-radius: 7px;
+  border: 1px solid #C81523;
+}
+.sk_container .sk_bd ul li .sk_text .jd .border span{
+  display: inline-block;
+  width: 85px;
+  height: 30px;
+  background-color: #C81523;
+}
+.sk_container .sk_bd ul li .button{
+  text-align: center;
+  height: 39px;
+  line-height: 39px;
+  background-color: #B1191B;
+}
+.sk_container .sk_bd ul li .button h4{
+  font-weight: normal;
+  color: white;
+}
+.top{
+  position: fixed;
+  top: 700px;
+  left: 50%;
+  margin-left: 620px;
+}

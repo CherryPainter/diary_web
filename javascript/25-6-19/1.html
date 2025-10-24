@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [1, 2, 3, 4, 5]
+    arr.forEach(ele => console.log(ele))
+
+    console.log('-----------------------');
+    let list = [5, 4, 3, 2, 1]
+    let newList = []
+    for (const ele of list) {
+      newList.push(ele + 2)
+    }
+    console.log(newList);
+
+    console.log('---------------------');
+    let arr2 = [1, 2, 3, 4, 5, 6, 7, 8]
+    function sum(arr) {
+      let arrs = arr.filter(ele => ele % 2 == 0)
+      let sum = arrs.reduce((prev, now) => prev + now, 0)
+      console.log(sum);
+    }
+    sum(arr2)
+    console.log('---------------------');
+    // 创建一个学生对象，包含姓名、年龄、学号属性和学习、吃饭方法，并打印学生对象的年龄属性，调用学习方法。
+    let student = {
+      name: 'sqy',
+      age: 19,
+      stu_id: 2024006444,
+      learn: function () {
+        console.log('学不了一点');
+      },
+      eat: function () {
+        console.log('干饭不积极，脑子有问题');
+      }
+    }
+    console.log(student.age);
+    console.log(student.learn());
+    console.log('---------------------');
+
+    const date = new Date()
+    let year = date.getFullYear()
+    let month = date.getMonth() + 1
+    let day = date.getDate()
+    let xq = ['日', '一', '二', '三', '四', '五', '六'][date.getDay()]
+    console.log(`${year}年${month}月${day}日 星期${xq}`);
+    console.log('---------------------');
+    console.log(3 + '4');
+
+
+  </script>
+</body>
+
+</html>

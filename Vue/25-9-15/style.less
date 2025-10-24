@@ -1,0 +1,165 @@
+h1 {
+  text-align: center;
+}
+
+body {
+  position: relative;
+
+  main {
+    width: 1800px;
+
+    &:hover ul li {
+      opacity: .3;
+    }
+
+    ul {
+      display: flex;
+      margin: 0;
+
+      &:nth-child(n + 2) {
+        margin-top: -2px;
+      }
+
+      &:nth-child(1) {
+        color: #2359ba;
+
+        li {
+          border-top-left-radius: 25px;
+        }
+      }
+
+      &:nth-child(2) {
+        color: #b92286;
+      }
+
+      &:nth-child(3) {
+        color: #34b1bf;
+      }
+
+      &:nth-child(4) {
+        color: #1f58bb;
+      }
+
+      &:nth-child(5) {
+        color: pink;
+      }
+
+      &:nth-child(6) {
+        color: skyblue;
+      }
+
+      &:nth-child(7) {
+        color: rgb(235, 202, 151);
+      }
+
+      &:nth-child(8) {
+        color: gold;
+      }
+
+      &:nth-child(9) {
+        color: yellowgreen;
+
+
+        li {
+          &:first-child {
+            border-bottom-left-radius: 25px;
+          }
+
+          &:last-child {
+            border-bottom-right-radius: 25px;
+          }
+
+          border-bottom: 3px solid skyblue;
+        }
+      }
+
+      li {
+        list-style: none;
+        text-align: center;
+        line-height: 50px;
+        height: 50px;
+        width: 150px;
+        border: 3px solid transparent; // 默认3px透明边框，防止抽搐
+        margin: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s;
+        box-shadow: 0 4px 16px 0 rgba(60, 120, 200, 0.12), 0 1px 3px 0 rgba(0, 0, 1, 0.5); // 每个li阴影
+
+        &:nth-child(1) {
+          background-color: #f6dfdf;
+          border-left: 3px solid skyblue;
+        }
+
+        &:nth-child(2) {
+          background-color: #e8f7e0;
+        }
+
+        &:nth-child(3) {
+          background-color: #f6e0f3;
+        }
+
+        &:nth-child(4) {
+          background-color: #e1dff7;
+        }
+
+        &:nth-child(5) {
+          background-color: #f6dfdf;
+        }
+
+        &:nth-child(6) {
+          background-color: #e8f7e0;
+        }
+
+        &:nth-child(7) {
+          background-color: #f6e0f3;
+        }
+
+        &:nth-child(8) {
+          background: #e1dff7;
+        }
+
+        &:nth-child(9) {
+          background-color: #f6dfdf;
+        }
+
+        &:last-child {
+          border-top-right-radius: 25px;
+          border-top: 3px solid skyblue;
+          border-right: 3px solid skyblue;
+          margin-top: -2px;
+        }
+
+        &:hover {
+          opacity: 1;
+          border-color: skyblue; // hover时只变色
+          animation: action 1s forwards;
+        }
+      }
+    }
+  }
+
+  .enzh {
+    position: absolute;
+    top: 80px;
+    right: 100px;
+    color: #fff;
+    width: 100px;
+    height: 50px;
+    background-color: skyblue;
+    border: 3px solid pink;
+    border-radius: 15px;
+  }
+}
+
+
+@keyframes action {
+  0% {
+    height: 50px;
+    width: 150px;
+  }
+
+  100% {
+    transform: rotate(360deg) scale(2, 2);
+    border: 3px solid skyblue;
+    border-radius: 25px;
+  }
+}

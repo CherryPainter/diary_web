@@ -1,0 +1,121 @@
+.header {
+  .w {
+    .nav {
+      ul {
+        li {
+          &:nth-child(3) {
+            a {
+              color: #00a4ff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.main {
+  margin-top: 5rem !important;
+
+  h3 {
+    display: inline;
+    color: #00a4ff;
+  }
+
+  span {
+    color: #b8b1b1;
+  }
+
+  .navbars-contain {
+    width: 100%;
+
+    h4 {
+      color: #00a4ff;
+    }
+
+    .box-list {
+      display: flex;
+      height: 11rem;
+      text-align: center;
+      transition: all .5s;
+
+      .left {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #fff;
+        box-shadow: 0 3px 10px rgba(#999, .3);
+
+        .list-title {
+          flex: 1;
+          padding-top: 1rem;
+          color: #00a4ff;
+
+        }
+
+        a {
+          .list-contain {
+            flex: 5;
+            font-size: 1rem;
+            color: gray;
+          }
+
+          &:hover {
+            .list-contain {
+              color: #00a4ff;
+            }
+          }
+        }
+
+      }
+
+      .right {
+        position: relative;
+        flex: 1;
+        background-color: #fff;
+        box-shadow: 3px 3px 10px rgba(#999, .3);
+        border-left: 2px dashed #b8b1b1;
+
+        .num {
+          text-align: center;
+          margin-top: 50px;
+          color: #00a4ff;
+          font-size: 3rem;
+          font-weight: bold;
+        }
+
+        &::after {
+          position: absolute;
+          top: -9px;
+          left: -12px;
+          display: inline-block;
+          content: '';
+          width: 1.4rem;
+          height: 1.4rem;
+          background-color: #f4f3f3;
+          border-radius: 50%;
+          box-shadow: 0 -1px 5px hsl(0, 2%, 65%) inset;
+        }
+
+        &::before {
+          position: absolute;
+          top: 164px;
+          left: -12px;
+          display: inline-block;
+          content: '';
+          width: 1.4rem;
+          height: 1.4rem;
+          background-color: #f4f3f3;
+          border-radius: 50%;
+          box-shadow: 0 1px 5px hsl(0, 2%, 65%) inset;
+        }
+      }
+
+      &:hover {
+        top: -8px;
+        box-shadow: 0 15px 30px rgb(0 0 0 / 10%);
+      }
+    }
+  }
+}

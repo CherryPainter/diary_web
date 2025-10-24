@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function miao(x = 0) {
+      let h = Math.floor(x / 3600)
+      let m = Math.floor((x % 3600) / 60)
+      let s = x % 60
+      h = h < 10 ? '0' + h : h
+      m = m < 10 ? '0' + m : m
+      s = s < 10 ? '0' + s : s
+      document.write(`用户输入：${x} 秒,转换为${h}小时${m}分钟${s}秒`);
+    }
+    let x = +prompt('请输入要处理的秒')
+    miao(x)
+  </script>
+</body>
+
+</html>

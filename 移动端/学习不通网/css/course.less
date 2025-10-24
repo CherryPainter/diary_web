@@ -1,0 +1,110 @@
+.header {
+  .w {
+    .nav {
+      ul {
+        li {
+          &:nth-child(2) {
+            a {
+              color: #00a4ff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+.filtrate {
+  margin-top: 4.5rem;
+  box-shadow: 0 4px 3px rgba(0, 0, 0, 0.1);
+  background-color: #f8f7f7;
+
+  .classCourse {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    height: auto;
+    line-height: 50px;
+
+    .left {
+      margin-left: 10px;
+      font-weight: bold;
+      color: #00a4ff;
+    }
+
+    .right {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      height: auto;
+
+      li {
+        width: 100px;
+        text-align: center;
+
+        a {
+          color: #050505;
+
+          &:hover {
+            color: #00a4ff;
+          }
+        }
+      }
+    }
+  }
+}
+
+.box {
+  .box-hd {
+    height: 45px;
+
+    h3 {
+      float: left;
+      font-weight: normal;
+      font-size: 21px;
+      color: #494949;
+      line-height: 45px;
+      margin-bottom: 0;
+      margin-left: 20px;
+    }
+
+    a {
+      float: right;
+      font-size: 12px;
+      color: #a5a5a5;
+      margin-top: 10px;
+      margin-right: 30px;
+    }
+  }
+
+  .main {
+
+    .col {
+      position: relative;
+      top: 0;
+      transition: all .5s;
+      color: #000;
+
+      &:hover {
+        top: -8px;
+        box-shadow: 0 15px 30px rgb(0 0 0 / 10%);
+      }
+
+      .card {
+        img {
+          border-radius: 4%;
+        }
+      }
+
+      .info {
+        font-size: 12px;
+        color: #999;
+
+        span {
+          color: #ff7c2d;
+        }
+      }
+    }
+  }
+}

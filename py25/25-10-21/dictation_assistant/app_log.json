@@ -1,0 +1,518 @@
+[
+  {
+    "session_id": "20251021_093030",
+    "start_time": "2025-10-21 09:30:30",
+    "end_time": "2025-10-21 09:31:43",
+    "duration_seconds": 73.29,
+    "exception_occurred": false,
+    "total_words": 4,
+    "module_stats": {
+      "E2C": {
+        "total": 4,
+        "correct": 4,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {
+      "E2C": 100.0
+    },
+    "accuracy_by_module": {
+      "E2C": 100.0
+    }
+  },
+  {
+    "session_id": "20251021_093935",
+    "start_time": "2025-10-21 09:39:35",
+    "end_time": "2025-10-21 09:41:16",
+    "duration_seconds": 100.63,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_093935",
+    "start_time": "2025-10-21 09:39:35",
+    "end_time": "2025-10-21 09:41:16",
+    "duration_seconds": 100.63,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_094332",
+    "start_time": "2025-10-21 09:43:32",
+    "end_time": "2025-10-21 09:43:33",
+    "duration_seconds": 0.51,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_094524",
+    "start_time": "2025-10-21 09:45:24",
+    "end_time": "2025-10-21 09:45:25",
+    "duration_seconds": 0.21,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_120404",
+    "start_time": "2025-10-21 12:04:04",
+    "end_time": "2025-10-21 12:04:29",
+    "duration_seconds": 25.16,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_120404",
+    "start_time": "2025-10-21 12:04:04",
+    "end_time": "2025-10-21 12:04:29",
+    "duration_seconds": 25.21,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_121057",
+    "start_time": "2025-10-21 12:10:57",
+    "end_time": "2025-10-21 12:11:48",
+    "duration_seconds": 51.27,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_121057",
+    "start_time": "2025-10-21 12:10:57",
+    "end_time": "2025-10-21 12:11:49",
+    "duration_seconds": 51.33,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_121235",
+    "start_time": "2025-10-21 12:12:35",
+    "end_time": "2025-10-21 12:13:04",
+    "duration_seconds": 29.26,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_121235",
+    "start_time": "2025-10-21 12:12:35",
+    "end_time": "2025-10-21 12:13:04",
+    "duration_seconds": 29.32,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_121627",
+    "start_time": "2025-10-21 12:16:27",
+    "end_time": "2025-10-21 12:18:09",
+    "duration_seconds": 102.5,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_121627",
+    "start_time": "2025-10-21 12:16:27",
+    "end_time": "2025-10-21 12:18:09",
+    "duration_seconds": 102.55,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_122407",
+    "start_time": "2025-10-21 12:24:07",
+    "end_time": "2025-10-21 12:24:24",
+    "duration_seconds": 17.35,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_122407",
+    "start_time": "2025-10-21 12:24:07",
+    "end_time": "2025-10-21 12:24:24",
+    "duration_seconds": 17.41,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  },
+  {
+    "session_id": "20251021_122511",
+    "start_time": "2025-10-21 12:25:11",
+    "end_time": "2025-10-21 12:25:11",
+    "duration_seconds": 0.11,
+    "exception_occurred": false,
+    "total_words": 0,
+    "module_stats": {
+      "E2C": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "C2E": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "LISTEN": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      },
+      "review": {
+        "total": 0,
+        "correct": 0,
+        "wrong": 0
+      }
+    },
+    "module_percentage": {},
+    "accuracy_by_module": {}
+  }
+]

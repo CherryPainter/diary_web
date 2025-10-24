@@ -1,0 +1,109 @@
+var UnselectedMenuTableView = Backbone.View.extend({
+    attributes:{
+        topMenuView : undefined,
+        selectedListView : undefined
+    },
+
+    getData : function () {
+        var data = [];
+        if (this.attributes.topMenuView != undefined) {
+            this.attributes.topMenuView.getCollection().each(function (topMenu) {
+                data.push(topMenu.toJSON());
+                var secondMenuView = topMenu.get("secondMenuView");
+                if (secondMenuView != undefined) {
+                    secondMenuView.getCollection().each(function (secondMenu) {
+                        data.push(secondMenu.toJSON());
+                        var thirdMenuView = secondMenu.get("thirdMenuView");
+                        if (thirdMenuView != undefined) {
+                            thirdMenuView.getCollection().each(function (thirdMenu) {
+                                data.push(thirdMenu.toJSON());
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        return data;
+    },
+
+    unCheck: function(id){
+        var $table = this.$el.find("#menuTable");
+        var row = $table.bootstrapTable("getRowByUniqueId", id);
+        var index = $table.bootstrapTable("getData").findIndex((value, index, arr) => {
+            return Object.is(row, value);
+        });
+        $table.bootstrapTable("uncheck", index);
+    },
+
+    render : function () {
+        if (this.attributes.selectedListView != undefined){
+            this.attributes.selectedListView.setUnselectedTableView(this);
+        }
+        var _this = this;
+        var data = this.getData();
+        var $table = this.$el.find("#menuTable");
+        $table.bootstrapTable({
+            data : data,
+            idField: "id",
+            columns:[
+                {field: 'name',title: "\u83dc\u5355\u540d\u79f0", formatter: function (value,row, index) {
+                        if (row["href"] != "#"){
+                            return "<input data-index='" + index + "' name='btSelectItem' type='checkbox' value='" + row["id"] + "'>" + value;
+                        }else{
+                            return value;
+                        }
+                    }
+                }
+            ],
+            treeShowField:"name",
+            parentIdField:"parentId",
+            uniqueId: "id",
+            showHeader: false,
+            onResetView: function(data) {
+                $table.treegrid({
+                    treeColumn: 0,
+                    initialState: 'collapsed',//\u6298\u53e0
+                    expanderExpandedClass: 'fa fa-angle-down',
+                    expanderCollapsedClass: 'fa fa-angle-right',
+                });
+
+                if ($table.treegrid('getRootNodes').first() && $table.treegrid('getRootNodes').first().length) {
+                    $table.treegrid('getRootNodes').first().treegrid('expand');
+                    $table.treegrid('getRootNodes').first().treegrid("getChildNodes").first().treegrid('expand');
+                }
+                jQuery(data.data).each(function (index, dataItem) {
+                    if (_this.attributes.selectedListView != undefined && _this.attributes.selectedListView.hasItem(dataItem["id"])) {
+                        $table.bootstrapTable("check", index);
+                    }
+                });
+            },
+            onCheck:function(row){
+                if (_this.attributes.selectedListView != undefined && !_this.attributes.selectedListView.hasItem(row["id"])){
+                    if (_this.attributes.selectedListView.itemCount() < 9) {
+                        _this.attributes.selectedListView.addSelectedListItem(new SelectedListItem({id: row["id"],name: row["name"]}));
+                    }else {
+                        alert("\u5feb\u6377\u83dc\u5355\u6700\u591a\u8bbe\u7f6e9\u4e2a");
+                        _this.unCheck(row["id"]);
+                    }
+                }
+            },
+
+            onUncheck:function(row){
+                if (_this.attributes.selectedListView != undefined && _this.attributes.selectedListView.hasItem(row["id"])){
+                    _this.attributes.selectedListView.removeSelectedListItem(row["id"]);
+                }
+            }
+        });
+        
+        $table.find('td').on('click', function(e){
+        	if(this !== e.target){
+        		e.preventDefault();
+        	 	e.stopPropagation();
+        	 	return false;
+        	}
+        	$(this).find('>span').click();
+        	$(this).find('>input').click();
+        });
+    }
+});

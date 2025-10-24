@@ -1,0 +1,127 @@
+body {
+  min-width: 320px;
+  max-width: 750px;
+  margin: 0 auto;
+  height: 1200px;
+  background-color: #f2f4f7;
+}
+html {
+  font-size: 37.5px;
+}
+@media screen and (min-width: 320px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 360px) {
+  html {
+    font-size: 18px;
+  }
+}
+@media screen and (min-width: 375px) {
+  html {
+    font-size: 18.75px;
+  }
+}
+@media screen and (min-width: 400px) {
+  html {
+    font-size: 20px;
+  }
+}
+@media screen and (min-width: 414px) {
+  html {
+    font-size: 20.7px;
+  }
+}
+@media screen and (min-width: 424px) {
+  html {
+    font-size: 21.2px;
+  }
+}
+@media screen and (min-width: 480px) {
+  html {
+    font-size: 24px;
+  }
+}
+@media screen and (min-width: 540px) {
+  html {
+    font-size: 27px;
+  }
+}
+@media screen and (min-width: 720px) {
+  html {
+    font-size: 36px;
+  }
+}
+@media screen and (min-width: 750px) {
+  html {
+    font-size: 37.5px;
+  }
+}
+a {
+  text-decoration: none;
+  color: #707070;
+}
+img {
+  vertical-align: middle;
+}
+.warp {
+  background-color: #fff;
+  padding-bottom: 2.66666667rem;
+}
+.head {
+  height: 2.13333333rem;
+  border-bottom: 1px solid #eaeaea;
+  text-align: center;
+  line-height: 2.13333333rem;
+  font-size: 0.93333333rem;
+}
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+}
+.nav .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33.33%;
+  margin: 1.2rem 0 1.6rem 0;
+}
+.nav .item img {
+  width: 3.70666667rem;
+  height: 3.70666667rem;
+}
+.nav .item span {
+  font-size: 0.66666667rem;
+}
+.go {
+  margin: 0 0.26666667rem 0 0.48rem;
+}
+.go img {
+  width: 100%;
+}
+.content {
+  padding: 1.06666667rem 0.64rem;
+  background-color: #fff;
+  margin-top: 0.26666667rem;
+}
+.content .con-hd {
+  display: flex;
+  justify-content: space-between;
+  height: 1.01333333rem;
+  border: 0;
+}
+.content .con-hd h4 {
+  margin: 0;
+  font-size: 0.74666667rem;
+  color: #333;
+}
+.content .con-hd h4 .icon {
+  display: inline-block;
+  width: 1.01333333rem;
+  height: 1.01333333rem;
+}
+.content .con-hd .more {
+  font-size: 0.58666667rem;
+  color: #999;
+}

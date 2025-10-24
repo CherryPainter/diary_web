@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>年会抽奖</title>
+  <style>
+    .wrapper {
+      width: 840px;
+      height: 420px;
+      background: url(./images/bg01.jpg) no-repeat center / cover;
+      padding: 100px 250px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <strong>羊羊村年会抽奖</strong>
+    <h1>一等奖：<span id="one">???</span></h1>
+    <h3>二等奖：<span id="two">???</span></h3>
+    <h5>三等奖：<span id="three">???</span></h5>
+  </div>
+  <script>
+    const arr = ['喜羊羊', '美羊羊', '沸羊羊', '懒羊羊', '暖羊羊']
+    const random = Math.floor(Math.random() * arr.length)
+    const hq = document.querySelector('#one')
+    hq.innerHTML = arr[random]
+    arr.splice(random, 1)
+
+    const random2 = Math.floor(Math.random() * arr.length)
+    const hq2 = document.querySelector('#two')
+    hq2.innerHTML = arr[random2]
+    arr.splice(random2, 1)
+
+    const random3 = Math.floor(Math.random() * arr.length)
+    const hq3 = document.querySelector('#three')
+    hq3.innerHTML = arr[random3]
+    arr.splice(random3, 1)
+  </script>
+</body>
+
+</html>

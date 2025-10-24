@@ -1,0 +1,22 @@
+{
+  "E2C": {
+    "total": 0,
+    "correct": 0,
+    "wrong": 0
+  },
+  "C2E": {
+    "total": 0,
+    "correct": 0,
+    "wrong": 0
+  },
+  "LISTEN": {
+    "total": 0,
+    "correct": 0,
+    "wrong": 0
+  },
+  "review": {
+    "total": 0,
+    "correct": 0,
+    "wrong": 0
+  }
+}

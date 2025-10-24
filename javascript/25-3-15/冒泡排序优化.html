@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [0, 9, 8, 7, 6, 5, 4, 3, 2, 1,]
+    for (let i = 0; i < arr.length - 1; i++) {
+      let swapped = false; // 记录是否发生了交换
+      for (let j = 0; j < arr.length - i - 1; j++) {
+        if (arr[j] > arr[j + 1]) {
+          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+          swapped = true;
+        }
+      }
+      if (!swapped) break; // 如果没有交换，说明已经有序，提前结束
+    }
+  </script>
+</body>
+
+</html>

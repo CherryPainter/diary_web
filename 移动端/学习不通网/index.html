@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0 user-scalable=no,maximum-scale=1.0,minimum-scale=1.0">
+  <meta name="description" content="零基础也能学前端！本平台提供系统化 HTML、CSS、JavaScript 教程与实战项目，助你成为合格的前端开发者。">
+  <meta name="keywords"
+    content="前端学习平台,在线前端课程,HTML教程,CSS教程,JavaScript入门,前端开发实战,前端工程师学习路线,零基础学前端,Web开发教程,在线编程网站,前端项目练习,前端框架教学,响应式网页设计,前端就业培训,前端学习网站推荐">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./css/Normalize.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <script src="./js/bootstrap.bundle.js"></script>
+  <title>学习不通 | 从入门到项目实战</title>
+</head>
+
+<body>
+  <!-- 头部导航栏 -->
+  <header class="header ">
+    <div class="w">
+      <!-- logo模块 -->
+      <div class="logo"></div>
+      <!-- 头部子导航模块 -->
+      <div class="nav">
+        <ul>
+          <li><a href="./index.html">首页</a></li>
+          <li><a href="./course.html">课程</a></li>
+          <li><a href="./programme.html">职业规划</a></li>
+        </ul>
+      </div>
+      <!-- 搜索模块 -->
+      <div class="search">
+        <form action="#" method="post" name="search" id="search">
+          <input type="text" class="input_txt" placeholder="请输入关键字">
+          <button></button>
+        </form>
+      </div>
+      <!-- 登录&注册 -->
+      <div class="login pt-1 ms-4">
+        <a href="./login.html">
+          <button type="button" class="btn btn-outline-primary btns">登录</button>
+        </a>
+        <a href="./register.html">
+          <button type="button" class="btn btn-outline-secondary btns">注册</button>
+        </a>
+      </div>
+      <!-- 用户栏 -->
+      <a class="user" href="#">
+        <img src="./images/图像.png" alt="" style="vertical-align: middle;">
+        <span class="uname text-truncate">用户名</span>
+      </a>
+      <!-- 更多 -->
+      <li class="nav-item dropdown mt-2 ms-3 mtab">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          更多
+        </a>
+        <ul class="dropdown-menu ">
+          <li><a class="dropdown-item" href="./course.html">课程</a></li>
+          <li><a class="dropdown-item" href="./programme.html">职业规划</a></li>
+        </ul>
+      </li>
+    </div>
+  </header>
+  <!-- 轮播图模块 -->
+  <div class="banner">
+    <div class="w">
+      <!-- bs轮播框架 -->
+      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="./images/13392907916325697.png" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="./images/13392908988839214.png" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="./images/13392907916325697.png" class="d-block w-100" alt="...">
+          </div>
+        </div>
+      </div>
+      <!-- 轮播图子模块-导航 -->
+      <div class="subnav">
+        <ul>
+          <li><a href="#">前端开发</a></li>
+          <li><a href="#">后端开发</a></li>
+          <li><a href="#">移动开发</a></li>
+          <li><a href="#">人工智能</a></li>
+          <li><a href="#">商业预测</a></li>
+          <li><a href="#">云计算&大数据</a></li>
+          <li><a href="#">运维&测试</a></li>
+          <li><a href="#">UI设计</a></li>
+          <li><a href="#">产品</a></li>
+        </ul>
+      </div>
+      <!-- 轮播图子模块2-课程表 -->
+      <div class="course">
+        <h2>我的课程表</h2>
+        <div class="main">
+          <ul>
+            <li>
+              <a href="#">
+                <h4>继续学习 程序语义设计</h4>
+                <p>正在学习-使用对象</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <h4>继续学习 JavaScript</h4>
+                <p>正在学习-正则表达式</p>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <h4>继续学习 Python</h4>
+                <p>正在学习-数据结构与算法</p>
+              </a>
+            </li>
+          </ul>
+          <a href="#" class="footer">全部课程</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 精品导航或兴趣导航栏 -->
+  <div class="goods w mt-3">
+    <div class="jinping">
+      <h3>精品推荐</h3>
+    </div>
+    <a href="#" class="mod">修改兴趣</a>
+    <div class="goods-item">
+      <ul>
+        <li><a href="#">JQuery</a></li>
+        <li><a href="#">Spark</a></li>
+        <li><a href="#">MySQL</a></li>
+        <li><a href="#">JavaWeb</a></li>
+        <li><a href="#">MySQL</a></li>
+        <li><a href="#">JavaWeb</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- 精品模块 -->
+  <div class="box w clearfix mt-4">
+    <div class="box-hd mb-4">
+      <h3>精品推荐</h3>
+      <a href="#">查看全部</a>
+    </div>
+    <div class="main container-fluid">
+      <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 row-cols-sm-3 g-3 renderBox">
+        <!-- 参考结构 -->
+        <!-- <a href="#">
+          <div class="col">
+            <div class="card h-100">
+              <img src="./images/pic.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text text-truncate">JavaScript数据看板项目实战</p>
+                <div class="info">
+                  <span>高级</span> • <span>3306</span>人在学习
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>-->
+      </div>
+    </div>
+  </div>
+  <!-- 楼层模块 -->
+  <div class="floor w">
+    <!-- A类楼层 -->
+    <div class="bc-box mt-5">
+      <!-- 楼层导航 -->
+      <div class="ty-nav">
+        <h3>编程入门</h3>
+        <a href="#">查看全部</a>
+        <ul>
+          <li><a href="#" data-id="hot" class="actives">热门</a></li>
+          <li><a href="#" data-id="Elementary">初级</a></li>
+          <li><a href="#" data-id="Intermediate">中级</a></li>
+          <li><a href="#" data-id="Advanced">高级</a></li>
+        </ul>
+      </div>
+      <!-- 楼层内容区 -->
+      <div class="ty-main">
+        <!-- <div class="ty-left"><img src="./images/合作5ssr.png" alt=""></div>
+        <div class="ty-right"><img src="./images/上图.png" alt=""></div>
+        <div class="main mt-4">
+          <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 row-cols-sm-3 g-3 renderBox2">
+            <a href="#">
+              <div class="col">
+                <div class="card h-100">
+                  <img src="./images/ins图片1ss.png" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <p class="card-text text-truncate">JavaScript数据看板项目实战</p>
+                    <div class="info">
+                      <span>高级</span> • <span>3306</span>人在学习
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <!-- A类楼层 -->
+    <div class="bc-box  mt-5">
+      <!-- 楼层导航 -->
+      <div class="ty-nav">
+        <h3>数据分析师</h3>
+        <a href="#">查看全部</a>
+        <ul class="uu">
+          <li><a href="#" data-id="hot2" class="actives">热门</a></li>
+          <li><a href="#" data-id="Elementary2">初级</a></li>
+          <li><a href="#" data-id="Intermediate2">中级</a></li>
+          <li><a href="#" data-id="Advanced2">高级</a></li>
+        </ul>
+      </div>
+      <!-- 楼层内容区 -->
+      <div class="ty-main render-ty"></div>
+    </div>
+    <!-- B类楼层 -->
+    <div class="bc-box mt-5">
+      <!-- 楼层导航 -->
+      <div class="ty-nav">
+        <h3>机器学习工程师</h3>
+        <a href="#">查看全部</a>
+        <ul class="uul">
+          <li><a href="#" data-id="hot3" class="actives">热门</a></li>
+          <li><a href="#" data-id="Elementary3">初级</a></li>
+          <li><a href="#" data-id="Intermediate3">中级</a></li>
+          <li><a href="#" data-id="Advanced3">高级</a></li>
+        </ul>
+      </div>
+      <!-- 楼层内容区 -->
+      <div class="ty-banner">
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 row-cols-sm-3 g-3 renderBox3 container-fluid"></div>
+      </div>
+    </div>
+    <!-- B类楼层 -->
+    <div class="bc-box mt-5">
+      <!-- 楼层导航 -->
+      <div class="ty-nav">
+        <h3>前端开发工程师</h3>
+        <a href="#">查看全部</a>
+        <ul class="uull">
+          <li><a href="#" data-id="hot4" class="actives">热门</a></li>
+          <li><a href="#" data-id="Elementary4">初级</a></li>
+          <li><a href="#" data-id="Intermediate4">中级</a></li>
+          <li><a href="#" data-id="Advanced4">高级</a></li>
+        </ul>
+      </div>
+      <!-- 楼层内容区 -->
+      <div class="ty-banner">
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 row-cols-sm-3 g-3 renderBox4 container-fluid"></div>
+      </div>
+    </div>
+  </div>
+  <!-- 底部版权页 -->
+  <div class="footer mt-4">
+    <div class="w">
+      <!-- 左版权 -->
+      <div class="copyright">
+        <img src="./images/logo.png" alt="">
+        <p>
+          学习不通致力于普及中国最好的教育它与中国一流大学和机构合作提供在线课程。<br>
+          © 2025年XTCG Inc.保留所有权利。-沪ICP备131452099号
+        </p>
+        <a>下载APP</a>
+      </div>
+      <!-- 右版权链接 -->
+      <div class="links">
+        <dl>
+          <dt>关于学不通</dt>
+          <dd><a href="#">关于</a></dd>
+          <dd><a href="#">管理团队</a></dd>
+          <dd><a href="#">工作机会</a></dd>
+          <dd><a href="#">客户服务</a></dd>
+          <dd><a href="#">帮助</a></dd>
+        </dl>
+        <dl>
+          <dt>新手指南</dt>
+          <dd><a href="#">如何注册</a></dd>
+          <dd><a href="#">如何选择</a></dd>
+          <dd><a href="#">如何拿到毕业证</a></dd>
+          <dd><a href="#">学分是什么</a></dd>
+          <dd><a href="#">考试未通过怎么办</a></dd>
+        </dl>
+        <dl>
+          <dt>合作伙伴</dt>
+          <dd><a href="#">合作机构</a></dd>
+          <dd><a href="#">合作导师</a></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/index.js"></script>
+  <script src="./js/verifylogin.js"></script>
+</body>
+
+</html>
