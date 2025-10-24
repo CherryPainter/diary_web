@@ -40,3 +40,8 @@ class SecurityProfile(db.Model):
     locked_until = db.Column(db.DateTime, nullable=True)
 
     user = db.relationship('User', backref=db.backref('security_profile', uselist=False, cascade="all, delete-orphan"))
+
+class AppSetting(db.Model):
+    __tablename__ = 'app_settings'
+    key = db.Column(db.String(50), primary_key=True)
+    value = db.Column(db.Text, nullable=False)

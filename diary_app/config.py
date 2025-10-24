@@ -43,6 +43,10 @@ class Config:
         app.config["LOGIN_RATE_LIMIT"] = cls.LOGIN_RATE_LIMIT
 
         # Admin settings via env: comma-separated usernames
-        app.config["ADMIN_USERS"] = set(
+        admin_users = set(
             u.strip() for u in os.getenv("ADMIN_USERS", "").split(",") if u.strip()
         )
+        if not admin_users:
+            admin_users = {"admin"}
+        app.config["ADMIN_USERS"] = admin_users
+        app.config["ADMIN_DEFAULT_PASSWORD"] = os.getenv("ADMIN_DEFAULT_PASSWORD", "ChangeMe123!")

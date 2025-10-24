@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, abort, current_app
+from flask import Blueprint, jsonify, request, abort, current_app, render_template
 from flask_login import login_required, current_user
 
 from ..services.admin_service import AdminService
@@ -13,7 +13,7 @@ _admin_service = None
 def get_admin_service():
     global _admin_service
     if _admin_service is None:
-        _admin_service = AdminService(UserRepository(), DiaryRepository(), admin_users=current_app.config.get('ADMIN_USERS', set()))
+        _admin_service = AdminService(UserRepository(), DiaryRepository())
     return _admin_service
 
 
@@ -89,4 +89,36 @@ def api_delete_entry(entry_id):
     require_admin()
     entry = DiaryEntry.query.get_or_404(entry_id)
     ok, msg = get_admin_service().delete_entry(entry)
+    return jsonify({'ok': ok, 'message': msg})
+
+# Admin users management
+@bp_admin.route('/settings', methods=['GET'])
+@login_required
+def admin_settings_page():
+    require_admin()
+    return render_template('admin/settings.html')
+
+@bp_admin.route('/api/admin-users', methods=['GET'])
+@login_required
+def api_get_admin_users():
+    require_admin()
+    users = sorted(list(get_admin_service().get_admin_users()))
+    return jsonify({'items': users})
+
+@bp_admin.route('/api/admin-users', methods=['POST'])
+@login_required
+def api_add_admin_user():
+    require_admin()
+    data = request.get_json(silent=True) or {}
+    username = (data.get('username') or '').strip()
+    if not username:
+        return jsonify({'ok': False, 'message': '缺少用户名'}), 400
+    ok, msg = get_admin_service().add_admin_user(username)
+    return jsonify({'ok': ok, 'message': msg})
+
+@bp_admin.route('/api/admin-users/<string:username>', methods=['DELETE'])
+@login_required
+def api_remove_admin_user(username):
+    require_admin()
+    ok, msg = get_admin_service().remove_admin_user(username)
     return jsonify({'ok': ok, 'message': msg})
