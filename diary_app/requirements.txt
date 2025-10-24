@@ -7,3 +7,6 @@ PyMySQL==1.1.1
 python-dotenv==1.0.1
 Flask-Limiter==3.6.0
 email-validator==2.2.0
+pytest==6.2.5
+pytest-flask==1.2.0
+coverage==6.2
